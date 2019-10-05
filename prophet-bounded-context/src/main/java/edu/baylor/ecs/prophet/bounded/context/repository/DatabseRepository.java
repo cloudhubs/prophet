@@ -1,16 +1,17 @@
-package edu.baylor.ecs.prophet.bounded.context.api;
+package edu.baylor.ecs.prophet.bounded.context.repository;
 
-import java.util.List;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
 
 /**
- *
+ * Interface to communicate with neo4j database
  */
-public interface DatabseApi {
+public interface DatabseRepository {
 
-    // get all context models from the system
-    List<String> getAllEntityClassesInSystem(String name);
+    // get all context models from the database based on system name
+    SystemContext getAllEntityClassesInSystem(String systemName);
 
     // persist data to database
-    String createBoundedContext(String system, String boundedContext);
+    BoundedContext createBoundedContext(BoundedContext boundedContext);
 
 }
