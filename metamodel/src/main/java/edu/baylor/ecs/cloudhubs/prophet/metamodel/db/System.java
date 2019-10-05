@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.prophet.metamodel;
+package edu.baylor.ecs.cloudhubs.prophet.metamodel.db;
 
 import org.neo4j.graphdb.Node;
 
