@@ -10,5 +10,5 @@ import lombok.*;
 public class Annotation {
     private String name;
     private String stringValue;
-    private String intValue;
+    private Integer intValue;
 }
