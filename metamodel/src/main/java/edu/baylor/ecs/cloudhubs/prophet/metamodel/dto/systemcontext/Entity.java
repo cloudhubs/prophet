@@ -10,4 +10,13 @@ import java.util.List;
 @ToString
 public class Entity {
     private List<Field> fields;
+    private String entityName;
+
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<Field> fields) {
+        this.fields = fields;
+    }
 }
