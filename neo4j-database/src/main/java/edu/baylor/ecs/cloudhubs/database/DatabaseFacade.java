@@ -6,6 +6,8 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContex
 public class DatabaseFacade {
 
     /**
+     *
+     * It retrieves following data structure from database based on system name
      * System1
      *  -Module1
      *      - EntityClass1
@@ -17,9 +19,7 @@ public class DatabaseFacade {
      * @return
      */
     public static SystemContext getAllEntityClassesInSystem(String name){
-        //ToDo @Ian: create some system context, modules, entities
-        SystemContext systemContext = new SystemContext();
-        return systemContext;
+        return FakeDataFactory.getSystemContext();
     }
 
     public static BoundedContext createBoundedContext(BoundedContext boundedContext){
