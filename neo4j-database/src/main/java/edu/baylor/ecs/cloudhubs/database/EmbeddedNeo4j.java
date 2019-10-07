@@ -23,6 +23,10 @@ public class EmbeddedNeo4j
     Node firstNode;
     Node secondNode;
     Relationship relationship;
+
+    public GraphDatabaseService getGraphDb(){
+        return graphDb;
+    }
     // end::vars[]
 
     // tag::createReltype[]
@@ -49,34 +53,34 @@ public class EmbeddedNeo4j
         registerShutdownHook( graphDb );
         // end::startDb[]
 
-        // tag::transaction[]
-        try ( Transaction tx = graphDb.beginTx() )
-        {
-            // Database operations go here
-            // end::transaction[]
-            // tag::addData[]
-            firstNode = graphDb.createNode();
-            firstNode.setProperty( "message", "Hello, " );
-            secondNode = graphDb.createNode();
-            secondNode.setProperty( "message", "World!" );
-
-            relationship = firstNode.createRelationshipTo( secondNode, RelTypes.KNOWS );
-            relationship.setProperty( "message", "brave Neo4j " );
-            // end::addData[]
-
-            // tag::readData[]
-            System.out.print( firstNode.getProperty( "message" ) );
-            System.out.print( relationship.getProperty( "message" ) );
-            System.out.print( secondNode.getProperty( "message" ) );
-            // end::readData[]
-
-            greeting = ( (String) firstNode.getProperty( "message" ) )
-                    + ( (String) relationship.getProperty( "message" ) )
-                    + ( (String) secondNode.getProperty( "message" ) );
-
-            // tag::transaction[]
-            tx.success();
-        }
+//        // tag::transaction[]
+//        try ( Transaction tx = graphDb.beginTx() )
+//        {
+//            // Database operations go here
+//            // end::transaction[]
+//            // tag::addData[]
+//            firstNode = graphDb.createNode();
+//            firstNode.setProperty( "message", "Hello, " );
+//            secondNode = graphDb.createNode();
+//            secondNode.setProperty( "message", "World!" );
+//
+//            relationship = firstNode.createRelationshipTo( secondNode, RelTypes.KNOWS );
+//            relationship.setProperty( "message", "brave Neo4j " );
+//            // end::addData[]
+//
+//            // tag::readData[]
+//            System.out.print( firstNode.getProperty( "message" ) );
+//            System.out.print( relationship.getProperty( "message" ) );
+//            System.out.print( secondNode.getProperty( "message" ) );
+//            // end::readData[]
+//
+//            greeting = ( (String) firstNode.getProperty( "message" ) )
+//                    + ( (String) relationship.getProperty( "message" ) )
+//                    + ( (String) secondNode.getProperty( "message" ) );
+//
+//            // tag::transaction[]
+//            tx.success();
+//        }
         // end::transaction[]
     }
 
