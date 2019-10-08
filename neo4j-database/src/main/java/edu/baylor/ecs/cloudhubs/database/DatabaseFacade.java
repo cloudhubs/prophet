@@ -26,4 +26,18 @@ public class DatabaseFacade {
         //ToDo: persist context
         return boundedContext;
     }
+
+    // Java Source Code Parser
+
+
+    // Java Bytecode Parser
+
+    // -- data for bounded context
+
+    // -- data for semantics
+
+
+    // Python Source Code Parser
+
+    // Semantic detection
 }
