@@ -51,6 +51,8 @@ public class EmbeddedNeo4j
         // tag::startDb[]
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
         registerShutdownHook( graphDb );
+
+
         // end::startDb[]
 
 //        // tag::transaction[]

@@ -1,16 +1,21 @@
 package edu.baylor.ecs.cloudhubs.database;
 
+import edu.baylor.ecs.cloudhubs.database.model.RelTypes;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SystemRepository {
 
     private EmbeddedNeo4j embeddedNeo4j;
     private GraphDatabaseService graphDb;
+    private Relationship relationship;
 
     @Inject
     public SystemRepository(EmbeddedNeo4j embeddedNeo4j){
@@ -19,7 +24,23 @@ public class SystemRepository {
     }
 
 
-    public void createSystemObject(String systemName){
+    public void createSystemModules(String systemName, List<String> modules){
+        try(Transaction tx = graphDb.beginTx()){
+            Node system = graphDb.createNode();
+            system.setProperty("name", systemName);
+            List<Node> nodes = new ArrayList<>();
+            for (String s: modules
+                 ) {
+                Node n = graphDb.createNode();
+                n.setProperty("name", s);
+                nodes.add(n);
+                relationship = system.createRelationshipTo( n, RelTypes.HAS_A_MODULE );
+            }
+        }
+    }
+}
+
+
 //        try ( Transaction tx = graphDb.beginTx() ) {
 //            // Database operations go here
 //            // end::transaction[]
@@ -46,5 +67,3 @@ public class SystemRepository {
 //            // tag::transaction[]
 //            tx.success();
 //        }
-    }
-}
