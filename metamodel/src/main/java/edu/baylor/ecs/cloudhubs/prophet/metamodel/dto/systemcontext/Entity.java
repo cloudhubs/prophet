@@ -19,4 +19,12 @@ public class Entity {
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
 }
