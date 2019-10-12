@@ -2,24 +2,25 @@ package edu.baylor.ecs.cloudhubs.database;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
-import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.graphdb.index.UniqueFactory;
 import org.neo4j.io.fs.FileUtils;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class EmbeddedNeo4j
 {
     private static final File databaseDirectory = new File( "target/neo4j-hello-db" );
 
-    public String greeting;
+    protected String greeting;
+    protected UniqueFactory.UniqueNodeFactory factory;
 
     // tag::vars[]
-    GraphDatabaseService graphDb;
+    protected GraphDatabaseService graphDb;
     Node firstNode;
     Node secondNode;
     Relationship relationship;
@@ -44,13 +45,26 @@ public class EmbeddedNeo4j
 //        hello.shutDown();
 //    }
 
-    public void createDb() throws IOException
+    public void createDb()
     {
-        FileUtils.deleteRecursively( databaseDirectory );
+        try {
+            FileUtils.deleteRecursively( databaseDirectory );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // tag::startDb[]
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
         registerShutdownHook( graphDb );
+        try ( Transaction tx = graphDb.beginTx() ) {
+            factory = new UniqueFactory.UniqueNodeFactory(graphDb, "systems") {
+                @Override
+                protected void initialize(Node node, Map<String, Object> map) {
+                    node.addLabel(Label.label( "System" ));node.setProperty( "name", map.get( "systemName"));
+                }
+            };
+        }
+
 
 
         // end::startDb[]

@@ -4,12 +4,12 @@ import org.neo4j.graphdb.Node;
 
 public class System {
 
-    static final String NAME = "NAME";
+    static final String NAME = "SYSTEMNAME";
     static final String DESCRIPTION = "System description";
 
     private final Node underlyingNode;
 
-    System( Node personNode )
+    public System(Node personNode)
     {
         this.underlyingNode = personNode;
     }

@@ -1,42 +1,159 @@
 package edu.baylor.ecs.cloudhubs.database;
 
 import edu.baylor.ecs.cloudhubs.database.model.RelTypes;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
+import edu.baylor.ecs.cloudhubs.database.model.System;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.parser.JPModule;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.parser.JPSystem;
+import org.neo4j.graphdb.*;
+import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.UniqueFactory;
+import org.neo4j.graphdb.schema.ConstraintDefinition;
+import org.neo4j.graphdb.schema.IndexDefinition;
+import org.neo4j.graphdb.schema.Schema;
 
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.NormalScope;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+@Stateless
+public class SystemRepository extends EmbeddedNeo4j{
 
-public class SystemRepository {
+//    @Inject
+//    private EmbeddedNeo4j embeddedNeo4j;
 
-    private EmbeddedNeo4j embeddedNeo4j;
-    private GraphDatabaseService graphDb;
+//    private GraphDatabaseService graphDb;
     private Relationship relationship;
+    private static final String MODULENAME_KEY = "modulename";
+    private static Index<Node> nodeIndex;
 
-    @Inject
-    public SystemRepository(EmbeddedNeo4j embeddedNeo4j){
-        this.embeddedNeo4j = embeddedNeo4j;
-        this.graphDb = embeddedNeo4j.getGraphDb();
+//    public Node getNodeById(String id){
+//        try ( Transaction tx = graphDb.beginTx() )
+//        {
+//            try ( ResourceIterator<Node> users =
+//                          graphDb.findNodes( label, "name", nameToFind ) )
+//            {
+//                ArrayList<Node> userNodes = new ArrayList<>();
+//                while ( users.hasNext() )
+//                {
+//                    userNodes.add( users.next() );
+//                }
+//
+//                for ( Node node : userNodes )
+//                {
+//                    System.out.println(
+//                            "The username of user " + idToFind + " is " + node.getProperty( "username" ) );
+//                }
+//            }
+//        }
+//
+//
+//    }
+
+
+    public void createSystemModules(JPSystem jpSystem){
+
+        //System index
+        IndexDefinition indexDefinition;
+        try ( Transaction tx = graphDb.beginTx() )
+        {
+            Schema schema = graphDb.schema();
+            ConstraintDefinition constraintDefinition = schema
+                    .constraintFor(Label.label("SystemName"))
+                    .assertPropertyIsUnique("systemName")
+//                    .indexFor( Label.label( "SystemName" ) )
+////                    .on( "systemName" )
+                    .create();
+
+//            indexDefinition = schema
+////                    .constraintFor(Label.label("SystemName"))
+////                    .assertPropertyIsUnique("systemName")
+//                    .indexFor( Label.label( "SystemName" ) )
+//                    .on( "systemName" )
+//                    .create();
+
+            tx.success();
+
+
+
+        }
+
+
+
+
+        try(Transaction tx = graphDb.beginTx()){
+
+            //init primitive types
+
+
+//            Node system = graphDb.createNode();
+//            system.setProperty("systemName", jpSystem.getName());
+            Label label = Label.label( "SystemName" );
+
+//            List<Node> nodes = new ArrayList<>();
+//            for (JPModule m: jpSystem.getModules()
+//                 ) {
+//                Node n = graphDb.createNode();
+//                n.setProperty("name", m.getName());
+//                nodes.add(n);
+//                relationship = system.createRelationshipTo( n, RelTypes.HAS_A_MODULE );
+//
+//            }
+            tx.success();
+        }
+
+//        Label label = Label.label( "User" );
+//        int idToFind = 45;
+//        String nameToFind = "user" + idToFind + "@neo4j.org";
+//        try ( Transaction tx = graphDb.beginTx();
+//              ResourceIterator<Node> users = graphDb.findNodes( label, "username", nameToFind ) )
+//        {
+//            Node firstUserNode;
+//            if ( users.hasNext() )
+//            {
+//                firstUserNode = users.next();
+//            }
+//            users.close();
+//        }
     }
 
 
-    public void createSystemModules(String systemName, List<String> modules){
-        try(Transaction tx = graphDb.beginTx()){
-            Node system = graphDb.createNode();
-            system.setProperty("name", systemName);
-            List<Node> nodes = new ArrayList<>();
-            for (String s: modules
-                 ) {
-                Node n = graphDb.createNode();
-                n.setProperty("name", s);
-                nodes.add(n);
-                relationship = system.createRelationshipTo( n, RelTypes.HAS_A_MODULE );
-            }
+    public JPSystem getByName(String name){
+//        Label label = Label.label( "SystemName" );
+        try ( Transaction tx = graphDb.beginTx() )
+        {Node node = this.factory.getOrCreate( "systemName", "a" );
+//            System system = new System(node);
+            JPSystem jpSystem = new JPSystem();
+            jpSystem.setName((String)node.getProperty("systemName"));
+        tx.success();return jpSystem;
+//            try ( ResourceIterator<Node> users =
+//                          graphDb.findNodes( label, "SystemName", name ) )
+//            {
+//                ArrayList<Node> userNodes = new ArrayList<>();
+//                while ( users.hasNext() )
+//                {
+//                    userNodes.add( users.next() );
+//                }
+//
+//                for ( Node node : userNodes )
+//                {
+//                    System.out.println(
+//                            "The username of user " + " is " + node.getProperty( "systemName" ) );
+//                }
+//            }
         }
+
+    }
+
+    private Node createAndIndexUser( final String username ) {
+        Node node = graphDb.createNode();
+        node.setProperty(MODULENAME_KEY, username );
+        nodeIndex.add( node, MODULENAME_KEY, username );
+        return node;
     }
 }
 

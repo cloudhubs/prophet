@@ -1,6 +1,7 @@
-package edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext;
+package edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.parser;
 
 import lombok.*;
+
 import java.util.List;
 
 @Data
@@ -8,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Module {
+public class JPModule {
     private String name;
-    private List<Entity> entities;
+    private List<JPClass> classes;
 }
