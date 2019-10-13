@@ -20,6 +20,18 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+
+    <assertj.version>3.11.1</assertj.version>
+    <java.version>1.8</java.version>
+    <jaxrs.version>2.0</jaxrs.version>
+    <junit-jupiter.version>5.3.2</junit-jupiter.version>
+    <neo4j.version>3.5.1</neo4j.version>
+    <neo4j-java-driver.version>1.7.2</neo4j-java-driver.version>
+    <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+    <maven-shade-plugin.version>3.1.1</maven-shade-plugin.version>
+    <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+    <slf4j.version>1.7.25</slf4j.version>
+
   </properties>
 
   <dependencies>
@@ -108,6 +120,41 @@
       <scope>compile</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+
+    <!-- -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- tag::test-harness-dep[] -->
+    <dependency>
+      <groupId>org.neo4j.test</groupId>
+      <artifactId>neo4j-harness</artifactId>
+      <version>${neo4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+      <dependency>
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-runner</artifactId>
+          <version>1.1.0</version>
+          <scope>test</scope>
+      </dependency>
+      <!-- end::test-harness-dep[] -->
 
   </dependencies>
 
