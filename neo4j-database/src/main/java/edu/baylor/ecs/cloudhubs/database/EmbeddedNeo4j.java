@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.graphdb.factory.GraphDatabaseSettings;
 import org.neo4j.graphdb.index.UniqueFactory;
 import org.neo4j.io.fs.FileUtils;
 
@@ -54,13 +55,23 @@ public class EmbeddedNeo4j
         }
 
         // tag::startDb[]
-        graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
+//        graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
+
+        GraphDatabaseSettings.BoltConnector bolt = GraphDatabaseSettings.boltConnector( "0" );
+
+        graphDb = new GraphDatabaseFactory()
+                .newEmbeddedDatabaseBuilder( databaseDirectory )
+                .setConfig( bolt.type, "BOLT" )
+                .setConfig( bolt.enabled, "true" )
+                .setConfig( bolt.address, "localhost:7687" )
+                .newGraphDatabase();
+
         registerShutdownHook( graphDb );
         try ( Transaction tx = graphDb.beginTx() ) {
             factory = new UniqueFactory.UniqueNodeFactory(graphDb, "systems") {
                 @Override
                 protected void initialize(Node node, Map<String, Object> map) {
-                    node.addLabel(Label.label( "System" ));node.setProperty( "name", map.get( "systemName"));
+                    node.addLabel(Label.label( "DBSystem" ));node.setProperty( "name", map.get( "systemName"));
                 }
             };
         }
@@ -85,9 +96,9 @@ public class EmbeddedNeo4j
 //            // end::addData[]
 //
 //            // tag::readData[]
-//            System.out.print( firstNode.getProperty( "message" ) );
-//            System.out.print( relationship.getProperty( "message" ) );
-//            System.out.print( secondNode.getProperty( "message" ) );
+//            DBSystem.out.print( firstNode.getProperty( "message" ) );
+//            DBSystem.out.print( relationship.getProperty( "message" ) );
+//            DBSystem.out.print( secondNode.getProperty( "message" ) );
 //            // end::readData[]
 //
 //            greeting = ( (String) firstNode.getProperty( "message" ) )
