@@ -1,28 +1,18 @@
 package edu.baylor.ecs.cloudhubs.database;
 
-import edu.baylor.ecs.cloudhubs.database.model.RelTypes;
-import edu.baylor.ecs.cloudhubs.database.model.System;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.parser.JPModule;
+import edu.baylor.ecs.cloudhubs.database.model.DBSystem;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.parser.JPSystem;
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.UniqueFactory;
 import org.neo4j.graphdb.schema.ConstraintDefinition;
 import org.neo4j.graphdb.schema.IndexDefinition;
 import org.neo4j.graphdb.schema.Schema;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.NormalScope;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Stateless
 public class SystemRepository extends EmbeddedNeo4j{
-
+//
 //    @Inject
 //    private EmbeddedNeo4j embeddedNeo4j;
 
@@ -45,7 +35,7 @@ public class SystemRepository extends EmbeddedNeo4j{
 //
 //                for ( Node node : userNodes )
 //                {
-//                    System.out.println(
+//                    DBSystem.out.println(
 //                            "The username of user " + idToFind + " is " + node.getProperty( "username" ) );
 //                }
 //            }
@@ -57,7 +47,7 @@ public class SystemRepository extends EmbeddedNeo4j{
 
     public void createSystemModules(JPSystem jpSystem){
 
-        //System index
+        //DBSystem index
         IndexDefinition indexDefinition;
         try ( Transaction tx = graphDb.beginTx() )
         {
@@ -90,9 +80,11 @@ public class SystemRepository extends EmbeddedNeo4j{
             //init primitive types
 
 
-//            Node system = graphDb.createNode();
-//            system.setProperty("systemName", jpSystem.getName());
-            Label label = Label.label( "SystemName" );
+            Node system = graphDb.createNode();
+            system.setProperty("systemName", jpSystem.getName());
+
+            System.out.print( system.getProperty( "systemName" ) );
+//            Label label = Label.label( "SystemName" );
 
 //            List<Node> nodes = new ArrayList<>();
 //            for (JPModule m: jpSystem.getModules()
@@ -125,8 +117,9 @@ public class SystemRepository extends EmbeddedNeo4j{
     public JPSystem getByName(String name){
 //        Label label = Label.label( "SystemName" );
         try ( Transaction tx = graphDb.beginTx() )
+
         {Node node = this.factory.getOrCreate( "systemName", "a" );
-//            System system = new System(node);
+//            DBSystem system = new DBSystem(node);
             JPSystem jpSystem = new JPSystem();
             jpSystem.setName((String)node.getProperty("systemName"));
         tx.success();return jpSystem;
@@ -141,7 +134,7 @@ public class SystemRepository extends EmbeddedNeo4j{
 //
 //                for ( Node node : userNodes )
 //                {
-//                    System.out.println(
+//                    DBSystem.out.println(
 //                            "The username of user " + " is " + node.getProperty( "systemName" ) );
 //                }
 //            }
@@ -172,9 +165,9 @@ public class SystemRepository extends EmbeddedNeo4j{
 //            // end::addData[]
 //
 //            // tag::readData[]
-//            System.out.print( firstNode.getProperty( "message" ) );
-//            System.out.print( relationship.getProperty( "message" ) );
-//            System.out.print( secondNode.getProperty( "message" ) );
+//            DBSystem.out.print( firstNode.getProperty( "message" ) );
+//            DBSystem.out.print( relationship.getProperty( "message" ) );
+//            DBSystem.out.print( secondNode.getProperty( "message" ) );
 //            // end::readData[]
 //
 //            greeting = ( (String) firstNode.getProperty( "message" ) )
