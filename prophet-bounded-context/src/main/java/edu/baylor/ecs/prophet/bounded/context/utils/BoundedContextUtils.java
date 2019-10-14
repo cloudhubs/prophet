@@ -5,6 +5,7 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Field;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,5 +14,9 @@ import java.util.Set;
 public interface BoundedContextUtils {
 
     BoundedContext mergeEntities(SystemContext systemContext);
+
+    Entity merge(Entity one, Entity two, Map<Field, Field> fieldMapping);
+
+    Field mergeFields(Field one, Field two);
 
 }

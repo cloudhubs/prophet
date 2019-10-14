@@ -2,6 +2,7 @@ package edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext;
 
 import lombok.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -9,16 +10,16 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Field {
-    private List<Annotation> annotations;
+    private Set<Annotation> annotations;
     private String type;
     private String name;
     private Entity entityReference;
 
-    public List<Annotation> getAnnotations() {
+    public Set<Annotation> getAnnotations() {
         return annotations;
     }
 
-    public void setAnnotations(List<Annotation> annotations) {
+    public void setAnnotations(Set<Annotation> annotations) {
         this.annotations = annotations;
     }
 

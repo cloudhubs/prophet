@@ -3,25 +3,41 @@ package edu.baylor.ecs.prophet.bounded.context.utils.impl;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Field;
 import edu.baylor.ecs.prophet.bounded.context.utils.SimilarityUtils;
+import edu.cmu.lti.jawjaw.pobj.POS;
+import edu.cmu.lti.lexical_db.ILexicalDatabase;
+import edu.cmu.lti.lexical_db.NictWordNet;
+import edu.cmu.lti.lexical_db.data.Concept;
+import edu.cmu.lti.ws4j.Relatedness;
+import edu.cmu.lti.ws4j.RelatednessCalculator;
+import edu.cmu.lti.ws4j.impl.WuPalmer;
+import edu.cmu.lti.ws4j.util.WS4JConfiguration;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author Ian Laird
+ */
 public class SimilarityUtilsImpl implements SimilarityUtils {
 
     private static final double ENTITY_NAME_SIMILARITY_CUTOFF = .8;
+    private static final double ENTITY_SIMILARITY_SUTOFF = .8;
+
+    private static ILexicalDatabase db = new NictWordNet();
+    private static RelatednessCalculator rc = new WuPalmer(db);
+
     @Override
     public double localFieldSimilarity(Field fieldOne, Field fieldTwo) {
         return 0;
     }
 
     @Override
-    public double globalFieldSimilarity(Entity entityOne, Entity entityTwo) {
+    public ImmutablePair<Double, Map<Field, Field> > globalFieldSimilarity(Entity entityOne, Entity entityTwo) {
         // see if the names of the entities are similar
-        double nameSimilarity = stringSimilarity(entityOne.getEntityName(), entityOne.getEntityName());
+        double nameSimilarity = nameSimilarity(entityOne.getEntityName(), entityOne.getEntityName());
         if(nameSimilarity > ENTITY_NAME_SIMILARITY_CUTOFF){
-            return nameSimilarity;
+            return new ImmutablePair<>(nameSimilarity, new HashMap<>());
         }
 
         // for each field find the similarity they have to other fields
@@ -41,7 +57,10 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
                 ));
 
         boolean changeOccurred = true;
+
+        // keep going until no two fields map to the same field
         while(changeOccurred){
+            changeOccurred = false;
             Map<Field, ImmutablePair<Double, TreeMap<Double, Field>>> encountered = new HashMap<>();
             for(Map.Entry<Field, TreeMap<Double, Field>> entry : fieldSimilarity.entrySet()){
                 //get the best field of entity 2 for this field of entity 1
@@ -61,12 +80,42 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
                 }
             }
         }
-
-        return 0;
+        Double similarity = fieldSimilarity.entrySet().stream().mapToDouble(entry -> entry.getValue().isEmpty() ? 0.0 : entry.getValue().lastKey()).average().getAsDouble();
+        Map<Field, Field> fieldMap = fieldSimilarity
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(
+                x -> x.getKey(),
+                x->
+                    {
+                        return x.getValue().isEmpty() ? null : x.getValue().lastEntry().getValue();
+                    }
+            ));
+        return new ImmutablePair<>(similarity, fieldMap);
     }
 
     @Override
-    public double stringSimilarity(String one, String two) {
-        return 0;
+    public double nameSimilarity(String one, String two) {
+        return wordSimilarity(one, POS.n, two, POS.n);
+    }
+
+    // https://blog.thedigitalgroup.com/words-similarityrelatedness-using-wupalmer-algorithm
+    private static double wordSimilarity(String word1, POS posWord1, String word2, POS posWord2) {
+        double maxScore = 0.0;
+        try {
+            WS4JConfiguration.getInstance().setMFS(true);
+            List<Concept> synsets1 = (List < Concept > ) db.getAllConcepts(word1, posWord1.name());
+            List < Concept > synsets2 = (List < Concept > ) db.getAllConcepts(word2, posWord2.name());
+            for (Concept synset1: synsets1) {
+                for (Concept synset2: synsets2) {
+                    Relatedness relatedness = rc.calcRelatednessOfSynset(synset1, synset2);
+                    double score = relatedness.getScore();
+                    if (score > maxScore) {
+                        maxScore = score;
+                    }
+                }
+            }
+        } catch (Exception e) {}
+        return maxScore;
     }
 }
