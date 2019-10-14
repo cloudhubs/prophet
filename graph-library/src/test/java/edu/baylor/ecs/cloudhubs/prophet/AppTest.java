@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -36,6 +37,7 @@ public class AppTest {
     }
 
     @Test
+    @DisplayName("")
     public void shouldCreateNode() {
         String message = this.myService.message();
         assertEquals(message,"system name");
