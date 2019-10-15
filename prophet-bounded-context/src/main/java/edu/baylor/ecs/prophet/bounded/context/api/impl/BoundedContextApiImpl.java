@@ -19,7 +19,7 @@ public class BoundedContextApiImpl implements BoundedContextApi {
         SystemContext systemContext = databseRepository.getAllEntityClassesInSystem(systemName);
 
         // next merge the entities
-        BoundedContext boundedContext = boundedContextUtils.mergeEntities(systemContext);
+        BoundedContext boundedContext = boundedContextUtils.createBoundedContext(systemContext);
 
         //now save the boundedContext to the DB
         return databseRepository.createBoundedContext(boundedContext);

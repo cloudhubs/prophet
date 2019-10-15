@@ -1,23 +1,61 @@
 package edu.baylor.ecs.prophet.bounded.context.utils.impl;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.*;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Module;
 import edu.baylor.ecs.prophet.bounded.context.utils.BoundedContextUtils;
+import edu.baylor.ecs.prophet.bounded.context.utils.SimilarityUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.neo4j.cypher.internal.compiler.v2_3.No;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
+/**
+ * methods for creating a {@link BoundedContext} from a {@link SystemContext}
+ * @author Ian laird
+ */
 public class BoundedContextUtilsImpl implements BoundedContextUtils {
 
+    private SimilarityUtils similarityUtils = new SimilarityUtilsImpl();
     @Override
-    public BoundedContext mergeEntities(SystemContext systemContext) {
+    public BoundedContext createBoundedContext(SystemContext systemContext) {
         return null;
     }
 
     @Override
-    public Entity merge(Entity one, Entity two, Map<Field, Field> fieldMapping) {
+    public Module mergeModules(Module moduleOne, Module moduleTwo){
+
+        // for each entity find the similarity it has to other entities
+        final Map<Entity, TreeMap<Double, ImmutablePair<Entity, Map<Field, Field>>>>  entitySimilarity = new HashMap<>();
+
+        moduleOne.getEntities()
+                .forEach(x -> entitySimilarity.put(
+                        x,
+                        moduleTwo.getEntities()
+                                .stream()
+                                .collect(Collectors.toMap(
+                                        y -> similarityUtils.globalFieldSimilarity(x, y).getLeft(),
+                                        y -> new ImmutablePair<>(y,similarityUtils.globalFieldSimilarity(x, y).getRight()),
+                                        (oldValue,newValue) -> newValue,
+                                        TreeMap::new
+                                ))
+                ));
+
+        Module newModule = new Module();
+        newModule.setEntities(entitySimilarity.entrySet().stream().map(x -> mergeEntities(x.getKey(), x.getValue().lastEntry().getValue().getLeft(), x.getValue().lastEntry().getValue().getRight())).collect(Collectors.toList()));
+
+        return null;
+    }
+
+    /**
+     * merges two entities together using the field mapping
+     * @param one the first entity to merge
+     * @param two the second entity to merge
+     * @param fieldMapping the mapping between the fields of the entities
+     * @return the newly creataed merged entity
+     */
+    @Override
+    public Entity mergeEntities(Entity one, Entity two, Map<Field, Field> fieldMapping) {
         Entity newEntity = new Entity();
         newEntity.setEntityName(one.getEntityName());
         Set<Field> entityTwoFields = new HashSet<>(two.getFields());
@@ -52,6 +90,12 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
         return newEntity;
     }
 
+    /**
+     * merges two fields into one field
+     * @param one the first field to merge
+     * @param two the second field to merge
+     * @return the new field
+     */
     @Override
     public Field mergeFields(Field one, Field two) {
         Field toReturn = new Field();

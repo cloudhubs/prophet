@@ -26,6 +26,14 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
 
     private static ILexicalDatabase db = new NictWordNet();
     private static RelatednessCalculator rc = new WuPalmer(db);
+    private class LastComputedEntitySimilarity{
+        Entity entityOne = null;
+        Entity entityTwo = null;
+        ImmutablePair<Double, Map<Field, Field> > savedVal;
+    }
+
+    private LastComputedEntitySimilarity lastComputedEntitySimilarity = new LastComputedEntitySimilarity();
+
 
     @Override
     public double localFieldSimilarity(Field fieldOne, Field fieldTwo) {
@@ -34,10 +42,15 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
 
     @Override
     public ImmutablePair<Double, Map<Field, Field> > globalFieldSimilarity(Entity entityOne, Entity entityTwo) {
-        // see if the names of the entities are similar
+        //store the result of the last comp
+        if(entityOne == lastComputedEntitySimilarity.entityOne && entityTwo == lastComputedEntitySimilarity.entityTwo){
+            return lastComputedEntitySimilarity.savedVal;
+        }
+
+        // if the entity names are too dissimilar then dont try
         double nameSimilarity = nameSimilarity(entityOne.getEntityName(), entityOne.getEntityName());
-        if(nameSimilarity > ENTITY_NAME_SIMILARITY_CUTOFF){
-            return new ImmutablePair<>(nameSimilarity, new HashMap<>());
+        if(nameSimilarity < ENTITY_NAME_SIMILARITY_CUTOFF){
+            return new ImmutablePair<>(0.0, new HashMap<>());
         }
 
         // for each field find the similarity they have to other fields
@@ -80,7 +93,11 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
                 }
             }
         }
+
+        // get the average of the field similarity
         Double similarity = fieldSimilarity.entrySet().stream().mapToDouble(entry -> entry.getValue().isEmpty() ? 0.0 : entry.getValue().lastKey()).average().getAsDouble();
+
+        // get the field mapping
         Map<Field, Field> fieldMap = fieldSimilarity
             .entrySet()
             .stream()
@@ -91,7 +108,15 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
                         return x.getValue().isEmpty() ? null : x.getValue().lastEntry().getValue();
                     }
             ));
-        return new ImmutablePair<>(similarity, fieldMap);
+
+        // compute the return value
+        ImmutablePair<Double, Map<Field, Field> > toReturn = new ImmutablePair<>(similarity, fieldMap);
+
+        // save these to maybe save time next time
+        lastComputedEntitySimilarity.entityOne = entityOne;
+        lastComputedEntitySimilarity.entityTwo = entityTwo;
+        lastComputedEntitySimilarity.savedVal = toReturn;
+        return toReturn;
     }
 
     @Override

@@ -4,6 +4,7 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedConte
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Field;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Module;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,9 +14,11 @@ import java.util.Set;
  */
 public interface BoundedContextUtils {
 
-    BoundedContext mergeEntities(SystemContext systemContext);
+    BoundedContext createBoundedContext(SystemContext systemContext);
 
-    Entity merge(Entity one, Entity two, Map<Field, Field> fieldMapping);
+    Entity mergeEntities(Entity one, Entity two, Map<Field, Field> fieldMapping);
+
+    Module mergeModules(Module one, Module two);
 
     Field mergeFields(Field one, Field two);
 

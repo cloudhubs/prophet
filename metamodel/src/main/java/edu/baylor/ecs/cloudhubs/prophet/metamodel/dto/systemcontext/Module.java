@@ -10,4 +10,12 @@ import java.util.List;
 @ToString
 public class Module {
     private List<Entity> entities;
+
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(List<Entity> entities) {
+        this.entities = entities;
+    }
 }
