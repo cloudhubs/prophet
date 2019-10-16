@@ -1,3 +1,8 @@
+/**
+ * Copyright 2019, Cloud Innovation Labs, All rights reserved
+ * Version: 1.0
+ */
+
 package edu.baylor.ecs.prophet.bounded.context.utils.impl;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
@@ -21,25 +26,49 @@ import java.util.stream.Collectors;
  */
 public class SimilarityUtilsImpl implements SimilarityUtils {
 
+    // the cutoff for when to consider two entities to be similar
     private static final double ENTITY_NAME_SIMILARITY_CUTOFF = .8;
-    private static final double ENTITY_SIMILARITY_SUTOFF = .8;
 
+    // used for finding Wu Palmer similarity *******************
     private static ILexicalDatabase db = new NictWordNet();
     private static RelatednessCalculator rc = new WuPalmer(db);
-    private class LastComputedEntitySimilarity{
+    // *********************************************************
+
+    /**
+     * stores last computer entity similarity to try and short circuit computation
+     */
+    private class EntitySimilarity {
+
+        // the first entity
         Entity entityOne = null;
+
+        // the second entity
         Entity entityTwo = null;
+
+        // the computed similarity and mapping between the fields
         ImmutablePair<Double, Map<Field, Field> > savedVal;
     }
 
-    private LastComputedEntitySimilarity lastComputedEntitySimilarity = new LastComputedEntitySimilarity();
+    // stores last computer entity similarity to try and short circuit computation
+    private EntitySimilarity lastComputedEntitySimilarity = new EntitySimilarity();
 
-
+    /**
+     * finds the similarity between two fields
+     * @param fieldOne the first field to compare
+     * @param fieldTwo the second field to compare
+     * @return the similarity of the fields
+     */
     @Override
     public double localFieldSimilarity(Field fieldOne, Field fieldTwo) {
         return 0;
     }
 
+    /**
+     * find the similarity of two entities
+     * @param entityOne first entity to find similarity of
+     * @param entityTwo second entity to find similarity of
+     * @return tuple of similarity of the entities as well as the mapping between their fields
+     */
     @Override
     public ImmutablePair<Double, Map<Field, Field> > globalFieldSimilarity(Entity entityOne, Entity entityTwo) {
         //store the result of the last comp
@@ -119,11 +148,25 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
         return toReturn;
     }
 
+    /**
+     * finds the similalrity of two names (i.e. nouns)
+     * @param one the first name to comapare
+     * @param two the second name to compare
+     * @return the Wu Palmer similarity of these names
+     */
     @Override
     public double nameSimilarity(String one, String two) {
         return wordSimilarity(one, POS.n, two, POS.n);
     }
 
+    /**
+     * finds the wu palmer similarity of two words
+     * @param word1 the first word to compare
+     * @param posWord1 the pos of the first word
+     * @param word2 the second word to compare
+     * @param posWord2 the pos of the second word
+     * @return the wu palmer similarity of the words given their pos
+     */
     // https://blog.thedigitalgroup.com/words-similarityrelatedness-using-wupalmer-algorithm
     private static double wordSimilarity(String word1, POS posWord1, String word2, POS posWord2) {
         double maxScore = 0.0;

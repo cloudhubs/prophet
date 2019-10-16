@@ -1,9 +1,15 @@
+/**
+ * Copyright 2019, Cloud Innovation Labs, All rights reserved
+ * Version: 1.0
+ */
+
 package edu.baylor.ecs.prophet.bounded.context.api;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
 
 /**
  * Interface to accept requests from outside
+ * @author Ian Laird
  */
 public interface BoundedContextApi {
 
