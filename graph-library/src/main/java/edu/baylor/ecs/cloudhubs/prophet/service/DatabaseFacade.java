@@ -23,15 +23,29 @@ public class DatabaseFacade {
     }
 
     /**
-     * System -> DbBoundedContext
      * MergedEntity::createNew
-     * Entity -(merged)-> Entity
+     * -- merged entity has associations to fields of merging entities
+     * Entity -(mergedTo)-> MergedEntity
+     * System -> MergedEntity
+     * BoundedContext -> MergedEntity + Other entities
      * @param boundedContext
      * @return
      */
     public static BoundedContext createBoundedContext(BoundedContext boundedContext){
         //ToDo: persist context
         return boundedContext;
+    }
+
+    public static BoundedContext updateBoundedContext(BoundedContext boundedContext){
+        return boundedContext;
+    }
+
+    public static BoundedContext deleteBoundedContext(BoundedContext boundedContext){
+        return boundedContext;
+    }
+
+    public static BoundedContext getBoundedContext(){
+        return new BoundedContext();
     }
 
     // Java Source Code Parser
