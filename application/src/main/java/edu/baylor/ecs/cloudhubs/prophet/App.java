@@ -1,8 +1,8 @@
 package edu.baylor.ecs.cloudhubs.prophet;
 
+import edu.baylor.ecs.cloudhubs.prophet.service.EmbeddedDb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
