@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.prophet;
+package edu.baylor.ecs.cloudhubs.prophet.service;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
