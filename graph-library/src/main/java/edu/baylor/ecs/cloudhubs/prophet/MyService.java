@@ -1,5 +1,6 @@
 package edu.baylor.ecs.cloudhubs.prophet;
 
+import edu.baylor.ecs.cloudhubs.prophet.model.DbSystem;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
