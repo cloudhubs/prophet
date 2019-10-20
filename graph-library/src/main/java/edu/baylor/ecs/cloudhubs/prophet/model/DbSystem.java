@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.prophet;
+package edu.baylor.ecs.cloudhubs.prophet.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
