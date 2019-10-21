@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.prophet.metamodel.db;
+package edu.baylor.ecs.cloudhubs.database.model;
 
 public class Module {
 

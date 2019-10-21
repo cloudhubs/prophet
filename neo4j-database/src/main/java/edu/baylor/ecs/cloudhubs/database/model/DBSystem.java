@@ -1,15 +1,15 @@
-package edu.baylor.ecs.cloudhubs.prophet.metamodel.db;
+package edu.baylor.ecs.cloudhubs.database.model;
 
 import org.neo4j.graphdb.Node;
 
-public class System {
+public class DBSystem {
 
-    static final String NAME = "NAME";
-    static final String DESCRIPTION = "System description";
+    static final String NAME = "SYSTEMNAME";
+    static final String DESCRIPTION = "DBSystem description";
 
     private final Node underlyingNode;
 
-    System( Node personNode )
+    public DBSystem(Node personNode)
     {
         this.underlyingNode = personNode;
     }
@@ -43,13 +43,13 @@ public class System {
     @Override
     public boolean equals( Object o )
     {
-        return o instanceof System &&
-                underlyingNode.equals( ( (System)o ).getUnderlyingNode() );
+        return o instanceof DBSystem &&
+                underlyingNode.equals( ( (DBSystem)o ).getUnderlyingNode() );
     }
 
     @Override
     public String toString()
     {
-        return "System[" + getName() + "]";
+        return "DBSystem[" + getName() + "]";
     }
 }

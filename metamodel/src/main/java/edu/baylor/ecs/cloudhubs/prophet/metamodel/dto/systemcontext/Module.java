@@ -9,6 +9,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Module {
+    private String name;
     private List<Entity> entities;
 
     public List<Entity> getEntities() {

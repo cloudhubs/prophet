@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.database;
+package edu.baylor.ecs.cloudhubs.prophet.service;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
@@ -15,16 +15,37 @@ public class DatabaseFacade {
      *          - Field2
      *      - EntityClass2
      *  -Module2
-     *      -EntityClass3
+     *      -EntityClass3 ...
      * @return
      */
     public static SystemContext getAllEntityClassesInSystem(String name){
-        return FakeDataFactory.getSystemContext();
+        return new SystemContext();
     }
 
+    /**
+     * MergedEntity::createNew
+     * -- merged entity has associations to fields of merging entities
+     * Entity -(mergedTo)-> MergedEntity
+     * System -> MergedEntity
+     * BoundedContext -> MergedEntity + Other entities
+     * @param boundedContext
+     * @return
+     */
     public static BoundedContext createBoundedContext(BoundedContext boundedContext){
         //ToDo: persist context
         return boundedContext;
+    }
+
+    public static BoundedContext updateBoundedContext(BoundedContext boundedContext){
+        return boundedContext;
+    }
+
+    public static BoundedContext deleteBoundedContext(BoundedContext boundedContext){
+        return boundedContext;
+    }
+
+    public static BoundedContext getBoundedContext(){
+        return new BoundedContext();
     }
 
     // Java Source Code Parser
