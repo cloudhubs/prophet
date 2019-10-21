@@ -11,7 +11,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DbClass {
+public class DbModule {
     @Id
     @GeneratedValue
     private Long id;
