@@ -71,7 +71,8 @@
           
     
     <module>graph-library</module>
-      
+    <module>bytecode-analysis</module>
+
   </modules>
       
 
