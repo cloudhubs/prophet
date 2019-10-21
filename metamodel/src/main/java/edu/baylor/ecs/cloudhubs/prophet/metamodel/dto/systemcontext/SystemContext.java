@@ -11,4 +11,8 @@ import java.util.List;
 public class SystemContext {
     private String systemName;
     private List<Module> modules;
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
+    }
 }
