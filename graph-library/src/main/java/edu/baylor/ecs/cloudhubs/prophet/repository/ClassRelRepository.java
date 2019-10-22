@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import java.util.List;
 
-public interface DbSystemModuleRepository extends Neo4jRepository<HasAModuleRel, Long> {
+public interface ClassRelRepository extends Neo4jRepository<HasAModuleRel, Long> {
     List<HasAModuleRel> findAllDbSystemModuleBySystemName(String systemName);
 
     HasAModuleRel findDbSystemModuleByModuleName(String moduleName);

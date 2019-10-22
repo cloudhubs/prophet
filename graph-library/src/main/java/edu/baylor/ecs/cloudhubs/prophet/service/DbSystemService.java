@@ -1,10 +1,15 @@
 package edu.baylor.ecs.cloudhubs.prophet.service;
 
+import edu.baylor.ecs.cloudhubs.prophet.exceptions.EntityNotFoundException;
+import edu.baylor.ecs.cloudhubs.prophet.model.DbModule;
 import edu.baylor.ecs.cloudhubs.prophet.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.repository.DbSystemRepository;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
+/**
+ * DbSystem Service
+ */
 @Service
 public class DbSystemService {
 
@@ -14,64 +19,82 @@ public class DbSystemService {
         this.repository = repository;
     }
 
+    /**
+     * Get all systems
+     * @return List of Db Systems
+     */
     public Iterable<DbSystem> getAllSystems() {
         return repository.findAll();
     }
 
+    /**
+     * Retrieves the System of the name provided
+     * @param name Name of system to return
+     * @return Db System matching given name
+     */
     public DbSystem getSystem(String name) {
-        return repository.findByName(name);
+        return repository.findByName(name).orElseThrow(() -> new EntityNotFoundException("System with name not found"));
     }
 
+    /**
+     * Retrieves the System of the id provided
+     * @param id Id of system to return
+     * @return Db System matching given id
+     */
     public DbSystem getSystem(long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("System with id not found"));
     }
 
-    public void createSystem(String systemName) {
+    /**
+     * Creates a new system with given name
+     * @param systemName Name of the system to create
+     */
+    public DbSystem createSystem(String systemName) {
         DbSystem dbSystem = new DbSystem();
         dbSystem.setName(systemName);
 
-        if (validateSystem(dbSystem)) {
-            repository.save(dbSystem);
-        } else {
-            throw new IllegalStateException("system name must be unique");
-        }
+        validateSystem(dbSystem);
+        return repository.save(dbSystem);
     }
 
-    private boolean validateSystem(DbSystem dbSystem) {
-        return true;
+    /**
+     * Change name of system matching given name
+     * @param oldName old name of system to update
+     * @param newName new name of system to update
+     */
+    public DbSystem changeName(String oldName, String newName) {
+        return repository.setDbSystemNameByName(oldName, newName).orElseThrow(() -> new EntityNotFoundException("System with name not found"));
     }
 
-    public void changeName(String oldName, String newName) {
-        repository.setDbSystemNameByName(oldName, newName);
+    /**
+     * Change name of system matching given id
+     * @param id id of system to update
+     * @param newName new name of system to update
+     */
+    public DbSystem changeName(long id, String newName) {
+        return repository.setDbSystemNameById(id, newName).orElseThrow(() -> new EntityNotFoundException("System with id not found"));
     }
 
-    public void changeName(long id, String newName) {
-        repository.setDbSystemNameById(id, newName);
-    }
-
+    /**
+     * Delete system of the given name
+     * @param systemName name of system to delete
+     */
     public void deleteSystem(String systemName) {
         repository.deleteByName(systemName);
     }
 
+    /**
+     * Delete system of the given id
+     * @param id id of system to delete
+     */
     public void deleteSystem(long id) {
         repository.deleteById(id);
     }
 
     /**
-     * Future: Recursively delete all "direct" relationship of module
-     * (module's classes, class's variables, etc.)
-     *
-     * @param moduleName
+     * Performs validation of system
+     * @param dbSystem system to perform validations on
      */
-    public void deleteModuleRelRec(String moduleName) {
-        throw new NotImplementedException("deleteModuleRelRec not implemented");
+    private void validateSystem(DbSystem dbSystem) {
     }
-
-    // business rules
-
-    public void createModuleRel(String moduleName) {
-        throw new NotImplementedException("createModuleRel not implemented");
-    }
-
-
 }

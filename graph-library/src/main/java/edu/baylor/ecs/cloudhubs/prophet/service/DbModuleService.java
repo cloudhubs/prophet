@@ -2,44 +2,76 @@ package edu.baylor.ecs.cloudhubs.prophet.service;
 
 import edu.baylor.ecs.cloudhubs.prophet.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.model.DbModule;
+import edu.baylor.ecs.cloudhubs.prophet.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.repository.DbModuleRepository;
-import org.neo4j.cypher.InvalidArgumentException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DbModuleService {
     private final DbModuleRepository repository;
+    private final DbSystemService systemService;
 
-    public DbModuleService(DbModuleRepository repository) {
+    public DbModuleService(DbModuleRepository repository, DbSystemService systemService) {
         this.repository = repository;
+        this.systemService = systemService;
     }
 
+    /**
+     * Get all modules
+     *
+     * @return List of Db Systems
+     */
     public Iterable<DbModule> getAllModules() {
         return repository.findAll();
     }
 
+    /**
+     * Retrieves the Module of the name provided
+     *
+     * @param name Name of module to return
+     * @return Db Module matching given name
+     */
     public DbModule getModule(String name) {
-        return repository.findByName(name);
+        return repository.findByName(name).orElseThrow(() -> new EntityNotFoundException("Module with name not found"));
     }
 
+    /**
+     * Retrieves the Module of the id provided
+     *
+     * @param id Id of module to return
+     * @return Db Module matching given id
+     */
     public DbModule getModule(long id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Module with id not found"));
     }
 
-    public void createModule(String moduleName) {
+    /**
+     * Creates a new module with given name
+     *
+     * @param moduleName Name of the module to create
+     */
+    public DbModule createModule(String moduleName) {
+        DbModule module = new DbModule();
+        module.setName(moduleName);
+        validateModule(module);
+
+        return repository.save(module);
+    }
+
+    public DbModule createModule(String systemName, String moduleName) {
+        DbSystem system = systemService.getSystem(systemName);
         DbModule module = new DbModule();
         module.setName(moduleName);
 
-        if (validateModule(module)) {
-            repository.save(module);
-        } else {
-            throw new IllegalStateException("module name must be unique");
-        }
+        validateModule(module);
+        module = repository.save(module);
+
+        system.getModules().add(module);
+        //module.
+
+        return module;
     }
 
-    private boolean validateModule(DbModule module) {
-        return true;
-    }
 
     public void changeName(String oldName, String newName) {
         repository.setDbModuleNameByName(oldName, newName);
@@ -55,5 +87,8 @@ public class DbModuleService {
 
     public void deleteModule(long id) {
         repository.deleteById(id);
+    }
+
+    private void validateModule(DbModule module) {
     }
 }

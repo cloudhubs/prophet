@@ -1,5 +1,8 @@
 package edu.baylor.ecs.cloudhubs.prophet.exceptions;
 
+/**
+ * Generic Exception thrown when entity/model is read but not found
+ */
 public class EntityNotFoundException extends org.neo4j.cypher.EntityNotFoundException {
     public EntityNotFoundException(String message, Throwable cause) {
         super(message, cause);

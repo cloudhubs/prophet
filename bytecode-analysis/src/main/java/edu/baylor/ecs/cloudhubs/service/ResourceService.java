@@ -3,7 +3,7 @@ package edu.baylor.ecs.cloudhubs.service;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.bytecode.ClassFile;
-import jdk.internal.loader.Resource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
 import java.io.DataInputStream;

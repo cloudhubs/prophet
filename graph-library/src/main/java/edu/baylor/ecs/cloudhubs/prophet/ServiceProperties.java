@@ -1,8 +1,10 @@
 package edu.baylor.ecs.cloudhubs.prophet;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 @ConfigurationProperties("service")
+@Configuration
 public class ServiceProperties {
 
     /**
