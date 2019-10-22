@@ -1,7 +1,9 @@
 package edu.baylor.ecs.cloudhubs.prophet.service;
 
+import edu.baylor.ecs.cloudhubs.prophet.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.model.DbModule;
 import edu.baylor.ecs.cloudhubs.prophet.repository.DbModuleRepository;
+import org.neo4j.cypher.InvalidArgumentException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,10 +23,10 @@ public class DbModuleService {
     }
 
     public DbModule getModule(long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Module with id not found"));
     }
 
-    public void createSystem(String moduleName) {
+    public void createModule(String moduleName) {
         DbModule module = new DbModule();
         module.setName(moduleName);
 
@@ -50,8 +52,6 @@ public class DbModuleService {
     public void deleteModule(String moduleName) {
         repository.deleteByName(moduleName);
     }
-
-    // business rules
 
     public void deleteModule(long id) {
         repository.deleteById(id);
