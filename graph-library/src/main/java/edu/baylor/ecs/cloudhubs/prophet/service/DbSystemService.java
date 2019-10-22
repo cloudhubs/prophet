@@ -58,7 +58,7 @@ public class DbSystemService {
     }
 
     /**
-     * Future: Recursively delete all "direct" relationships of module
+     * Future: Recursively delete all "direct" relationship of module
      * (module's classes, class's variables, etc.)
      *
      * @param moduleName

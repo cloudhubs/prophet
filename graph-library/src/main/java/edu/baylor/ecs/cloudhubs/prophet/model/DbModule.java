@@ -1,6 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import edu.baylor.ecs.cloudhubs.prophet.model.relationship.HasAModuleRel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,6 @@ public class DbModule {
     private String name;
 
     @JsonIgnoreProperties("dbModule")
-    @Relationship(type = "ACTED_IN", direction = Relationship.INCOMING)
-    private List<DbSystemModule> systemModules;
+    @Relationship(type = "HAS_A_MODULE", direction = Relationship.INCOMING)
+    private List<HasAModuleRel> systemModules;
 }

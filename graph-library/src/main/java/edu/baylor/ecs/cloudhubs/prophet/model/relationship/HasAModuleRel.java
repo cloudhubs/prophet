@@ -1,5 +1,7 @@
-package edu.baylor.ecs.cloudhubs.prophet.model;
+package edu.baylor.ecs.cloudhubs.prophet.model.relationship;
 
+import edu.baylor.ecs.cloudhubs.prophet.model.DbModule;
+import edu.baylor.ecs.cloudhubs.prophet.model.DbSystem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,17 +10,14 @@ import org.neo4j.ogm.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NodeEntity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DbSystemModule {
+@RelationshipEntity(type = "HAS_A_MODULE")
+public class HasAModuleRel {
     @Id
     @GeneratedValue
     private Long id;
-
-    // name of link/relationship
-    private List<String> systemModules = new ArrayList<>();
 
     @StartNode
     private DbSystem system;

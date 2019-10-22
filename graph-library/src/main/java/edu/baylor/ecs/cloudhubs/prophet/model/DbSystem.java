@@ -24,6 +24,6 @@ public class DbSystem {
     @NotNull
     private String name;
 
-    @Relationship(type = "ACTED_IN")
+    @Relationship(type = "HAS_A_MODULE", direction = Relationship.OUTGOING)
     private Set<DbModule> modules = new HashSet<>();
 }
