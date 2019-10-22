@@ -1,67 +1,77 @@
 package edu.baylor.ecs.cloudhubs.prophet.service;
 
-import edu.baylor.ecs.cloudhubs.prophet.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.repository.DbSystemRepository;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DbSystemService {
 
-    private final DbSystemRepository dbSystemRepository;
+    private final DbSystemRepository repository;
 
-    public DbSystemService(DbSystemRepository dbSystemRepository) {
-        this.dbSystemRepository = dbSystemRepository;
+    public DbSystemService(DbSystemRepository repository) {
+        this.repository = repository;
     }
 
-    public Iterable<DbSystem> getAllSystems(){
-        return dbSystemRepository.findAll();
+    public Iterable<DbSystem> getAllSystems() {
+        return repository.findAll();
     }
 
-    public DbSystem getSystem(String name){
-        return dbSystemRepository.findByName(name);
+    public DbSystem getSystem(String name) {
+        return repository.findByName(name);
     }
 
-    public void createSystem(String systemName){
+    public DbSystem getSystem(long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public void createSystem(String systemName) {
         DbSystem dbSystem = new DbSystem();
         dbSystem.setName(systemName);
 
-        if(validateSystem(dbSystem)) {
-            dbSystemRepository.save(dbSystem);
+        if (validateSystem(dbSystem)) {
+            repository.save(dbSystem);
+        } else {
+            throw new IllegalStateException("system name must be unique");
         }
     }
 
-    public void changeName(String oldName, String newName){
-        dbSystemRepository.setDbSystemNameByName(oldName, newName);
+    private boolean validateSystem(DbSystem dbSystem) {
+        return true;
     }
 
-    public void deleteSystem(String systemName){
-        dbSystemRepository.deleteByName(systemName);
+    public void changeName(String oldName, String newName) {
+        repository.setDbSystemNameByName(oldName, newName);
+    }
+
+    public void changeName(long id, String newName) {
+        repository.setDbSystemNameById(id, newName);
+    }
+
+    public void deleteSystem(String systemName) {
+        repository.deleteByName(systemName);
+    }
+
+    public void deleteSystem(long id) {
+        repository.deleteById(id);
     }
 
     /**
      * Future: Recursively delete all "direct" relationships of module
      * (module's classes, class's variables, etc.)
+     *
      * @param moduleName
      */
-    public void deleteModuleRelRec(String moduleName){
-
+    public void deleteModuleRelRec(String moduleName) {
+        throw new NotImplementedException("deleteModuleRelRec not implemented");
     }
 
-    public void createModuleRel(String moduleName){
+    // business rules
 
+    public void createModuleRel(String moduleName) {
+        throw new NotImplementedException("createModuleRel not implemented");
     }
-
-    private boolean validateSystem(DbSystem dbSystem) {
-        DbSystem db = dbSystemRepository.findByName(dbSystem.getName());
-        if(db != null)  return false;
-
-        return true;
-    }
-
 
 
 }
