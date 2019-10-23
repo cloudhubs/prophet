@@ -30,7 +30,19 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
      */
     @Override
     public BoundedContext createBoundedContext(SystemContext systemContext) {
-        return null;
+
+        // take all of the modules in the System context and merge them
+        Optional<Module> mergedModule = systemContext.getModules().stream().reduce(this::mergeModules);
+
+        // make sure that the modules were able to merge properly
+        if(!mergedModule.isPresent()){
+            throw new RuntimeException("Unable to merge the Contexts");
+        }
+        Module m = mergedModule.get();
+
+        //create the bounded context
+        BoundedContext toReturn = new BoundedContext(systemContext.getSystemName(), m.getEntities());
+        return toReturn;
     }
 
     /**
@@ -64,8 +76,10 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
                         // similarity of entity from module one and entity from module two
                         y -> similarityUtils.globalFieldSimilarity(x, y).getLeft(),
 
-                        // tuple of entity from module two and field mapping
-                        y -> new ImmutablePair<>(y,similarityUtils.globalFieldSimilarity(x, y).getRight()),
+                        // tuple of entity from module two
+                        y -> new ImmutablePair<>(y,
+                                //and the field mapping
+                                similarityUtils.globalFieldSimilarity(x, y).getRight()),
                         (oldValue,newValue) -> newValue,
                         TreeMap::new
                     ))
@@ -98,13 +112,21 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
      */
     @Override
     public Entity mergeEntities(Entity one, Entity two, Map<Field, Field> fieldMapping) {
+
+        // the entity that is to be returned
         Entity newEntity = new Entity();
+
+        // set the entity name to the name of the first entity
         newEntity.setEntityName(one.getEntityName());
+
+        // get the fields of the second entity
         Set<Field> entityTwoFields = new HashSet<>(two.getFields());
         Field toAdd = null;
 
-        // for each field in in entity one
+        // for each field in entity one
         for(Field f1 : one.getFields()){
+
+            // get the field that this field in entity one maps to
             Field f2 = fieldMapping.get(f1);
             toAdd = f1;
 
@@ -112,6 +134,8 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
 
                 //make sure that mapped to field is present in entity 2
                 if (!entityTwoFields.remove(f2)) {
+
+                    // will be thrown if the entity mapping is invalid
                     throw new NoSuchElementException("Field not found in entity 2 " + f2.toString());
                 }
 
@@ -121,10 +145,14 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
                     toAdd = f1;
                 }
 
+                // merge the fields into one field
                 else {
                     toAdd = mergeFields(f1, f2);
                 }
             }
+
+            // add the field
+            // TODO what if a field of this name already exists?
             newEntity.getFields().add(toAdd);
         }
 
@@ -154,7 +182,8 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
         toReturn.setAnnotations(one.getAnnotations());
         toReturn.getAnnotations().addAll(two.getAnnotations());
 
-        // ASSUMED THAT BOTH DO NOT HAVE ENTITY REFERENCES
+        // set the entity reference (if it is present)
+        // ASSUMED THAT BOTH DO NOT HAVE DIFFERENT ENTITY REFERENCES
         toReturn.setEntityReference(one.getEntityReference() == null ? two.getEntityReference() : one.getEntityReference());
 
         return toReturn;
