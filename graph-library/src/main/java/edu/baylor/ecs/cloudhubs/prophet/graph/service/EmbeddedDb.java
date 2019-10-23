@@ -13,7 +13,7 @@ public class EmbeddedDb {
     private static final File databaseDirectory = new File( "target/neo4j-hello-db" );
     private GraphDatabaseService graphDb;
 
-    public void registerDb(){
+    public GraphDatabaseService registerDb(){
         GraphDatabaseSettings.BoltConnector bolt = GraphDatabaseSettings.boltConnector( "0" );
 
         graphDb = new GraphDatabaseFactory()
@@ -22,6 +22,8 @@ public class EmbeddedDb {
                 .setConfig( bolt.enabled, "true" )
                 .setConfig( bolt.address, "localhost:7687" )
                 .newGraphDatabase();
+
+        return graphDb;
     }
 
     public void shutDown() {

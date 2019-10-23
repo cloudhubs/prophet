@@ -3,13 +3,31 @@ package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbSystemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * DbSystem Service
  */
 @Service
 public class DbSystemService {
+
+    @Autowired
+    private DbSystemRepository dbSystemRepository;
+
+    public void create(String name){
+        DbSystem dbSystem = new DbSystem();
+        dbSystem.setName(name);
+        dbSystemRepository.save(dbSystem);
+    }
+
+    public Optional<DbSystem> testSystem(){
+        System.out.println("system test");
+        Optional<DbSystem> op = dbSystemRepository.findByName("SystemA");
+        return op;
+    }
 
 //    private final DbSystemRepository repository;
 //
