@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.service;
+package edu.baylor.ecs.cloudhubs.prophet.bytecode.service;
 
 import javassist.ClassPool;
 import javassist.CtClass;

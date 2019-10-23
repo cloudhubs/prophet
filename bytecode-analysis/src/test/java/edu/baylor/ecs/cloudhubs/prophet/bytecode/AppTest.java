@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs;
+package edu.baylor.ecs.cloudhubs.prophet.bytecode;
 
 import static org.junit.Assert.assertTrue;
 
