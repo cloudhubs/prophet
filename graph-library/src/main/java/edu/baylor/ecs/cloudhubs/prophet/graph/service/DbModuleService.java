@@ -48,7 +48,7 @@ public class DbModuleService {
 //    /**
 //     * Creates a new module with given name
 //     *
-//     * @param moduleName Name of the module to create
+//     * @param moduleName Name of the module to createByName
 //     */
 //    public DbModule createModule(String moduleName) {
 //        DbModule module = new DbModule();

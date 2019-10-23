@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface DbSystemRepository extends Neo4jRepository<DbSystem, Long> {
     Optional<DbSystem> findByName(@Param("name") String name);
 
-    void deleteByName(@Param("name") String name);
+    Iterable<Long> deleteByName(@Param("name") String name);
 
-    @Query("update DbSystem u set u.name = ?2 where u.name = ?1")
-    Optional<DbSystem> setDbSystemNameByName(String oldName, String newName);
+    @Query("MATCH (n { name: {oldName} }) SET n.name = {newName} RETURN n")
+    Optional<DbSystem> setDbSystemNameByName(@Param("oldName") String oldName,@Param("newName") String newName);
 
     @Query("update DbSystem u set u.name = ?2 where u.id = ?1")
     Optional<DbSystem> setDbSystemNameById(long id, String newName);
