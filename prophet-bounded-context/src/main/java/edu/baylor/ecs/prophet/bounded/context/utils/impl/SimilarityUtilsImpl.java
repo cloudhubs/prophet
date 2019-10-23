@@ -60,7 +60,8 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
      */
     @Override
     public double localFieldSimilarity(Field fieldOne, Field fieldTwo) {
-        return 0;
+        //TODO is this good enough?
+        return nameSimilarity(fieldOne.getName(), fieldTwo.getName());
     }
 
     /**
@@ -72,6 +73,7 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
     @Override
     public ImmutablePair<Double, Map<Field, Field> > globalFieldSimilarity(Entity entityOne, Entity entityTwo) {
         //store the result of the last comp
+        // intentionally using == here instead of equals because we only short circuit for exact objects
         if(entityOne == lastComputedEntitySimilarity.entityOne && entityTwo == lastComputedEntitySimilarity.entityTwo){
             return lastComputedEntitySimilarity.savedVal;
         }
@@ -85,15 +87,22 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
         // for each field find the similarity they have to other fields
         final Map<Field, TreeMap<Double, Field>>  fieldSimilarity = new HashMap<>();
 
+        // get each field in entity one
         entityOne.getFields()
+                // for each field put
                 .forEach(x -> fieldSimilarity.put(
+                        // that field
                         x,
+                        // and a map of fields and similarity
                         entityTwo.getFields()
                                 .stream()
                                 .collect(Collectors.toMap(
+                                        // the similarity of field one and field 2
                                         y -> localFieldSimilarity(x, y),
+                                        // field 2
                                         y -> y,
                                         (oldValue,newValue) -> newValue,
+                                        // using tree map so that it is sorted
                                         TreeMap::new
                                 ))
                 ));
@@ -101,23 +110,38 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
         boolean changeOccurred = true;
 
         // keep going until no two fields map to the same field
+        // this is really slow
         while(changeOccurred){
             changeOccurred = false;
             Map<Field, ImmutablePair<Double, TreeMap<Double, Field>>> encountered = new HashMap<>();
             for(Map.Entry<Field, TreeMap<Double, Field>> entry : fieldSimilarity.entrySet()){
-                //get the best field of entity 2 for this field of entity 1
-                Field best = entry.getValue().lastEntry().getValue();
-                Double val = entry.getValue().lastKey();
-                if(encountered.containsKey(best)){
-                    changeOccurred = true;
-                    // if this one is better then remove the old one
-                    if(val > encountered.get(best).getLeft()){
-                        encountered.get(best).getRight().remove(best);
-                        encountered.put(best, new ImmutablePair<>(val, entry.getValue()));
-                    }
-                    // if the other one is better then remove this one
-                    else {
-                        entry.getValue().remove(best);
+                boolean repeat = true;
+
+                // this will always execute at least once
+                while(repeat) {
+                    repeat = false;
+
+                    //get the similarity and field that are best from entity two for this field in entity one
+                    Map.Entry<Double, Field> bestEntry = entry.getValue().lastEntry();
+                    if(Objects.nonNull(bestEntry)) {
+                        Field best = bestEntry.getValue();
+                        Double val = bestEntry.getKey();
+
+                        // see if a field already maps to this field
+                        if (encountered.containsKey(best)) {
+
+                            // if this one is better then remove the old one and restart the whole algorithm
+                            if (val > encountered.get(best).getLeft()) {
+                                encountered.get(best).getRight().remove(best);
+                                encountered.put(best, new ImmutablePair<>(val, entry.getValue()));
+                                changeOccurred = true;
+                            }
+                            // if the other one is better then remove this one and get the next best mapping
+                            else {
+                                entry.getValue().remove(best);
+                                repeat = true;
+                            }
+                        }
                     }
                 }
             }
@@ -133,6 +157,7 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
             .collect(Collectors.toMap(
                 x -> x.getKey(),
                 x->
+                    // if there is a field put it in the mapping, else put null
                     {
                         return x.getValue().isEmpty() ? null : x.getValue().lastEntry().getValue();
                     }
@@ -141,7 +166,7 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
         // compute the return value
         ImmutablePair<Double, Map<Field, Field> > toReturn = new ImmutablePair<>(similarity, fieldMap);
 
-        // save these to maybe save time next time
+        // save the computed values to maybe short circuit next time
         lastComputedEntitySimilarity.entityOne = entityOne;
         lastComputedEntitySimilarity.entityTwo = entityTwo;
         lastComputedEntitySimilarity.savedVal = toReturn;
@@ -149,8 +174,8 @@ public class SimilarityUtilsImpl implements SimilarityUtils {
     }
 
     /**
-     * finds the similalrity of two names (i.e. nouns)
-     * @param one the first name to comapare
+     * finds the similarity of two names (i.e. nouns)
+     * @param one the first name to compare
      * @param two the second name to compare
      * @return the Wu Palmer similarity of these names
      */

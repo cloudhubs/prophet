@@ -6,10 +6,14 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class BoundedContext {
     private String systemName;
     private List<Entity> boundedContextEntities;
+
+    public BoundedContext(String systemName, List<Entity> boundedContextEntities) {
+        this.systemName = systemName;
+        this.boundedContextEntities = boundedContextEntities;
+    }
 }
