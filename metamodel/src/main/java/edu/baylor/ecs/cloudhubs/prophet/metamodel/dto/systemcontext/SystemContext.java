@@ -15,4 +15,16 @@ public class SystemContext {
     public void setSystemName(String systemName) {
         this.systemName = systemName;
     }
+
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
+    }
 }

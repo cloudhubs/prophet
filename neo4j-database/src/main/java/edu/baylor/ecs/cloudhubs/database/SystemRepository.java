@@ -1,3 +1,8 @@
+/**
+ * Copyright 2019, Cloud Innovation Labs, All rights reserved
+ * Version: 1.0
+ */
+
 package edu.baylor.ecs.cloudhubs.database;
 
 import edu.baylor.ecs.cloudhubs.database.model.DBSystem;
