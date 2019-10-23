@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public interface DbSystemRepository extends Neo4jRepository<DbSystem, Long> {
     Optional<DbSystem> findByName(@Param("name") String name);
 

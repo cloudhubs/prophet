@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
+
 public interface DbClassRepository extends Neo4jRepository<DbClass, Long> {
     DbClass findByName(@Param("name") String name);
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface ModuleRelRepository extends Neo4jRepository<HasAModuleRel, Long> {
     List<HasAModuleRel> findAllDbSystemModuleBySystemName(String systemName);
 
