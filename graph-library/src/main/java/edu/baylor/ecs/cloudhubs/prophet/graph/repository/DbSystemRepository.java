@@ -15,7 +15,4 @@ public interface DbSystemRepository extends Neo4jRepository<DbSystem, Long> {
 
     @Query("MATCH (n { name: {oldName} }) SET n.name = {newName} RETURN n")
     Optional<DbSystem> setDbSystemNameByName(@Param("oldName") String oldName, @Param("newName") String newName);
-
-    @Query("update DbSystem u set u.name = ?2 where u.id = ?1")
-    Optional<DbSystem> setDbSystemNameById(long id, String newName);
 }

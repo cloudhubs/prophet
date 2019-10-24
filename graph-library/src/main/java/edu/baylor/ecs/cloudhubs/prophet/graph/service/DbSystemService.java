@@ -24,28 +24,13 @@ public class DbSystemService {
         repository.save(dbSystem);
     }
 
-    public Optional<DbSystem> findByName() {
-        return repository.findByName("SystemA");
+    public Optional<DbSystem> findByName(String name) {
+        return repository.findByName(name);
     }
 
     public Iterable<DbSystem> getAll() {
         return repository.findAll();
     }
-
-//    private final DbSystemRepository repository;
-//
-//    public DbSystemService(DbSystemRepository repository) {
-//        this.repository = repository;
-//    }
-//
-//    /**
-//     * Get all systems
-//     * @return List of Db Systems
-//     */
-//    public Iterable<DbSystem> getAllSystems() {
-//        return repository.findAll();
-//    }
-//
 
     /**
      * Retrieves the System of the name provided
@@ -108,11 +93,5 @@ public class DbSystemService {
     public void deleteSystem(long id) {
         repository.deleteById(id);
     }
-//
-//    /**
-//     * Performs validation of system
-//     * @param dbSystem system to perform validations on
-//     */
-//    private void validateSystem(DbSystem dbSystem) {
-//    }
+
 }

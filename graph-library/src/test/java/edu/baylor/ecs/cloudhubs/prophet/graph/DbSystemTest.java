@@ -5,6 +5,7 @@ import edu.baylor.ecs.cloudhubs.prophet.graph.service.DbSystemService;
 import edu.baylor.ecs.cloudhubs.prophet.graph.service.EmbeddedDb;
 import org.assertj.core.api.Assertions;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -38,7 +39,19 @@ public class DbSystemTest {
     @Test
     public void bCreateSystem() {
         dbSystemService.createByName("SystemA");
-        Assertions.assertThat(dbSystemService.findByName().isPresent()).isTrue();
+        Assertions.assertThat(dbSystemService.findByName("SystemA").isPresent()).isTrue();
+    }
+
+    @Test(expected = Exception.class)
+    @Ignore
+    public void bCreateSystemDuplicate() {
+        dbSystemService.createByName("SystemA");
+    }
+
+    @Test(expected = Exception.class)
+    @Ignore
+    public void b2CreateSystem() {
+        dbSystemService.createByName(null);
     }
 
     @Test
