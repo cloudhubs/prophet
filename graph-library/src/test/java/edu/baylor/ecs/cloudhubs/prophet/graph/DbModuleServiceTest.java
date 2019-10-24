@@ -1,5 +1,6 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph;
 
+import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.ConstraintViolationException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
 import edu.baylor.ecs.cloudhubs.prophet.graph.service.DbModuleService;
@@ -69,10 +70,12 @@ public class DbModuleServiceTest {
     }
 
     @Test
-    @Ignore
     public void createModuleDuplicate() {
         service.createByName("ModuleA");
-        service.createByName("ModuleA");
+
+        Throwable thrown = catchThrowable(() -> service.createByName("ModuleA"));
+        Assertions.assertThat(thrown).isInstanceOf(ConstraintViolationException.class);
+        ;
 
         List modules = (List) service.getAll();
         Assertions.assertThat(modules.size()).isEqualTo(1);

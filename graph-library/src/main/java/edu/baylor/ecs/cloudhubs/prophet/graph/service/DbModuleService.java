@@ -1,11 +1,14 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 
+import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.ConstraintViolationException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class DbModuleService {
@@ -53,7 +56,12 @@ public class DbModuleService {
     public DbModule createByName(String moduleName) {
         DbModule module = new DbModule();
         module.setName(moduleName);
-        validateModule(module);
+
+        // check if no entity exists with name
+        Optional<DbModule> m = repository.findByName(module.getName());
+        if(m.isPresent()) {
+            throw new ConstraintViolationException("DbModule with name already exists");
+        }
 
         return repository.save(module);
     }
@@ -74,6 +82,16 @@ public class DbModuleService {
 
 
     public void changeName(String oldName, String newName) {
+        // check if oldName exists
+        if(!repository.findByName(oldName).isPresent()) {
+            throw new ConstraintViolationException("DbModule with name does not exist");
+        }
+
+        // check if no system with new name exits
+        if(repository.findByName(newName).isPresent()) {
+            throw new ConstraintViolationException("DbModule with name already exists");
+        }
+
         repository.setDbModuleNameByName(oldName, newName);
     }
 

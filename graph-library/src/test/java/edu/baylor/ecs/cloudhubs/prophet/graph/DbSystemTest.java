@@ -43,13 +43,11 @@ public class DbSystemTest {
     }
 
     @Test(expected = Exception.class)
-    @Ignore
     public void bCreateSystemDuplicate() {
         dbSystemService.createByName("SystemA");
     }
 
     @Test(expected = Exception.class)
-    @Ignore
     public void b2CreateSystem() {
         dbSystemService.createByName(null);
     }

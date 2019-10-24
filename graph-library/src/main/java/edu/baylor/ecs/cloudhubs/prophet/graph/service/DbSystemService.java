@@ -1,5 +1,6 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 
+import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.ConstraintViolationException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbSystemRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 /**
@@ -19,8 +21,18 @@ public class DbSystemService {
     private DbSystemRepository repository;
 
     public void createByName(String name) {
+        if(name == null) {
+            throw new ConstraintViolationException("DbSystem cannot be null");
+        }
+
         DbSystem dbSystem = new DbSystem();
         dbSystem.setName(name);
+
+        // check if no entity exists with name
+        Optional<DbSystem> s = repository.findByName(dbSystem.getName());
+        if(s.isPresent()) {
+            throw new ConstraintViolationException("DbSystem with name already exists");
+        }
         repository.save(dbSystem);
     }
 
@@ -71,8 +83,21 @@ public class DbSystemService {
      * @param newName new name of system to update
      */
     public DbSystem changeName(String oldName, String newName) {
-        return repository.setDbSystemNameByName(oldName, newName)
-                .orElseThrow(() -> new EntityNotFoundException("System with name not found"));
+        if(oldName == null || newName == null) {
+            throw new ConstraintViolationException("DbSystem cannot be null");
+        }
+
+        // check if oldName exists
+        if(!repository.findByName(oldName).isPresent()) {
+            throw new ConstraintViolationException("DbSystem with name does not exist");
+        }
+
+        // check if no system with new name exits
+        if(repository.findByName(newName).isPresent()) {
+            throw new ConstraintViolationException("DbSystem with name already exists");
+        }
+
+        return repository.setDbSystemNameByName(oldName, newName).get();
     }
 
     /**
@@ -83,15 +108,6 @@ public class DbSystemService {
     @Transactional
     public Iterable<Long> deleteSystem(String systemName) {
         return repository.deleteByName(systemName);
-    }
-
-    /**
-     * Delete system of the given id
-     *
-     * @param id id of system to delete
-     */
-    public void deleteSystem(long id) {
-        repository.deleteById(id);
     }
 
 }
