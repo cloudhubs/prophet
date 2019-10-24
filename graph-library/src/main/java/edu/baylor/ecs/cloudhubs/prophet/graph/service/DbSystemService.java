@@ -18,13 +18,13 @@ public class DbSystemService {
     @Autowired
     private DbSystemRepository repository;
 
-    public void createByName(String name){
+    public void createByName(String name) {
         DbSystem dbSystem = new DbSystem();
         dbSystem.setName(name);
         repository.save(dbSystem);
     }
 
-    public Optional<DbSystem> findByName(){
+    public Optional<DbSystem> findByName() {
         return repository.findByName("SystemA");
     }
 
@@ -46,8 +46,10 @@ public class DbSystemService {
 //        return repository.findAll();
 //    }
 //
+
     /**
      * Retrieves the System of the name provided
+     *
      * @param name Name of system to return
      * @return Db System matching given name
      */
@@ -76,8 +78,10 @@ public class DbSystemService {
 //        return repository.save(dbSystem);
 //    }
 //
+
     /**
      * Change name of system matching given name
+     *
      * @param oldName old name of system to update
      * @param newName new name of system to update
      */
@@ -88,6 +92,7 @@ public class DbSystemService {
 
     /**
      * Delete system of the given name
+     *
      * @param systemName name of system to delete
      */
     @Transactional
@@ -97,6 +102,7 @@ public class DbSystemService {
 
     /**
      * Delete system of the given id
+     *
      * @param id id of system to delete
      */
     public void deleteSystem(long id) {

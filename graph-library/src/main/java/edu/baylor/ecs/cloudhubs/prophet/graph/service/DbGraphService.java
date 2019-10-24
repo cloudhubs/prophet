@@ -8,7 +8,7 @@ public class DbGraphService {
     /**
      * Init Global Enterprise data: class types, global variable, etc
      */
-    public void initGraphData(){
+    public void initGraphData() {
 
     }
 }

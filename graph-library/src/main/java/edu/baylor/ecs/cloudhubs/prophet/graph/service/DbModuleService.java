@@ -1,10 +1,5 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 
-import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
-import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
-import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
-import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbModuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

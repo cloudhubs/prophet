@@ -30,29 +30,25 @@ public class DbSystemTest {
     @Autowired
     private DbSystemService dbSystemService;
 
-    @SpringBootApplication
-    static class TestConfiguration {
-    }
-
     @Test
     public void aContextLoads() {
         Assertions.assertThat(embeddedDb.registerDb()).isNotNull();
     }
 
     @Test
-    public void bCreateSystem(){
+    public void bCreateSystem() {
         dbSystemService.createByName("SystemA");
         Assertions.assertThat(dbSystemService.findByName().isPresent()).isTrue();
     }
 
     @Test
-    public void cGetAll(){
+    public void cGetAll() {
         List<DbSystem> dbSystems = (List) dbSystemService.getAll();
         Assertions.assertThat(dbSystems.size()).isEqualTo(1);
     }
 
     @Test
-    public void eUpdate(){
+    public void eUpdate() {
         DbSystem dbSystem = dbSystemService.getSystem("SystemA");
         Assertions.assertThat(dbSystem.getName()).isEqualTo("SystemA");
         dbSystem = dbSystemService.changeName(dbSystem.getName(), "SystemB");
@@ -60,9 +56,13 @@ public class DbSystemTest {
     }
 
     @Test
-    public void fDelete(){
+    public void fDelete() {
         List<Long> l = (List) dbSystemService.deleteSystem("SystemB");
         Assertions.assertThat(l.size()).isEqualTo(1);
+    }
+
+    @SpringBootApplication
+    static class TestConfiguration {
     }
 
 }

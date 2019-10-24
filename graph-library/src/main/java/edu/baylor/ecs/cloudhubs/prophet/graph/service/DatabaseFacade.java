@@ -6,19 +6,19 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContex
 public class DatabaseFacade {
 
     /**
-     *
      * It retrieves following data structure from database based on system name
      * System1
-     *  -Module1
-     *      - EntityClass1
-     *          - Field1
-     *          - Field2
-     *      - EntityClass2
-     *  -Module2
-     *      -EntityClass3 ...
+     * -Module1
+     * - EntityClass1
+     * - Field1
+     * - Field2
+     * - EntityClass2
+     * -Module2
+     * -EntityClass3 ...
+     *
      * @return
      */
-    public static SystemContext getAllEntityClassesInSystem(String name){
+    public static SystemContext getAllEntityClassesInSystem(String name) {
         return new SystemContext();
     }
 
@@ -28,23 +28,24 @@ public class DatabaseFacade {
      * Entity -(mergedTo)-> MergedEntity
      * System -> MergedEntity
      * BoundedContext -> MergedEntity + Other entities
+     *
      * @param boundedContext
      * @return
      */
-    public static BoundedContext createBoundedContext(BoundedContext boundedContext){
+    public static BoundedContext createBoundedContext(BoundedContext boundedContext) {
         //ToDo: persist context
         return boundedContext;
     }
 
-    public static BoundedContext updateBoundedContext(BoundedContext boundedContext){
+    public static BoundedContext updateBoundedContext(BoundedContext boundedContext) {
         return boundedContext;
     }
 
-    public static BoundedContext deleteBoundedContext(BoundedContext boundedContext){
+    public static BoundedContext deleteBoundedContext(BoundedContext boundedContext) {
         return boundedContext;
     }
 
-    public static BoundedContext getBoundedContext(){
+    public static BoundedContext getBoundedContext() {
         return new BoundedContext();
     }
 

@@ -8,9 +8,10 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-//import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
+
+//import javax.validation.constraints.NotNull;
 
 @NodeEntity
 @Data
@@ -21,7 +22,7 @@ public class DbSystem {
     @GeneratedValue
     private Long id;
 
-//    @NotNull
+    //    @NotNull
     private String name;
 
     @Relationship(type = "HAS_A_MODULE", direction = Relationship.OUTGOING)

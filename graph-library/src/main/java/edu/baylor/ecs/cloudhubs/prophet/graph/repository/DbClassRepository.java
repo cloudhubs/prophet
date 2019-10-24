@@ -4,7 +4,6 @@ import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbClass;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 
 public interface DbClassRepository extends Neo4jRepository<DbClass, Long> {
