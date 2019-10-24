@@ -16,4 +16,9 @@ public interface DbClassRepository extends Neo4jRepository<DbClass, Long> {
 
     @Query("update DbClass u set u.name = ?2 where u.id = ?1")
     void setDbClassNameById(long id, String newName);
+
+    //get entity classes in the system
+    // Match classes,
+
+
 }

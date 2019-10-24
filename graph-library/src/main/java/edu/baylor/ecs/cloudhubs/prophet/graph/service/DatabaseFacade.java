@@ -27,7 +27,7 @@ public class DatabaseFacade {
      * -- merged entity has associations to fields of merging entities
      * Entity -(mergedTo)-> MergedEntity
      * System -> MergedEntity
-     * BoundedContext -> MergedEntity + Other entities
+     * DbBoundedContext -> MergedEntity + Other entities
      *
      * @param boundedContext
      * @return
