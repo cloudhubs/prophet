@@ -11,6 +11,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.List;
+import java.util.Objects;
 
 @NodeEntity
 @Data
@@ -25,4 +26,17 @@ public class DbClass {
     @JsonIgnoreProperties("dbClass")
     @Relationship(type = "HAS_A_CLASS", direction = Relationship.INCOMING)
     private List<HasAClassRel> moduleClasses;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DbClass dbClass = (DbClass) o;
+        return name.equals(dbClass.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

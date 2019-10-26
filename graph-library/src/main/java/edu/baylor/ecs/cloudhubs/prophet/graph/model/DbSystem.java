@@ -9,6 +9,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 //import javax.validation.constraints.NotNull;
@@ -26,5 +27,18 @@ public class DbSystem {
     private String name;
 
     @Relationship(type = "HAS_A_MODULE", direction = Relationship.OUTGOING)
-    private Set<DbModule> modules = new HashSet<>();
+    private Set<DbModule> modulesRel = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DbSystem system = (DbSystem) o;
+        return name.equals(system.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

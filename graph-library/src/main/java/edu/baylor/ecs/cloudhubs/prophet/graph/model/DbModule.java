@@ -12,6 +12,7 @@ import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @NodeEntity
@@ -26,8 +27,21 @@ public class DbModule {
 
     @JsonIgnoreProperties("dbModule")
     @Relationship(type = "HAS_A_MODULE", direction = Relationship.INCOMING)
-    private List<HasAModuleRel> systemModules;
+    private HasAModuleRel systemRel;
 
     @Relationship(type = "HAS_A_CLASS", direction = Relationship.OUTGOING)
     private Set<DbClass> classes = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DbModule module = (DbModule) o;
+        return name.equals(module.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

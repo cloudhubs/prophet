@@ -53,29 +53,34 @@ public class DbModuleService {
      *
      * @param moduleName Name of the module to createByName
      */
-    public DbModule createByName(String moduleName) {
-        DbModule module = new DbModule();
-        module.setName(moduleName);
-
-        // check if no entity exists with name
-        Optional<DbModule> m = repository.findByName(module.getName());
-        if(m.isPresent()) {
-            throw new ConstraintViolationException("DbModule with name already exists");
-        }
-
-        return repository.save(module);
-    }
+//    public DbModule createByName(String moduleName) {
+//        DbModule module = new DbModule();
+//        module.setName(moduleName);
+//
+//        // check if no entity exists with name
+//        Optional<DbModule> m = repository.findByName(module.getName());
+//        if(m.isPresent()) {
+//            throw new ConstraintViolationException("DbModule with name already exists");
+//        }
+//
+//        return repository.save(module);
+//    }
 
     public DbModule createByName(String systemName, String moduleName) {
-        DbSystem system = systemService.getSystem(systemName);
         DbModule module = new DbModule();
         module.setName(moduleName);
 
-        validateModule(module);
-        module = repository.save(module);
 
-        system.getModules().add(module);
-        //module.
+        // get system
+        DbSystem system = systemService.getSystem(systemName);
+
+        // check if no entity exists with name and systemName
+        if(system.getModulesRel().contains(module)) {
+            throw new ConstraintViolationException("System has module with same name");
+        }
+
+//        module = repository.save(module);
+//        system.getModulesRel().add(module); //TODO: Update system in database
 
         return module;
     }
@@ -83,12 +88,16 @@ public class DbModuleService {
 
     public void changeName(String oldName, String newName) {
         // check if oldName exists
-        if(!repository.findByName(oldName).isPresent()) {
+        Optional<DbModule> old = repository.findByName(oldName);
+        if(!old.isPresent()) {
             throw new ConstraintViolationException("DbModule with name does not exist");
         }
 
+        DbModule oldModule = old.get();
+        DbSystem moduleSystem = oldModule.getSystemRel().getSystem();
+
         // check if no system with new name exits
-        if(repository.findByName(newName).isPresent()) {
+        if(moduleSystem.getModulesRel().contains(oldModule)) {
             throw new ConstraintViolationException("DbModule with name already exists");
         }
 

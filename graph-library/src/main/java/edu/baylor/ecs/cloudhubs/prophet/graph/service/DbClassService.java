@@ -5,31 +5,34 @@ import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbClass;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
 import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbClassRepository;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.parser.JPClassType;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+@Service
 public class DbClassService {
     private final DbClassRepository repository;
+    private final DbModuleService moduleService;
 
-    public DbClassService(DbClassRepository repository) {
+    public DbClassService(DbClassRepository repository, DbModuleService moduleService) {
         this.repository = repository;
+        this.moduleService = moduleService;
     }
 
-    public void createClass(String className, JPClassType classType){
+    public void createByName(String moduleName, String className){
         DbClass dbClass = new DbClass();
         dbClass.setName(className);
 
-        // check if no entity exists with name
-        Optional<DbClass> c = repository.findByName(dbClass.getName());
-        if(c.isPresent()) {
-            throw new ConstraintViolationException("DbClass with name already exists");
+        // get module
+        DbModule module = moduleService.getModule(moduleName);
+
+        // check if no entity exists with name and systemName
+        if(module.getClasses().contains(dbClass)) {
+            throw new ConstraintViolationException("Module has class with same name");
         }
 
         repository.save(dbClass);
     }
 
-    public Iterable<DbClass> getAllClasses() {
+    public Iterable<DbClass> getAll() {
         return repository.findAll();
     }
 
