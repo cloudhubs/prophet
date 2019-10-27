@@ -20,6 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
@@ -54,6 +56,13 @@ public class DbModuleServiceTest {
     }
 
     @Test
+    public void getAllForSystem() {
+        service.createByName(systemName,"ModuleA");
+        Set modules = (Set) service.getAllForSystem(systemName);
+        Assertions.assertThat(modules.size()).isEqualTo(1);
+    }
+
+    @Test
     public void getAll_2() {
         service.createByName(systemName, "ModuleA");
         List modules = (List) service.getAll();
@@ -63,7 +72,7 @@ public class DbModuleServiceTest {
     @Test
     public void getModule() {
         service.createByName(systemName, "ModuleA");
-        DbModule module = service.getModule("ModuleA");
+        DbModule module = service.getModule(systemName,"ModuleA");
         Assertions.assertThat(module).isNotEqualTo(null);
     }
 
@@ -84,34 +93,46 @@ public class DbModuleServiceTest {
 
         Throwable thrown = catchThrowable(() -> service.createByName(systemName,"ModuleA"));
         Assertions.assertThat(thrown).isInstanceOf(ConstraintViolationException.class);
-        ;
 
         List modules = (List) service.getAll();
         Assertions.assertThat(modules.size()).isEqualTo(1);
     }
 
     @Test
+    public void createModuleNotDuplicate() {
+        service.createByName(systemName, "ModuleA");
+
+        // Another service
+        systemService.createByName("SystemB");
+
+        service.createByName("SystemB","ModuleA");
+
+        Set<DbModule> modules2 = service.getAllForSystem("SystemA");
+        Assertions.assertThat(modules2.size()).isEqualTo(1);
+    }
+
+    @Test
     public void changeName() {
         service.createByName(systemName,"ModuleA");
-        service.changeName("ModuleA", "ModuleB");
+        service.changeName(systemName, "ModuleA", "ModuleB");
 
-        Throwable thrown = catchThrowable(() -> service.getModule("ModuleA"));
+        Throwable thrown = catchThrowable(() -> service.getModule(systemName,"ModuleA"));
         Assertions.assertThat(thrown).isInstanceOf(EntityNotFoundException.class);
 
-        DbModule module2 = service.getModule("ModuleB");
+        DbModule module2 = service.getModule(systemName, "ModuleB");
         Assertions.assertThat(module2).isNotEqualTo(null);
     }
 
     @Test
     public void deleteModule() {
         service.createByName(systemName, "ModuleA");
-        DbModule module = service.getModule("ModuleA");
+        DbModule module = service.getModule(systemName, "ModuleA");
         Assertions.assertThat(module).isNotEqualTo(null);
 
-        service.deleteModule("ModuleA");
+        service.deleteModule(systemName, "ModuleA");
 
-        Throwable thrown = catchThrowable(() -> service.getModule("ModuleA"));
-        Assertions.assertThat(thrown).isInstanceOf(EntityNotFoundException.class);
+        Throwable thrown = catchThrowable(() -> service.getModule(systemName, "ModuleA"));
+        Assertions.assertThat(thrown).isInstanceOf(NoSuchElementException.class);
     }
 
     @SpringBootApplication

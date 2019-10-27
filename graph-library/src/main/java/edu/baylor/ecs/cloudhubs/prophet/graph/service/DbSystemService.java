@@ -2,6 +2,7 @@ package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 
 import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.ConstraintViolationException;
 import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
+import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
 import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbSystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class DbSystemService {
         repository.save(dbSystem);
     }
 
-    public Optional<DbSystem> findByName(String name) {
-        return repository.findByName(name);
+    public DbSystem findByName(String name) {
+        return repository.findByName(name).orElseThrow(() -> new EntityNotFoundException("System with name not found"));
     }
 
     public Iterable<DbSystem> getAll() {
@@ -108,6 +109,11 @@ public class DbSystemService {
     @Transactional
     public Iterable<Long> deleteSystem(String systemName) {
         return repository.deleteByName(systemName);
+    }
+
+    public DbSystem addModuleToSystem(DbSystem system, DbModule module) {
+        system.getModulesRel().add(module);
+        return repository.save(system);
     }
 
 }

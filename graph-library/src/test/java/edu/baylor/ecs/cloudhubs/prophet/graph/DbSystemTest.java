@@ -39,7 +39,7 @@ public class DbSystemTest {
     @Test
     public void bCreateSystem() {
         dbSystemService.createByName("SystemA");
-        Assertions.assertThat(dbSystemService.findByName("SystemA").isPresent()).isTrue();
+        Assertions.assertThat(dbSystemService.findByName("SystemA")).isNotEqualTo(null);
     }
 
     @Test(expected = Exception.class)
