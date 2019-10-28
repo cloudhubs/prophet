@@ -1,17 +1,26 @@
-package edu.baylor.ecs.cloudhubs.prophet.graph.service;
-
-import org.springframework.stereotype.Service;
-
-@Service
-public class GenericService {
-
+//package edu.baylor.ecs.cloudhubs.prophet.graph.service;
+//
+//import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
+//import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
+//import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
+//import edu.baylor.ecs.cloudhubs.prophet.graph.model.relationship.HasAModuleRel;
+//import edu.baylor.ecs.cloudhubs.prophet.graph.repository.*;
+//import org.apache.commons.lang3.NotImplementedException;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.List;
+//import java.util.stream.Collectors;
+//
+//@Service
+//public class RelationshipService {
+//
 //    private final DbSystemRepository systemRepository;
 //    private final DbModuleRepository moduleRepository;
 //    private final DbClassRepository classRepository;
 //    private final ModuleRelRepository moduleRelRepository;
 //    private final ClassRelRepository classRelRepository;
 //
-//    public GenericService(DbSystemRepository systemRepository,
+//    public RelationshipService(DbSystemRepository systemRepository,
 //                          DbModuleRepository moduleRepository,
 //                          DbClassRepository classRepository,
 //                          ModuleRelRepository moduleRelRepository,
@@ -23,9 +32,17 @@ public class GenericService {
 //        this.classRelRepository = classRelRepository;
 //    }
 //
+//    public HasAModuleRel createModuleRel(DbSystem system, DbModule module) {
+//        HasAModuleRel rel = new HasAModuleRel();
+//        rel.setModule(module);
+//        rel.setSystem(system);
+//
+//        return moduleRelRepository.save(rel);
+//    }
+//
 //    public void deleteSystemRelRec(String systemName) {
 //        DbSystem system = systemRepository.findByName(systemName).orElseThrow(() -> new EntityNotFoundException("System with name not found"));
-//        system.getModules().forEach(module -> deleteModuleRelRec(module.getName()));
+//        system.getModulesRel().forEach(module -> deleteModuleRelRec(module.getName()));
 //        systemRepository.deleteByName(system.getName());
 //    }
 //
@@ -45,10 +62,6 @@ public class GenericService {
 //        classRepository.deleteByName(className);
 //    }
 //
-//    public void createModuleRel(String moduleName) {
-//        throw new NotImplementedException("createModuleRel not implemented");
-//    }
-//
 //    public List<DbModule> getModulesForSystem(String systemName) {
 //        List<HasAModuleRel> systemModules = moduleRelRepository.findAllDbSystemModuleBySystemName(systemName);
 //        return systemModules.stream().map(HasAModuleRel::getModule).collect(Collectors.toList());
@@ -57,4 +70,4 @@ public class GenericService {
 //    public DbSystem getSystemForModule(String moduleName) {
 //        return moduleRelRepository.findDbSystemModuleByModuleName(moduleName).getSystem();
 //    }
-}
+//}

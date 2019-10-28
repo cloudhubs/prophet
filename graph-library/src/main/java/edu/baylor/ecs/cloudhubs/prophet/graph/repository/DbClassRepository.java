@@ -5,20 +5,14 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 
 public interface DbClassRepository extends Neo4jRepository<DbClass, Long> {
-    DbClass findByName(@Param("name") String name);
+    Optional<DbClass> findByName(@Param("name") String name);
 
-    void deleteByName(@Param("name") String name);
+    Iterable<Long> deleteByName(@Param("name") String name);
 
-    @Query("update DbClass u set u.name = ?2 where u.name = ?1")
-    void setDbClassByName(String oldName, String newName);
-
-    @Query("update DbClass u set u.name = ?2 where u.id = ?1")
-    void setDbClassNameById(long id, String newName);
-
-    //get entity classes in the system
-    // Match classes,
-
-
+    @Query("MATCH (n { name: {oldName} }) SET n.name = {newName} RETURN n")
+    Optional<DbClass> setDbClassByName(@Param("oldName") String oldName, @Param("newName") String newName);
 }
