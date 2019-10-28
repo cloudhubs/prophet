@@ -11,7 +11,6 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -37,7 +36,9 @@ public class DbModule {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DbModule module = (DbModule) o;
-        return name.equals(module.name);
+
+        // make sure check is performed in reference to a system
+        return name.equals(module.name) && systemRel.getSystem().equals(module.getSystemRel().getSystem());
     }
 
     @Override
