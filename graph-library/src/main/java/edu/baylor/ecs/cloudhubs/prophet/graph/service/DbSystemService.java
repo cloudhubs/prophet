@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 /**
@@ -22,7 +21,7 @@ public class DbSystemService {
     private DbSystemRepository repository;
 
     public void createByName(String name) {
-        if(name == null) {
+        if (name == null) {
             throw new ConstraintViolationException("DbSystem cannot be null");
         }
 
@@ -31,7 +30,7 @@ public class DbSystemService {
 
         // check if no entity exists with name
         Optional<DbSystem> s = repository.findByName(dbSystem.getName());
-        if(s.isPresent()) {
+        if (s.isPresent()) {
             throw new ConstraintViolationException("DbSystem with name already exists");
         }
         repository.save(dbSystem);
@@ -54,28 +53,6 @@ public class DbSystemService {
     public DbSystem getSystem(String name) {
         return repository.findByName(name).orElseThrow(() -> new EntityNotFoundException("System with name not found"));
     }
-//
-//    /**
-//     * Retrieves the System of the id provided
-//     * @param id Id of system to return
-//     * @return Db System matching given id
-//     */
-//    public DbSystem getSystem(long id) {
-//        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("System with id not found"));
-//    }
-//
-//    /**
-//     * Creates a new system with given name
-//     * @param systemName Name of the system to createByName
-//     */
-//    public DbSystem createSystem(String systemName) {
-//        DbSystem dbSystem = new DbSystem();
-//        dbSystem.setName(systemName);
-//
-//        validateSystem(dbSystem);
-//        return repository.save(dbSystem);
-//    }
-//
 
     /**
      * Change name of system matching given name
@@ -84,21 +61,25 @@ public class DbSystemService {
      * @param newName new name of system to update
      */
     public DbSystem changeName(String oldName, String newName) {
-        if(oldName == null || newName == null) {
+        if (oldName == null || newName == null) {
             throw new ConstraintViolationException("DbSystem cannot be null");
         }
 
         // check if oldName exists
-        if(!repository.findByName(oldName).isPresent()) {
+        Optional<DbSystem> oldSystem = repository.findByName(oldName);
+        if (!oldSystem.isPresent()) {
             throw new ConstraintViolationException("DbSystem with name does not exist");
         }
 
         // check if no system with new name exits
-        if(repository.findByName(newName).isPresent()) {
+        if (repository.findByName(newName).isPresent()) {
             throw new ConstraintViolationException("DbSystem with name already exists");
         }
 
-        return repository.setDbSystemNameByName(oldName, newName).get();
+        DbSystem newSystem = oldSystem.get();
+        newSystem.setName(newName);
+
+        return repository.save(newSystem);
     }
 
     /**
@@ -111,9 +92,9 @@ public class DbSystemService {
         return repository.deleteByName(systemName);
     }
 
-    public DbSystem addModuleToSystem(DbSystem system, DbModule module) {
+    public void addModuleToSystem(DbSystem system, DbModule module) {
         system.getModulesRel().add(module);
-        return repository.save(system);
+        repository.save(system);
     }
 
 }

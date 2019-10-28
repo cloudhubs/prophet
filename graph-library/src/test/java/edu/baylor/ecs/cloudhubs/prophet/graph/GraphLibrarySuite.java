@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         DbSystemTest.class,
         DbModuleServiceTest.class,
-//        DbClassServiceTest.class
+        ModuleRelRepositoryTest.class,
+        DbClassServiceTest.class
 })
 public class GraphLibrarySuite {
 
