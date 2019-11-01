@@ -124,13 +124,13 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
         Field toAdd = null;
 
         // for each field in entity one
-        for(Field f1 : one.getFields()){
+        for (Field f1 : one.getFields()){
 
             // get the field that this field in entity one maps to
             Field f2 = fieldMapping.get(f1);
             toAdd = f1;
 
-            if(f2 != null) {
+            if (f2 != null) {
 
                 //make sure that mapped to field is present in entity 2
                 if (!entityTwoFields.remove(f2)) {
