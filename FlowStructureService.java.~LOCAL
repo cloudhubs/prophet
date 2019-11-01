@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.service;
+package edu.baylor.ecs.cloudhubs.prophet.service;
 
 import edu.baylor.ecs.seer.common.entity.SeerFlowMethodRepresentation;
 import edu.baylor.ecs.seer.common.flow.SeerFlowMethod;

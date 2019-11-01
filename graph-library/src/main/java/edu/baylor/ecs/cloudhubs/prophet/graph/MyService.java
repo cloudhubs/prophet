@@ -1,7 +1,6 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph;
 
 import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
-import edu.baylor.ecs.cloudhubs.prophet.graph.repository.DbSystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -24,6 +23,6 @@ public class MyService {
         dbSystem.setName("system name");
 //        dbSystemRepository.save(dbSystem);
         //DbSystem newNode = dbSystemRepository.findByName("system name");
-        return null;
+        return "a";
     }
 }
