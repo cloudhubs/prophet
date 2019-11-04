@@ -3,12 +3,14 @@ package edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class Annotation {
+
+    @NonNull
     private String name;
-    private String stringValue;
-    private Integer intValue;
+
+    private String stringValue = null;
+    private Integer intValue = 0;
 }

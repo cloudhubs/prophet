@@ -9,22 +9,6 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Entity {
-    private List<Field> fields;
     private String entityName;
-
-    public List<Field> getFields() {
-        return fields;
-    }
-
-    public void setFields(List<Field> fields) {
-        this.fields = fields;
-    }
-
-    public String getEntityName() {
-        return entityName;
-    }
-
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
-    }
+    private List<Field> fields;
 }
