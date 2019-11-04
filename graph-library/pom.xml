@@ -32,6 +32,7 @@
         <maven-shade-plugin.version>3.1.1</maven-shade-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <neo4j-ogm-version></neo4j-ogm-version>
 
     </properties>
 
@@ -74,6 +75,12 @@
 
         <dependency>
             <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-core</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-embedded-driver</artifactId>
             <version>${neo4j-ogm.version}</version>
         </dependency>
@@ -81,7 +88,7 @@
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-bolt-driver</artifactId>
-            <version>${neo4j-ogm.version}</version>
+            <version>3.2.1</version>
         </dependency>
 
         <!-- NEO4J -->
