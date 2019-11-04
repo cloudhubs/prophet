@@ -1,5 +1,7 @@
-package edu.baylor.ecs.cloudhubs.prophet.graph.model;
+package edu.baylor.ecs.cloudhubs.prophet.graph.model.global;
 
+import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbClass;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.GeneratedValue;
@@ -10,19 +12,10 @@ import org.neo4j.ogm.annotation.Relationship;
 @NodeEntity
 @Data
 @NoArgsConstructor
-public class DbVariable {
-
+@AllArgsConstructor
+public class DbController {
     @Id
     @GeneratedValue
     private Long id;
-
-    private String name;
-
-    @Relationship(value = "HAS_A_CLASS")
-    private DbClass dbClass;
-
-    @Relationship(value = "HAS_A_METHOD")
-    private DbMethod method;
-
 
 }

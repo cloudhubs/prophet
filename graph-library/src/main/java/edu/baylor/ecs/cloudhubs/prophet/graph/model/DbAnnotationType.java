@@ -1,7 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import edu.baylor.ecs.cloudhubs.prophet.graph.model.relationship.HasAClassRel;
+import edu.baylor.ecs.cloudhubs.prophet.graph.model.relationship.HasAModuleRel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,15 +16,15 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DbClass {
+public class DbAnnotationType {
+
     @Id
     @GeneratedValue
     private Long id;
+
     private String name;
-    private Boolean isGlobal; //String, Integer, Long, ...
 
-    @JsonIgnoreProperties("dbClass")
-    @Relationship(type = "HAS_A_CLASS", direction = Relationship.INCOMING)
-    private List<HasAClassRel> moduleClasses;
-
+    @JsonIgnoreProperties("dbAnnotationType")
+    @Relationship(type = "HAS_AN_ANNOTATION_TYPE", direction = Relationship.INCOMING)
+    private List<DbAnnotation> dbAnnotations;
 }
