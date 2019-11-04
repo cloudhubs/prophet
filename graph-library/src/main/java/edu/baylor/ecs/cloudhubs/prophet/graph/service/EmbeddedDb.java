@@ -3,6 +3,7 @@ package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.factory.GraphDatabaseSettings;
+import org.neo4j.ogm.session.Neo4jSession;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -25,6 +26,7 @@ public class EmbeddedDb {
 
         return graphDb;
     }
+
 
     public void shutDown() {
         System.out.println("Shutting down database ...");

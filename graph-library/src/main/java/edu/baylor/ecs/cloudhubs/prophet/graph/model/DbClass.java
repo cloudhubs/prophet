@@ -21,6 +21,7 @@ public class DbClass {
     @GeneratedValue
     private Long id;
     private String name;
+    private Boolean isGlobal; //String, Integer, Long, ...
 
     @JsonIgnoreProperties("dbClass")
     @Relationship(type = "HAS_A_CLASS", direction = Relationship.INCOMING)

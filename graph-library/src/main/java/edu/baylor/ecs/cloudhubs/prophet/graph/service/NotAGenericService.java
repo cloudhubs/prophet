@@ -1,42 +1,17 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 
-import org.neo4j.ogm.session.Session;
+import org.springframework.stereotype.Service;
 
-abstract class RelationshipService<T> implements Service<T> {
+@Service
+public class NotAGenericService {
 
-    private static final int DEPTH_LIST = 0;
-    private static final int DEPTH_ENTITY = 1;
-
-    //attempt to create a generic service, because session factory does not work, this does not work as well
-
-//    protected Session session = Neo4jSessionFactory.getInstance().getNeo4jSession();
-
-//    @Override
-//    public Iterable<T> findAll() {
-//        return session.loadAll(getEntityType(), DEPTH_LIST)
-//package edu.baylor.ecs.cloudhubs.prophet.graph.service;
-//
-//import edu.baylor.ecs.cloudhubs.prophet.graph.exceptions.EntityNotFoundException;
-//import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbModule;
-//import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
-//import edu.baylor.ecs.cloudhubs.prophet.graph.model.relationship.HasAModuleRel;
-//import edu.baylor.ecs.cloudhubs.prophet.graph.repository.*;
-//import org.apache.commons.lang3.NotImplementedException;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//import java.util.stream.Collectors;
-//
-//@Service
-//public class RelationshipService {
-//
 //    private final DbSystemRepository systemRepository;
 //    private final DbModuleRepository moduleRepository;
 //    private final DbClassRepository classRepository;
 //    private final ModuleRelRepository moduleRelRepository;
 //    private final ClassRelRepository classRelRepository;
 //
-//    public RelationshipService(DbSystemRepository systemRepository,
+//    public GenericService(DbSystemRepository systemRepository,
 //                          DbModuleRepository moduleRepository,
 //                          DbClassRepository classRepository,
 //                          ModuleRelRepository moduleRelRepository,
@@ -48,17 +23,9 @@ abstract class RelationshipService<T> implements Service<T> {
 //        this.classRelRepository = classRelRepository;
 //    }
 //
-//    public HasAModuleRel createModuleRel(DbSystem system, DbModule module) {
-//        HasAModuleRel rel = new HasAModuleRel();
-//        rel.setModule(module);
-//        rel.setSystem(system);
-//
-//        return moduleRelRepository.save(rel);
-//    }
-//
 //    public void deleteSystemRelRec(String systemName) {
 //        DbSystem system = systemRepository.findByName(systemName).orElseThrow(() -> new EntityNotFoundException("System with name not found"));
-//        system.getModulesRel().forEach(module -> deleteModuleRelRec(module.getName()));
+//        system.getModules().forEach(module -> deleteModuleRelRec(module.getName()));
 //        systemRepository.deleteByName(system.getName());
 //    }
 //
@@ -74,24 +41,14 @@ abstract class RelationshipService<T> implements Service<T> {
 //        moduleRepository.deleteByName(module.getName());
 //    }
 //
-//    @Override
-//    T find(Long id) {
-//        return session.load(getEntityType(), id, DEPTH_ENTITY)
+//    public void deleteClassRelRec(String className) {
+//        classRepository.deleteByName(className);
 //    }
 //
-//    @Override
-//    void delete(Long id) {
-//        session.delete(session.load(getEntityType(), id))
+//    public void createModuleRel(String moduleName) {
+//        throw new NotImplementedException("createModuleRel not implemented");
 //    }
 //
-//    @Override
-//    T createOrUpdate(T entity) {
-//        session.save(entity, DEPTH_ENTITY)
-//        return find(entity.id)
-//    }
-//
-//    abstract Class<T> getEntityType()
-}
 //    public List<DbModule> getModulesForSystem(String systemName) {
 //        List<HasAModuleRel> systemModules = moduleRelRepository.findAllDbSystemModuleBySystemName(systemName);
 //        return systemModules.stream().map(HasAModuleRel::getModule).collect(Collectors.toList());
@@ -100,4 +57,4 @@ abstract class RelationshipService<T> implements Service<T> {
 //    public DbSystem getSystemForModule(String moduleName) {
 //        return moduleRelRepository.findDbSystemModuleByModuleName(moduleName).getSystem();
 //    }
-//}
+}
