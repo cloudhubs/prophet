@@ -25,7 +25,7 @@ public class DatabaseFacade {
     /**
      * MergedEntity::createNew
      * -- merged entity has associations to fields of merging entities
-     * Entity -(mergedTo)-> MergedEntity
+     * DbEntity -(mergedTo)-> MergedEntity
      * System -> MergedEntity
      * DbBoundedContext -> MergedEntity + Other entities
      *
