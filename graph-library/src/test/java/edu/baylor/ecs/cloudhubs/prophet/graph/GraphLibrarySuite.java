@@ -7,7 +7,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         DbSystemTest.class,
-        DbModuleServiceTest.class
+        DbModuleServiceTest.class,
+        ModuleRelRepositoryTest.class,
+        DbClassServiceTest.class
 })
 public class GraphLibrarySuite {
 

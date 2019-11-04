@@ -13,6 +13,6 @@ public interface DbModuleRepository extends Neo4jRepository<DbModule, Long> {
 
     Iterable<Long> deleteByName(@Param("name") String name);
 
-    @Query("MATCH (n { name: {oldName} }) SET n.name = {newName} RETURN n")
-    Optional<DbSystem> setDbModuleNameByName(@Param("oldName") String oldName, @Param("newName") String newName);
+    @Query("MATCH (:DbSystem { name: {systemName} })-[:HAS_A_MODULE]->(m:DbModule {name: {oldName} }) SET m.name = {newName} RETURN m")
+    Optional<DbSystem> setDbModuleNameByNameAndSystemName(@Param("systemName") String systemName, @Param("oldName") String oldName, @Param("newName") String newName);
 }
