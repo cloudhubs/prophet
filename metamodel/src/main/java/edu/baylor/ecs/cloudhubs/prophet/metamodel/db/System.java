@@ -20,7 +20,6 @@ public class System {
     @Relationship(type = "HAS_A_MODULE", direction = Relationship.OUTGOING)
     private Set<Module> modules = new HashSet<>();
 
-
     public System(){}
 
     public System(String name){
