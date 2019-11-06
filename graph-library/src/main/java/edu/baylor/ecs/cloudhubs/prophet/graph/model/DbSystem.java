@@ -15,9 +15,6 @@ import java.util.Set;
 //import javax.validation.constraints.NotNull;
 
 @NodeEntity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DbSystem {
     @Id
     @GeneratedValue
@@ -25,6 +22,12 @@ public class DbSystem {
 
     //    @NotNull
     private String name;
+
+    public DbSystem(){}
+
+    public DbSystem(String name){
+        this.name = name;
+    }
 
     @Relationship(type = "HAS_A_MODULE", direction = Relationship.OUTGOING)
     private Set<DbModule> modulesRel = new HashSet<>();
@@ -40,5 +43,29 @@ public class DbSystem {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<DbModule> getModulesRel() {
+        return modulesRel;
+    }
+
+    public void setModulesRel(Set<DbModule> modulesRel) {
+        this.modulesRel = modulesRel;
     }
 }
