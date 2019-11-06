@@ -26,10 +26,10 @@ public class LoadDataService {
     }
 
     @Transactional
-    public void load() {
+    public void load(String path) {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader =
-                new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("person.cql")));
+                new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)));
         String line;
         try {
             while ((line = reader.readLine()) != null) {

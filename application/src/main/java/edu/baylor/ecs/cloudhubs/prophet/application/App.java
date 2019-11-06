@@ -1,6 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.application;
 
 import edu.baylor.ecs.cloudhubs.prophet.application.services.DataService;
+import edu.baylor.ecs.cloudhubs.prophet.application.services.LoadDataService;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.DbClass;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.DbClassRepository;
 import org.slf4j.Logger;
@@ -66,13 +67,15 @@ public class App {
     }
 
     @Bean
-    CommandLineRunner demo(DbClassRepository dbClassRepository, DataService dataService) {
+    CommandLineRunner demo(LoadDataService loadDataService, DataService dataService) {
         return args -> {
 
-            dataService.insertData();
+//            dataService.insertData();
+
+            //dataService.createSystem();
 
 
-
+            loadDataService.load("bounded-context.cql");
 
 //            Module a = new Module();
 //            a.setName("ModuleA");

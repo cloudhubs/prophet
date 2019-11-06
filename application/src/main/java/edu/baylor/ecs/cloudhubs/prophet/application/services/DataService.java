@@ -6,11 +6,12 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.Module;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.DbClassRepository;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.ModuleRepository;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.SystemRepository;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.FacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DataService {
+public class DataService extends FacadeService {
 
     @Autowired
     private DbClassRepository dbClassRepository;
@@ -35,6 +36,12 @@ public class DataService {
         systemRepository.save(system);
 
 //        dbClassRepository.save(dbClass);
+    }
+
+
+    public void createSystem(){
+        System system = new System("SYSTEMD");
+        createSystem(system);
     }
 
 }
