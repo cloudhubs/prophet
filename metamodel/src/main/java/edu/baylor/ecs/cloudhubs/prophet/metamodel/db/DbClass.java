@@ -43,7 +43,4 @@ public class DbClass {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
 }
