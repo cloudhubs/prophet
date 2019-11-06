@@ -12,8 +12,11 @@ public interface SystemRepository extends CrudRepository<System, Long> {
     void deleteAll();
 
     @Query("START n=node(*) MATCH (n)-[r]->(m) RETURN n,r,m;")
-    List<Object> getAllConnected();
+    List<System> getAllConnected();
 
-    @Query("MATCH (n) RETURN n;")
-    List<Object> getAllNodes();
+//    @Query("MATCH (n) RETURN n;")
+//    @Query("MATCH (a:SYSTEM {name: 'Transaction system'})-[r]-(b)\n" +
+//            "RETURN r, a, b;")
+    Iterable<System> findAllByName(String name);
+
 }
