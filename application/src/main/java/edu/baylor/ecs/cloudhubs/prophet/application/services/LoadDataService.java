@@ -1,4 +1,4 @@
-package edu.baylor.ecs.cloudhubs.prophet.application;
+package edu.baylor.ecs.cloudhubs.prophet.application.services;
 
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;

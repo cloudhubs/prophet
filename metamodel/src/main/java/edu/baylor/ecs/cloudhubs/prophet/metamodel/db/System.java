@@ -17,7 +17,7 @@ public class System {
 
     private String name;
 
-    @Relationship(type = "HAS_A_MODULE", direction = Relationship.OUTGOING)
+    @Relationship(type = "HAS_A_MODULE", direction = Relationship.UNDIRECTED)
     private Set<Module> modules = new HashSet<>();
 
     public System(){}
