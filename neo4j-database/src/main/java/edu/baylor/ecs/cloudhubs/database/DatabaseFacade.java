@@ -24,7 +24,8 @@ public class DatabaseFacade {
      * @return
      */
     public static SystemContext getAllEntityClassesInSystem(String name){
-        return FakeDataFactory.getSystemContext();
+        return null;
+        //return FakeDataFactory.getSystemContext();
     }
 
     public static BoundedContext createBoundedContext(BoundedContext boundedContext){

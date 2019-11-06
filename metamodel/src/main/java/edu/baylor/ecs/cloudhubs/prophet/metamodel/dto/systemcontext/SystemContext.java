@@ -9,6 +9,8 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class SystemContext {
+
+    @NonNull
     private String systemName;
     private List<Module> modules;
 

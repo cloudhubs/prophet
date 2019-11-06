@@ -10,13 +10,14 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 public class Field {
-    private Set<Annotation> annotations = new HashSet<>();
+
+    @NonNull
+    private String name;
 
     @NonNull
     private String type;
 
-    @NonNull
-    private String name;
+    private Set<Annotation> annotations = new HashSet<>();
 
     private Entity entityReference = null;
 

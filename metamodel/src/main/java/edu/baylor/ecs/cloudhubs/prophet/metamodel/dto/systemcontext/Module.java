@@ -9,14 +9,13 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Module {
+
+    @NonNull
     private String name;
+
     private List<Entity> entities;
 
-    public List<Entity> getEntities() {
-        return entities;
-    }
-
-    public void setEntities(List<Entity> entities) {
-        this.entities = entities;
+    public Module(@NonNull String name) {
+        this.name = name;
     }
 }
