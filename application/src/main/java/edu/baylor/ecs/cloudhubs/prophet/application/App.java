@@ -13,6 +13,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
+import java.util.List;
+
 //@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
 //@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.graph.repository")
 //@RestController
@@ -76,6 +78,14 @@ public class App {
 
 
             loadDataService.load("bounded-context.cql");
+
+//            List<Object> notConnected = dataService.getAllNodes();
+//
+//            List<Object> getConnected = dataService.getAllNodesConnected();
+
+//            dataService.deleteAll();
+
+//            dataService.deleteAll();
 
 //            Module a = new Module();
 //            a.setName("ModuleA");

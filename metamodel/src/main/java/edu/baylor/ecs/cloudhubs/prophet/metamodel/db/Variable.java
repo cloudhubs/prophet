@@ -19,18 +19,64 @@ public class Variable {
     private String name;
 
     @Relationship(type = "HAS_TYPE", direction = Relationship.UNDIRECTED)
-    private Primitive primitiveType;
-
-    @Relationship(type = "HAS_TYPE", direction = Relationship.UNDIRECTED)
     private DbClass classType;
 
     @Relationship(type = "VARIABLE_MERGED", direction = Relationship.UNDIRECTED)
     private Set<Variable> mergedVariables = new HashSet<>();
 
-    @Relationship(value = "CLASS_VARIABLE", direction = Relationship.UNDIRECTED)
+    @Relationship(type = "HAS_TYPE", direction = Relationship.UNDIRECTED)
+    private Primitive primitiveType;
+
+    @Relationship(value = "HAS_TYPE", direction = Relationship.UNDIRECTED)
     private DbClass dbClass;
 
     public Variable(){}
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public DbClass getClassType() {
+        return classType;
+    }
+
+    public void setClassType(DbClass classType) {
+        this.classType = classType;
+    }
+
+    public Set<Variable> getMergedVariables() {
+        return mergedVariables;
+    }
+
+    public void setMergedVariables(Set<Variable> mergedVariables) {
+        this.mergedVariables = mergedVariables;
+    }
+
+    public Primitive getPrimitiveType() {
+        return primitiveType;
+    }
+
+    public void setPrimitiveType(Primitive primitiveType) {
+        this.primitiveType = primitiveType;
+    }
+
+    public DbClass getDbClass() {
+        return dbClass;
+    }
+
+    public void setDbClass(DbClass dbClass) {
+        this.dbClass = dbClass;
+    }
 }

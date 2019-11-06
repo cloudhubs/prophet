@@ -7,6 +7,8 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.SystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public abstract class FacadeService {
 
@@ -21,5 +23,15 @@ public abstract class FacadeService {
 
     public void createSystem(System system){
         systemRepository.save(system);
+    }
+
+    public void deleteAll(){systemRepository.deleteAll(); }
+
+    public List<Object> getAllNodes(){
+        return systemRepository.getAllNodes();
+    }
+
+    public List<Object> getAllNodesConnected(){
+        return systemRepository.getAllConnected();
     }
 }

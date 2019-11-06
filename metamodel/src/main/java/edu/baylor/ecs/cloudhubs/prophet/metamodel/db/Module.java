@@ -17,6 +17,9 @@ public class Module {
 
     private String name;
 
+    @Relationship(type = "SYSTEM_MODULE", direction = Relationship.UNDIRECTED)
+    private System system;
+
     @Relationship(type = "HAS_A_CLASS", direction = Relationship.UNDIRECTED)
     private Set<DbClass> classes = new HashSet<>();
 
@@ -44,6 +47,14 @@ public class Module {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public System getSystem() {
+        return system;
+    }
+
+    public void setSystem(System system) {
+        this.system = system;
     }
 
     @Override
