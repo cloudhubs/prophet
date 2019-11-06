@@ -3,7 +3,10 @@ package edu.baylor.ecs.cloudhubs.prophet.application;
 import edu.baylor.ecs.cloudhubs.prophet.application.services.DataService;
 import edu.baylor.ecs.cloudhubs.prophet.application.services.LoadDataService;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.DbClass;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.Module;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.DbClassRepository;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.ModuleRepository;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.SystemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
-
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.System;
 import java.util.List;
 
 //@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
@@ -69,34 +72,41 @@ public class App {
     }
 
     @Bean
-    CommandLineRunner demo(LoadDataService loadDataService, DataService dataService) {
+    CommandLineRunner demo(LoadDataService loadDataService, DataService dataService,
+                           ModuleRepository moduleRepository, SystemRepository systemRepository) {
         return args -> {
 
 //            dataService.insertData();
 
-            //dataService.createSystem();
+//            System ab = dataService.createSystem();
+//            log.info(ab.toString());
 
+            //loadDataService.load("bounded-context.cql");
 
-            loadDataService.load("bounded-context.cql");
+//            List<System> notConnected = dataService.getAllNodes();
 
-//            List<Object> notConnected = dataService.getAllNodes();
-//
-//            List<Object> getConnected = dataService.getAllNodesConnected();
+//            List<System> getConnected = dataService.getAllNodesConnected();
+
+            Iterable<System> systems = dataService.getAllNodesConnected();
+
+//            while (systems.iterator().hasNext()){
+//                log.info(systems.iterator().next().toString());
+//            }
 
 //            dataService.deleteAll();
 
 //            dataService.deleteAll();
 
-//            Module a = new Module();
-//            a.setName("ModuleA");
-//            a = moduleRepository.save(a);
-//
-//            System s = new System("SystemA");
-//            s.addModule(a);
-//            systemRepository.save(s);
-//
-//            Iterable<System> all = systemRepository.findAll();
-//            all.forEach(n -> log.info(n.toString()));
+            Module a = new Module();
+            a.setName("ModuleA");
+            a = moduleRepository.save(a);
+
+            System s = new System("SystemA");
+            s.addModule(a);
+            systemRepository.save(s);
+
+            Iterable<System> all = systemRepository.findAll();
+            all.forEach(n -> log.info(n.toString()));
 
 //            DbClass dbClass = new DbClass();
 //            dbClass.setName("ClassC");

@@ -21,17 +21,18 @@ public abstract class FacadeService {
     @Autowired
     private ModuleRepository moduleRepository;
 
-    public void createSystem(System system){
-        systemRepository.save(system);
+    public System createSystem(System system){
+        return systemRepository.save(system);
     }
 
     public void deleteAll(){systemRepository.deleteAll(); }
 
-    public List<Object> getAllNodes(){
-        return systemRepository.getAllNodes();
+    public Iterable<System> getAllNodes(){
+        return systemRepository.findAllByName("Transaction system");
     }
 
-    public List<Object> getAllNodesConnected(){
-        return systemRepository.getAllConnected();
+    public Iterable<System> getAllNodesConnected(){
+        Iterable<System> systems = systemRepository.findAll();
+        return systems;
     }
 }

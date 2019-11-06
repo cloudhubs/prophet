@@ -39,9 +39,9 @@ public class DataService extends FacadeService {
     }
 
 
-    public void createSystem(){
+    public System createSystem(){
         System system = new System("SYSTEMD");
-        createSystem(system);
+        return createSystem(system);
     }
 
 }
