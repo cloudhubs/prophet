@@ -121,11 +121,42 @@ CREATE (atm)-[:HAS_A_CLASS]->(atm_transaction)
 
 /* MODULE THREE ****************************************************************************************/
 
-
+/*an administrator for a tollbooth */
 CREATE (administrator:DBCLASS {name: 'edu.baylor.TollBooth.Administrator'})
-CREATE (tollbooth_Location:DBCLASS {name: 'edu.baylor.TollBooth.Location'})
-CREATE (tollbooth_Transaction:DBCLASS {name: 'edu.baylor.TollBooth.Transaction'})
-
 CREATE (tollbooth)-[:HAS_A_CLASS]->(administrator)
+CREATE (admin_name:VARIABLE{name : "name"})
+CREATE (admin_name)-[:HAS_TYPE]->(string)
+CREATE (administrator)-[:CLASS_VARIABLE]->(admin_name)
+CREATE (admin_social:VARIABLE{name : "social_security_number"})
+CREATE (admin_social)-[:HAS_TYPE]->(string)
+CREATE (administrator)-[:CLASS_VARIABLE]->(admin_social)
+CREATE (admin_pay:VARIABLE{name : "pay"})
+CREATE (admin_pay)-[:HAS_TYPE]->(string)
+CREATE (administrator)-[:CLASS_VARIABLE]->(admin_pay)
+
+/*The tollbooth */
+CREATE (tollBooth_physical:DBCLASS {name: 'edu.baylor.TollBooth.TollBooth'})
+CREATE (tollbooth)-[:HAS_A_CLASS]->(tollBooth_physical)
+CREATE (tollbooth_to_operator:VARIABLE{name : "admin"})
+CREATE (tollbooth_to_operator)-[:HAS_TYPE]->(administrator)
+CREATE (tollBooth_physical)-[:CLASS_VARIABLE]->(tollbooth_to_operator)
+CREATE (toll_throughput:VARIABLE{name : "throughput"})
+CREATE (toll_throughput)-[:HAS_TYPE]->(long)
+CREATE (tollBooth_physical)-[:CLASS_VARIABLE]->(toll_throughput)
+
+
+/* the location of a tollbooth */
+CREATE (tollbooth_Location:DBCLASS {name: 'edu.baylor.TollBooth.Location'})
 CREATE (tollbooth)-[:HAS_A_CLASS]->(tollbooth_Location)
-CREATE (tollbooth)-[:HAS_A_CLASS]->(tollbooth_Transaction)
+CREATE (toll_road:VARIABLE{name : "roadName"})
+CREATE (toll_road)-[:HAS_TYPE]->(string)
+CREATE (tollbooth_Location)-[:CLASS_VARIABLE]->(toll_road)
+CREATE (toll_cost:VARIABLE{name : "cost"})
+CREATE (toll_cost)-[:HAS_TYPE]->(double)
+CREATE (tollbooth_Location)-[:CLASS_VARIABLE]->(toll_cost)
+
+CREATE (tollbooth_transaction:DBCLASS {name: 'edu.baylor.TollBooth.Transaction'})
+CREATE (tollbooth)-[:HAS_A_CLASS]->(tollbooth_transaction)
+CREATE (tollbooth_transaction_id:VARIABLE{name : "id"})
+CREATE (tollbooth_transaction_id)-[:HAS_TYPE]->(long)
+CREATE (tollbooth_transaction)-[:CLASS_VARIABLE]->(tollbooth_transaction_id)
