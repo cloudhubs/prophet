@@ -1,6 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.metamodel.db;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.singletons.Entity;
+import lombok.Data;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -10,37 +11,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NodeEntity
+@Data
 public class DbClass {
 
     @Id
     @GeneratedValue
     private Long id;
+
     private String name;
 
-    @Relationship(type = "MERGED_FROM", direction = Relationship.UNDIRECTED)
-    private Set<DbClass> dbClasses = new HashSet<>();
+    @Relationship(type = "CLASS_IMPORT")
+    Set<DbImport> imports = new HashSet<>();
 
-    @Relationship(value = "CLASS_VARIABLE", direction = Relationship.UNDIRECTED)
-    private Set<Variable> variables = new HashSet<>();
+    @Relationship(type = "CLASS_FUNCTION")
+    Set<DbFunction> functions = new HashSet<>();
 
-    @Relationship(value = "IS_ENTITY", direction = Relationship.UNDIRECTED)
-    private Entity entity;
+    // If this file is a directory
+    @Relationship(type = "CLASS_CLASS")
+    Set<DbClass> classes = new HashSet<>();
 
-    public DbClass(){}
+    @Relationship(type = "CLASS_HAS_FILE", direction = Relationship.INCOMING)
+    DbFile file;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Relationship(type = "CLASS_HAS_FUNCTION", direction = Relationship.INCOMING)
+    DbFunction function;
 }
