@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2019, Cloud Innovation Labs, All rights reserved
  * Version: 1.0
  */
@@ -170,13 +170,10 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
      */
     @Override
     public Field mergeFields(Field one, Field two) {
-        Field toReturn = new Field();
+        String name = one.getName();
+        String type = Type.get(one.getName()).ordinal() < Type.get(two.getName()).ordinal() ? two.getName() : one.getName();
 
-        // set the name to the name of the first one
-        toReturn.setName(one.getName());
-
-        // set the type to whichever is a more 'general' type
-        toReturn.setType(Type.get(one.getName()).ordinal() < Type.get(two.getName()).ordinal() ? two.getName() : one.getName());
+        Field toReturn = new Field(type, name);
 
         // set the annotations
         toReturn.setAnnotations(one.getAnnotations());
