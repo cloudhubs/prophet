@@ -12,11 +12,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.System;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 //@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
 //@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.graph.repository")
@@ -158,4 +162,11 @@ public class App {
 
         };
     }
+
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
 }
