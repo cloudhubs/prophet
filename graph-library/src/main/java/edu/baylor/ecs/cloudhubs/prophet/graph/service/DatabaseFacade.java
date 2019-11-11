@@ -5,6 +5,8 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContex
 
 public class DatabaseFacade {
 
+    public DatabaseFacade(){}
+
     /**
      * It retrieves following data structure from database based on system name
      * System1
