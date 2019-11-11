@@ -1,5 +1,6 @@
 package edu.baylor.ecs.cloudhubs.prophet.application;
 
+import edu.baylor.ecs.cloudhubs.prophet.application.config.ServiceConfig;
 import edu.baylor.ecs.cloudhubs.prophet.application.services.DataService;
 import edu.baylor.ecs.cloudhubs.prophet.application.services.LoadDataService;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.DbClass;
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.System;
 import org.springframework.web.client.RestTemplate;

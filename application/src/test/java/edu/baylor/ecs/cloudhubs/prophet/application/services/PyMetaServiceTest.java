@@ -1,6 +1,8 @@
 package edu.baylor.ecs.cloudhubs.prophet.application.services;
 
 import edu.baylor.ecs.cloudhubs.prophet.application.util.PyRequest;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.DbSystem;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class PyMetaServiceTest {
         request.setFileName("/Users/yeboah/Python/py-testbd/app");
         request.setGitIgnore(true);
 
-        service.processPythonProject(request);
+        DbSystem system = service.processPythonProject(request);
+
+        Assertions.assertThat(system.getModules().size()).isEqualTo(1);
+        Assertions.assertThat(system.getName()).isEqualTo("app");
     }
 }
