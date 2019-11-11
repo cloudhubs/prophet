@@ -5,8 +5,7 @@
 
 package edu.baylor.ecs.prophet.bounded.context.utils.impl;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Field;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.*;
 import edu.baylor.ecs.prophet.bounded.context.utils.SimilarityUtils;
 import edu.cmu.lti.jawjaw.pobj.POS;
 import edu.cmu.lti.lexical_db.ILexicalDatabase;

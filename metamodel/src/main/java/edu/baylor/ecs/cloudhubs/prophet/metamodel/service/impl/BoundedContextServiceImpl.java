@@ -1,9 +1,9 @@
 package edu.baylor.ecs.cloudhubs.prophet.metamodel.service.impl;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.BoundedContextService;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.FacadeService;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.BoundedContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,16 +23,27 @@ public class BoundedContextServiceImpl extends FacadeService implements BoundedC
 
     public BoundedContext standardStrategy(String systemName){
         //Check if boundedContext in the database
-
-        //if so get the bounded context from the database
-
-        //if not -> getBoundedContextFromLibrary
-
-        return null;
+        if (hasBoundedContext(systemName)){
+            //if so get the bounded context from the database
+            return null;
+        } else {
+            //if not -> getBoundedContextFromLibrary
+            return null;
+        }
 
     }
 
-    public BoundedContext getBoundedContextFromLibrary(String systemName){
+    /**
+     * Checks if system is associated with bounded context object
+     * @param systemName
+     * @return
+     */
+    private boolean hasBoundedContext(String systemName) {
+
+        return true;
+    }
+
+    private BoundedContext getBoundedContextFromLibrary(String systemName){
         //Get Context Maps for Bounded Context Library
         SystemContext systemContext = getAllEntityClassesInSystem(systemName);
         //Get Bounded Context from Context Maps
@@ -42,10 +53,20 @@ public class BoundedContextServiceImpl extends FacadeService implements BoundedC
         return boundedContext;
     }
 
+    /**
+     * Get all entity classes clustered by module
+     * @param name
+     * @return
+     */
     private SystemContext getAllEntityClassesInSystem(String name){
         return null;
     }
 
+    /**
+     * Persist given bounded context to database
+     * @param boundedContext
+     * @return
+     */
     private BoundedContext createBoundedContext(BoundedContext boundedContext){
         //ToDo: persist context
         return boundedContext;

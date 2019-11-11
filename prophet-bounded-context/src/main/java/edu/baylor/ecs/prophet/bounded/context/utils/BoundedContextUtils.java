@@ -5,11 +5,7 @@
 
 package edu.baylor.ecs.prophet.bounded.context.utils;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Field;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Module;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.*;
 
 import java.util.Map;
 

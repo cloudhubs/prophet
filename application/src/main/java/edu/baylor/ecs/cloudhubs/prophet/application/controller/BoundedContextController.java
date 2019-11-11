@@ -1,7 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.application.controller;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.impl.BoundedContextServiceImpl;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.BoundedContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
