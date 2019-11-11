@@ -10,6 +10,7 @@ import org.junit.runners.Suite;
         DbModuleServiceTest.class,
         ModuleRelRepositoryTest.class,
         DbClassServiceTest.class
+        //DbBoundedContextTest.class
 })
 public class GraphLibrarySuite {
 

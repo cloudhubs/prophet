@@ -2,11 +2,10 @@ package edu.baylor.ecs.cloudhubs.prophet.application;
 
 import edu.baylor.ecs.cloudhubs.prophet.application.services.DataService;
 import edu.baylor.ecs.cloudhubs.prophet.application.services.LoadDataService;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.DbClass;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.Module;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.DbClassRepository;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.ModuleRepository;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.SystemRepository;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.LoadScriptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -14,9 +13,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.System;
-import java.util.List;
 
 //@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
 //@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.graph.repository")
@@ -27,8 +27,10 @@ import java.util.List;
 //@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
 //@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.graph.repository")
 @EntityScan("edu.baylor.ecs.cloudhubs.prophet.metamodel.db")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
 @EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.metamodel.repository")
+@ComponentScan({"edu.baylor.ecs.cloudhubs.prophet.metamodel.service", "edu.baylor.ecs.cloudhubs.prophet.application" +
+        ".services"})
 public class App {
 
 //    private final MyService myService;
@@ -73,7 +75,8 @@ public class App {
 
     @Bean
     CommandLineRunner demo(LoadDataService loadDataService, DataService dataService,
-                           ModuleRepository moduleRepository, SystemRepository systemRepository) {
+                           ModuleRepository moduleRepository, SystemRepository systemRepository,
+                            LoadScriptService loadScriptService) {
         return args -> {
 
 //            dataService.insertData();
@@ -86,6 +89,8 @@ public class App {
 //            List<System> notConnected = dataService.getAllNodes();
 
 //            List<System> getConnected = dataService.getAllNodesConnected();
+
+            //loadScriptService.load("bounded-context.cql");
 
             Iterable<System> systems = dataService.getAllNodesConnected();
 

@@ -13,9 +13,18 @@
         <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     <!--</parent>-->
 
+    <!--<parent>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--<version>2.1.8.RELEASE</version>-->
+        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--</parent>-->
+
   <groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>
   <artifactId>metamodel</artifactId>
   <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
 
   <name>metamodel</name>
   <!-- FIXME change it to the project's website -->
@@ -45,6 +54,21 @@
           <version>2.1.8.RELEASE</version>
       </dependency>
 
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+          <scope>test</scope>
+          <version>2.1.8.RELEASE</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
+      <dependency>
+          <groupId>javax.inject</groupId>
+          <artifactId>javax.inject</artifactId>
+          <version>1</version>
+      </dependency>
+
+
       <!--<dependency>-->
       <!--<groupId>edu.baylor.ecs.cloudhubs</groupId>-->
       <!--<artifactId>prophet</artifactId>-->
@@ -57,12 +81,12 @@
           <!--<scope>test</scope>-->
       <!--</dependency>-->
 
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.11</version>
-          <scope>test</scope>
-      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>junit</groupId>-->
+          <!--<artifactId>junit</artifactId>-->
+          <!--<version>4.12</version>-->
+          <!--<scope>test</scope>-->
+      <!--</dependency>-->
       <dependency>
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
@@ -85,6 +109,12 @@
           <groupId>org.springframework.data</groupId>
           <artifactId>spring-data-commons</artifactId>
           <version>2.1.10.RELEASE</version>
+      </dependency>
+
+      <dependency>
+          <groupId>edu.baylor.ecs.cil</groupId>
+          <artifactId>cil-jssa</artifactId>
+          <version>0.0.2</version>
       </dependency>
 
   </dependencies>

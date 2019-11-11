@@ -12,7 +12,7 @@
     <groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>
     <artifactId>graph-library</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>jar</packaging>
     <name>graph-library</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
@@ -83,6 +83,12 @@
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-bolt-driver</artifactId>
             <version>${neo4j-ogm.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
 
         <!-- NEO4J -->
@@ -185,6 +191,7 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-rest-core</artifactId>

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.nio.file.NotDirectoryException;
 
 @Service
-public class JParserService extends FacadeService {
+public class JavaParserService extends FacadeService {
 
     //Todo: call Jparser library and convert data and insert to db via FacadeService
 
