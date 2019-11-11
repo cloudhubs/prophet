@@ -7,7 +7,7 @@ package edu.baylor.ecs.prophet.bounded.context.repository.impl;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.BoundedContextDatabaseService;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.impl.BoundedContextServiceImpl;
 import edu.baylor.ecs.prophet.bounded.context.repository.DatabseRepository;
 
 /**
@@ -23,7 +23,7 @@ public class DatabseRepositoryImpl implements DatabseRepository {
      */
     @Override
     public SystemContext getAllEntityClassesInSystem(String systemName) {
-        return BoundedContextDatabaseService.getAllEntityClassesInSystem(systemName);
+        return BoundedContextServiceImpl.getAllEntityClassesInSystem(systemName);
     }
 
     /**
@@ -33,6 +33,6 @@ public class DatabseRepositoryImpl implements DatabseRepository {
      */
     @Override
     public BoundedContext createBoundedContext(BoundedContext boundedContext) {
-        return BoundedContextDatabaseService.createBoundedContext(boundedContext);
+        return BoundedContextServiceImpl.createBoundedContext(boundedContext);
     }
 }
