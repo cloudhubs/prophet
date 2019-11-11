@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PyServiceTest {
+public class PyMetaServiceTest {
 
     @Autowired
     private PyService service;
