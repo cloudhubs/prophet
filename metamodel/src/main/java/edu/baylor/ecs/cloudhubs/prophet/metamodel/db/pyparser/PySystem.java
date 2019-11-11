@@ -8,7 +8,5 @@ import java.util.List;
 @Data
 public class PySystem {
     String name;
-    List<PyModule> modules;
-    List<PyPackage> packages;
-    String type;
+    List<PyApp> apps;
 }
