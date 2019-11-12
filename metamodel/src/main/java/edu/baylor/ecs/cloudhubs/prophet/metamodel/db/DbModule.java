@@ -21,6 +21,9 @@ public class DbModule {
     @Relationship(type = "MODULE_FILE")
     Set<DbFile> files = new HashSet<>();
 
+    @Relationship(type = "MODULE_MODULE")
+    Set<DbModule> modules = new HashSet<>();
+
 //    @Relationship(type = "MODULE_HAS_SYSTEM", direction = Relationship.INCOMING)
 //    DbSystem system;
 }
