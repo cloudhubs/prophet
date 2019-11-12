@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 //@RepositoryRestResource(collectionResourceRel = "systems", path = "systems")
-public interface DbSystemRepository extends Neo4jRepository<DbSystem, Long> {
+public interface DbSystemRepository extends Neo4jRepository<DbSystem, String> {
     Optional<DbSystem> findByName(@Param("name") String name);
 
     Iterable<Long> deleteByName(@Param("name") String name);

@@ -9,7 +9,7 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.Set;
 
-@NodeEntity
+@NodeEntity(label = "Module")
 @Data
 public class DbModule {
     @Id
@@ -21,6 +21,6 @@ public class DbModule {
     @Relationship(type = "MODULE_FILE")
     Set<DbFile> files = new HashSet<>();
 
-    @Relationship(type = "MODULE_HAS_SYSTEM", direction = Relationship.INCOMING)
-    DbSystem system;
+//    @Relationship(type = "MODULE_HAS_SYSTEM", direction = Relationship.INCOMING)
+//    DbSystem system;
 }

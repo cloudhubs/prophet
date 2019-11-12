@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@NodeEntity
+@NodeEntity(label = "File")
 public class DbFile {
     @Id
     @GeneratedValue
@@ -28,9 +28,12 @@ public class DbFile {
     @Relationship(type = "FILE_FILE")
     Set<DbFile> files = new HashSet<>();
 
-    @Relationship(type = "FILE_HAS_MODULE", direction = Relationship.INCOMING)
-    DbModule module;
+    @Relationship(type = "FILE_IMPORT")
+    Set<DbImport> imports = new HashSet<>();
 
-    @Relationship(type = "FILE_HAS_FILE", direction = Relationship.INCOMING)
-    DbFile file;
+//    @Relationship(type = "FILE_HAS_MODULE", direction = Relationship.INCOMING)
+//    DbModule module;
+//
+//    @Relationship(type = "FILE_HAS_FILE", direction = Relationship.INCOMING)
+//    DbFile file;
 }

@@ -2,7 +2,6 @@ package edu.baylor.ecs.cloudhubs.prophet.metamodel.service;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.*;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.pyparser.*;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.pyparser.adapter.*;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,18 @@ public class PyMetaService {
     private DbFunctionRepository functionRepository;
     @Autowired
     private DbFileRepository fileRepository;
+    @Autowired
+    private DbImportRepository importRepository;
 
     public DbSystem persistPyData(PySystem pySystem) {
         // create system
-        DbSystem system = new PySystemAdapter(pySystem);
+        DbSystem system = new DbSystem();
+        system.setName(pySystem.getName());
 
         // db module -> py app
         for (PyApp pyApp: pySystem.getApps()) {
-            DbModule module = new PyAppAdapter(pyApp);
+            DbModule module = new DbModule();
+            module.setName(pyApp.getName());
 
             // db file -> db module
             setModuleNodes(pyApp.getModules(), module);
@@ -61,20 +64,58 @@ public class PyMetaService {
 
     private void setModuleNodes(List<PyModule> modules, DbModule module) {
         for (PyModule pyAppModule : modules) {
-            DbFile file = new PyModuleAdapter(pyAppModule);
+            DbFile file = new DbFile();
+            file.setName(pyAppModule.getName());
+
+            // imports
+            for (PyImport anImport : pyAppModule.getImports()) {
+                DbImport dbImport = new DbImport();
+                dbImport.setName(anImport.getName());
+                importRepository.save(dbImport);
+                file.getImports().add(dbImport);
+            }
 
             // Db
             for (PyClass pyClass : pyAppModule.getClasses()) {
-                DbClass dbClass = new PyClassAdapter(pyClass);
+                DbClass dbClass = new DbClass();
+                dbClass.setName(pyClass.getName());
+
+                // imports
+                for (PyImport anImport : pyClass.getImports()) {
+                    DbImport dbImport = new DbImport();
+                    dbImport.setName(anImport.getName());
+                    importRepository.save(dbImport);
+                    dbClass.getImports().add(dbImport);
+                }
 
                 for (PyClass aClass : pyClass.getClasses()) {
-                    DbClass bClass = new PyClassAdapter(aClass);
+                    DbClass bClass = new DbClass();
+                    bClass.setName(aClass.getName());
+
+                    // imports
+                    for (PyImport anImport : aClass.getImports()) {
+                        DbImport dbImport = new DbImport();
+                        dbImport.setName(anImport.getName());
+                        importRepository.save(dbImport);
+                        bClass.getImports().add(dbImport);
+                    }
+
                     classRepository.save(bClass);
                     dbClass.getClasses().add(bClass);
                 }
 
                 for (PyFunction pyFunction : pyClass.getFunctions()) {
-                    DbFunction function = new PyFunctionAdapter(pyFunction);
+                    DbFunction function = new DbFunction();
+                    function.setName(pyFunction.getName());
+
+                    // imports
+                    for (PyImport anImport : pyFunction.getImports()) {
+                        DbImport dbImport = new DbImport();
+                        dbImport.setName(anImport.getName());
+                        importRepository.save(dbImport);
+                        function.getImports().add(dbImport);
+                    }
+
                     functionRepository.save(function);
                     dbClass.getFunctions().add(function);
                 }
@@ -85,16 +126,45 @@ public class PyMetaService {
             }
 
             for (PyFunction pyFunction : pyAppModule.getFunctions()) {
-                DbFunction function = new PyFunctionAdapter(pyFunction);
+                DbFunction function = new DbFunction();
+                function.setName(pyFunction.getName());
+
+                // imports
+                for (PyImport anImport : pyFunction.getImports()) {
+                    DbImport dbImport = new DbImport();
+                    dbImport.setName(anImport.getName());
+                    importRepository.save(dbImport);
+                    function.getImports().add(dbImport);
+                }
 
                 for (PyClass aClass : pyFunction.getClasses()) {
-                    DbClass bClass = new PyClassAdapter(aClass);
+                    DbClass bClass = new DbClass();
+                    bClass.setName(aClass.getName());
+
+                    // imports
+                    for (PyImport anImport : aClass.getImports()) {
+                        DbImport dbImport = new DbImport();
+                        dbImport.setName(anImport.getName());
+                        importRepository.save(dbImport);
+                        bClass.getImports().add(dbImport);
+                    }
+
                     classRepository.save(bClass);
                     function.getClasses().add(bClass);
                 }
 
                 for (PyFunction aFunction : pyFunction.getFunctions()) {
-                    DbFunction bFunction = new PyFunctionAdapter(aFunction);
+                    DbFunction bFunction = new DbFunction();
+                    bFunction.setName(aFunction.getName());
+
+                    // imports
+                    for (PyImport anImport : aFunction.getImports()) {
+                        DbImport dbImport = new DbImport();
+                        dbImport.setName(anImport.getName());
+                        importRepository.save(dbImport);
+                        bFunction.getImports().add(dbImport);
+                    }
+
                     functionRepository.save(bFunction);
                     function.getFunctions().add(bFunction);
                 }

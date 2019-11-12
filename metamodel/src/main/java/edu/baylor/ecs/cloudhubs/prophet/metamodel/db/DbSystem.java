@@ -9,7 +9,7 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.HashSet;
 import java.util.Set;
 
-@NodeEntity
+@NodeEntity(label = "System")
 @Data
 public class DbSystem {
     @Id

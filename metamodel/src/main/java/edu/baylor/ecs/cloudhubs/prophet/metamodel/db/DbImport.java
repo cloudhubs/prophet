@@ -7,7 +7,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 @Data
-@NodeEntity
+@NodeEntity(label = "Import")
 public class DbImport {
     @Id
     @GeneratedValue
@@ -15,12 +15,12 @@ public class DbImport {
 
     private String name;
 
-    @Relationship(type = "IMPORT_HAS_FILE", direction = Relationship.INCOMING)
-    DbFile file;
-
-    @Relationship(type = "IMPORT_HAS_FUNCTION", direction = Relationship.INCOMING)
-    DbFunction function;
-
-    @Relationship(type = "IMPORT_HAS_CLASS", direction = Relationship.INCOMING)
-    DbClass dbClass;
+//    @Relationship(type = "IMPORT_HAS_FILE", direction = Relationship.INCOMING)
+//    DbFile file;
+//
+//    @Relationship(type = "IMPORT_HAS_FUNCTION", direction = Relationship.INCOMING)
+//    DbFunction function;
+//
+//    @Relationship(type = "IMPORT_HAS_CLASS", direction = Relationship.INCOMING)
+//    DbClass dbClass;
 }

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@NodeEntity
+@NodeEntity(label = "Function")
 public class DbFunction {
     @Id
     @GeneratedValue
@@ -28,12 +28,12 @@ public class DbFunction {
     @Relationship(type = "FUNCTION_CLASS")
     Set<DbClass> classes = new HashSet<>();
 
-    @Relationship(type = "FUNCTION_HAS_FILE", direction = Relationship.INCOMING)
-    DbFile file;
-
-    @Relationship(type = "FUNCTION_HAS_FUNCTION", direction = Relationship.INCOMING)
-    DbFunction function;
-
-    @Relationship(type = "FUNCTION_HAS_CLASS", direction = Relationship.INCOMING)
-    DbClass dbClass;
+//    @Relationship(type = "FUNCTION_HAS_FILE", direction = Relationship.INCOMING)
+//    DbFile file;
+//
+//    @Relationship(type = "FUNCTION_HAS_FUNCTION", direction = Relationship.INCOMING)
+//    DbFunction function;
+//
+//    @Relationship(type = "FUNCTION_HAS_CLASS", direction = Relationship.INCOMING)
+//    DbClass dbClass;
 }
