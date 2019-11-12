@@ -1,10 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.metamodel.db;
 
 import lombok.Data;
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +13,7 @@ public class DbSystem {
     @GeneratedValue
     private Long id;
 
+    @Index(unique = true)
     String name;
 
     @Relationship(type = "SYSTEM_MODULE")
