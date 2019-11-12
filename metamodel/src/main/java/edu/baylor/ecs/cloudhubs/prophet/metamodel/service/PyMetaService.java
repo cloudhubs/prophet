@@ -2,26 +2,20 @@ package edu.baylor.ecs.cloudhubs.prophet.metamodel.service;
 
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.*;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.pyparser.*;
+import edu.baylor.ecs.cloudhubs.prophet.metamodel.exceptions.ConstraintViolationException;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PyMetaService {
     @Autowired
+    @Lazy
     private DbSystemRepository systemRepository;
-    @Autowired
-    private DbModuleRepository moduleRepository;
-    @Autowired
-    private DbClassRepository classRepository;
-    @Autowired
-    private DbFunctionRepository functionRepository;
-    @Autowired
-    private DbFileRepository fileRepository;
-    @Autowired
-    private DbImportRepository importRepository;
 
     public DbSystem persistPyData(PySystem pySystem) {
         // create system
@@ -39,11 +33,10 @@ public class PyMetaService {
             // db file -> db package
             setPackages(pyApp.getPackages(), module);
 
-            moduleRepository.save(module);
             system.getModules().add(module);
         }
 
-        return systemRepository.save(system);
+        return create(system);
     }
 
     private void setPackages(List<PyPackage> pyPackages, DbModule module){
@@ -59,7 +52,12 @@ public class PyMetaService {
     }
 
     private void setPackage(PyPackage pyPackage, DbModule module){
-        setModuleNodes(pyPackage.getModules(), module);
+        DbModule packageModule = new DbModule();
+        packageModule.setName(pyPackage.getName());
+
+        setModuleNodes(pyPackage.getModules(), packageModule);
+
+        module.getModules().add(packageModule);
     }
 
     private void setModuleNodes(List<PyModule> modules, DbModule module) {
@@ -71,7 +69,6 @@ public class PyMetaService {
             for (PyImport anImport : pyAppModule.getImports()) {
                 DbImport dbImport = new DbImport();
                 dbImport.setName(anImport.getName());
-                importRepository.save(dbImport);
                 file.getImports().add(dbImport);
             }
 
@@ -84,7 +81,6 @@ public class PyMetaService {
                 for (PyImport anImport : pyClass.getImports()) {
                     DbImport dbImport = new DbImport();
                     dbImport.setName(anImport.getName());
-                    importRepository.save(dbImport);
                     dbClass.getImports().add(dbImport);
                 }
 
@@ -96,11 +92,9 @@ public class PyMetaService {
                     for (PyImport anImport : aClass.getImports()) {
                         DbImport dbImport = new DbImport();
                         dbImport.setName(anImport.getName());
-                        importRepository.save(dbImport);
                         bClass.getImports().add(dbImport);
                     }
 
-                    classRepository.save(bClass);
                     dbClass.getClasses().add(bClass);
                 }
 
@@ -112,15 +106,11 @@ public class PyMetaService {
                     for (PyImport anImport : pyFunction.getImports()) {
                         DbImport dbImport = new DbImport();
                         dbImport.setName(anImport.getName());
-                        importRepository.save(dbImport);
                         function.getImports().add(dbImport);
                     }
 
-                    functionRepository.save(function);
                     dbClass.getFunctions().add(function);
                 }
-
-                classRepository.save(dbClass);
 
                 file.getClasses().add(dbClass);
             }
@@ -133,7 +123,6 @@ public class PyMetaService {
                 for (PyImport anImport : pyFunction.getImports()) {
                     DbImport dbImport = new DbImport();
                     dbImport.setName(anImport.getName());
-                    importRepository.save(dbImport);
                     function.getImports().add(dbImport);
                 }
 
@@ -145,11 +134,9 @@ public class PyMetaService {
                     for (PyImport anImport : aClass.getImports()) {
                         DbImport dbImport = new DbImport();
                         dbImport.setName(anImport.getName());
-                        importRepository.save(dbImport);
                         bClass.getImports().add(dbImport);
                     }
 
-                    classRepository.save(bClass);
                     function.getClasses().add(bClass);
                 }
 
@@ -161,21 +148,30 @@ public class PyMetaService {
                     for (PyImport anImport : aFunction.getImports()) {
                         DbImport dbImport = new DbImport();
                         dbImport.setName(anImport.getName());
-                        importRepository.save(dbImport);
                         bFunction.getImports().add(dbImport);
                     }
 
-                    functionRepository.save(bFunction);
                     function.getFunctions().add(bFunction);
                 }
 
-                functionRepository.save(function);
                 file.getFunctions().add(function);
             }
 
-            fileRepository.save(file);
-
             module.getFiles().add(file);
         }
+    }
+
+    private DbSystem create(DbSystem system) {
+//        if (system.getName() == null) {
+//            throw new ConstraintViolationException("DbSystem cannot be null");
+//        }
+//
+//        // check if no entity exists with name
+//        Optional<DbSystem> s = systemRepository.findByName(system.getName());
+//        if (s.isPresent()) {
+//            throw new ConstraintViolationException("DbSystem with name already exists");
+//        }
+
+        return systemRepository.save(system);
     }
 }
