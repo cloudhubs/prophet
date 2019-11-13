@@ -4,12 +4,18 @@ import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.BoundedContextService;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.FacadeService;
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.BoundedContext;
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
+import edu.baylor.ecs.prophet.bounded.context.api.BoundedContextApi;
+import edu.baylor.ecs.prophet.bounded.context.api.impl.BoundedContextApiImpl;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BoundedContextServiceImpl extends FacadeService implements BoundedContextService {
 
     public BoundedContext getBoundedContext(String systemName, Long forceUpdate) {
+//        if (!hasSystemname(systemName)){
+//            //
+//            return Response;
+//        }
         if (forceUpdate.equals(new Long(1))){
             return forceUpdateStrategy(systemName);
         } else {
@@ -25,12 +31,17 @@ public class BoundedContextServiceImpl extends FacadeService implements BoundedC
         //Check if boundedContext in the database
         if (hasBoundedContext(systemName)){
             //if so get the bounded context from the database
+            //ToDo: method
+            getBoundedContextFromDb(systemName);
             return null;
         } else {
             //if not -> getBoundedContextFromLibrary
-            return null;
+            return getBoundedContextFromLibrary(systemName);
         }
 
+    }
+
+    private void getBoundedContextFromDb(String systemName) {
     }
 
     /**
@@ -46,10 +57,11 @@ public class BoundedContextServiceImpl extends FacadeService implements BoundedC
     private BoundedContext getBoundedContextFromLibrary(String systemName){
         //Get Context Maps for Bounded Context Library
         SystemContext systemContext = getAllEntityClassesInSystem(systemName);
-        //Get Bounded Context from Context Maps
-        BoundedContext boundedContext = null; // = boundedContextUtils.createBoundedContext(systemContext);
+        //Get Bounded Context from Context Maps (Bounded Context Library)
+        BoundedContextApi boundedContextApi = new BoundedContextApiImpl();
+        BoundedContext boundedContext = boundedContextApi.getBoundedContext(systemContext);
         //Persist to database
-        boundedContext = createBoundedContext(boundedContext);
+        boundedContext = persistBoundedContext(boundedContext);
         return boundedContext;
     }
 
@@ -67,7 +79,7 @@ public class BoundedContextServiceImpl extends FacadeService implements BoundedC
      * @param boundedContext
      * @return
      */
-    private BoundedContext createBoundedContext(BoundedContext boundedContext){
+    private BoundedContext persistBoundedContext(BoundedContext boundedContext){
         //ToDo: persist context
         return boundedContext;
     }
