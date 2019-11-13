@@ -5,8 +5,8 @@
 
 package edu.baylor.ecs.prophet.bounded.context.utils;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Entity;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.Field;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.Entity;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.Field;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.Map;

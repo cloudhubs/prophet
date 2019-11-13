@@ -68,7 +68,7 @@ public class EmbeddedNeo4j
                 .newEmbeddedDatabaseBuilder( databaseDirectory )
                 .setConfig( bolt.type, "BOLT" )
                 .setConfig( bolt.enabled, "true" )
-                .setConfig( bolt.address, "localhost:7687" )
+                .setConfig( bolt.address, "localhost:7474" )
                 .newGraphDatabase();
 
         registerShutdownHook( graphDb );
