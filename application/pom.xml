@@ -84,6 +84,12 @@
       <version>1.18.10</version>
       <scope>provided</scope>
     </dependency>
+
+      <dependency>
+          <groupId>edu.baylor.ecs.cloudhubs</groupId>
+          <artifactId>prophet-dto</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
   </dependencies>
 
 

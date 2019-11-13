@@ -2,10 +2,9 @@
  * Copyright 2019, Cloud Innovation Labs, All rights reserved
  * Version: 1.0
  */
-
 package edu.baylor.ecs.prophet.bounded.context.api;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.*;
 
 /**
  * Interface to accept requests from outside
@@ -20,5 +19,5 @@ public interface BoundedContextApi {
      * @param systemName
      * @return
      */
-    BoundedContext getBoundedContext(String systemName);
+    BoundedContext getBoundedContext(SystemContext systemName);
 }
