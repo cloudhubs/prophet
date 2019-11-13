@@ -5,7 +5,7 @@
 
 package edu.baylor.ecs.prophet.bounded.context;
 
-import edu.baylor.ecs.cloudhubs.database.EmbeddedNeo4j;
+ //import edu.baylor.ecs.cloudhubs.database.EmbeddedNeo4j;
 
 import java.io.IOException;
 
@@ -16,10 +16,13 @@ import java.io.IOException;
 public class App 
 {
     public static void main( String[] args ) throws IOException {
+        /*
         EmbeddedNeo4j hello = new EmbeddedNeo4j();
         hello.createDb();
         hello.removeData();
         hello.shutDown();
         System.out.println( "Hello World!" );
+        */
+
     }
 }

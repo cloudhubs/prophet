@@ -126,6 +126,18 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
         Set<Field> entityTwoFields = new HashSet<>(two.getFields());
         Field toAdd = null;
 
+        if(Objects.isNull(fieldMapping)){
+            fieldMapping = new HashMap<>();
+        }
+
+        // make sure that all fields in the field mapping are also in f1
+        for(Field f : fieldMapping.keySet()){
+            // TODO make this more efficient
+            if(!one.getFields().contains(f)){
+                throw new FieldMappingException();
+            }
+        }
+
         // for each field in entity one
         for (Field f1 : one.getFields()){
 
@@ -174,7 +186,7 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
     @Override
     public Field mergeFields(Field one, Field two) {
         String name = one.getName();
-        String type = Type.get(one.getName()).ordinal() < Type.get(two.getName()).ordinal() ? two.getName() : one.getName();
+        String type = Type.get(one.getType()).ordinal() < Type.get(two.getType()).ordinal() ? two.getType() : one.getType();
 
         Field toReturn = new Field(type, name);
 
