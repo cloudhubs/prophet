@@ -9,6 +9,7 @@ package edu.baylor.ecs.prophet.bounded.context.utils.impl;
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.*;
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.Module;
 
+import edu.baylor.ecs.prophet.bounded.context.exception.FieldMappingException;
 import edu.baylor.ecs.prophet.bounded.context.utils.BoundedContextUtils;
 import edu.baylor.ecs.prophet.bounded.context.utils.SimilarityUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -138,7 +139,7 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
                 if (!entityTwoFields.remove(f2)) {
 
                     // will be thrown if the entity mapping is invalid
-                    throw new NoSuchElementException("Field not found in entity 2 " + f2.toString());
+                    throw new FieldMappingException("Field not found in entity 2 " + f2.toString());
                 }
 
                 //see if they are both entity references to different things add them both

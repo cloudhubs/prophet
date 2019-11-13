@@ -2,6 +2,7 @@ package edu.baylor.ecs.prophet.bounded.context;
 
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.*;
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.Module;
+import edu.baylor.ecs.prophet.bounded.context.exception.FieldMappingException;
 import edu.baylor.ecs.prophet.bounded.context.utils.BoundedContextUtils;
 import edu.baylor.ecs.prophet.bounded.context.utils.impl.BoundedContextUtilsImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,8 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +22,9 @@ public class BoundedContextTester {
 
     private static SystemContext simpleSystem = null;
     private static BoundedContextUtils boundedContextUtils;
+    private static Entity dogEntity;
+    private static Entity catentity;
+    private static Entity dogAndCatEntityAllFields;
 
     @BeforeAll
     public static void  initSystems(){
@@ -92,6 +95,13 @@ public class BoundedContextTester {
         systemContext.setModules(Arrays.asList(moduleOne, moduleTwo));
 
         simpleSystem = systemContext;
+        dogEntity = dog;
+        catentity = cat;
+        dogAndCatEntityAllFields = new Entity();
+        dogAndCatEntityAllFields.setEntityName("dog and cat");
+        List<Field> mixedFields = new ArrayList<>(dogEntity.getFields());
+        mixedFields.addAll(catentity.getFields());
+        dogAndCatEntityAllFields.setFields(mixedFields);
     }
 
     @Nested
@@ -115,7 +125,7 @@ public class BoundedContextTester {
             @Test
             public void nullFieldTwo(){
                 Field field = new Field("int", "foo");
-                assertThrows(NullPointerException.class, () -> boundedContextUtils.mergeFields(field, null);
+                assertThrows(NullPointerException.class, () -> boundedContextUtils.mergeFields(field, null));
             }
             @Test
             public void nullBothFields(){
@@ -182,5 +192,71 @@ public class BoundedContextTester {
             }
         }
 
+    }
+
+    @Nested
+    @DisplayName("Entity Merging tests")
+    public class EntityMergingTests{
+
+        @Test
+        @DisplayName("null field mapping")
+        public void testNullFieldMapping(){
+            Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, null);
+            assertEquals(result.getFields().size(), dogAndCatEntityAllFields.getFields().size());
+        }
+
+        @Test
+        @DisplayName("empty field mapping")
+        public void testEmptyFieldMapping(){
+            Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, new HashMap<>());
+            assertEquals(result.getFields().size(), dogAndCatEntityAllFields.getFields().size());
+        }
+
+        @Test
+        @DisplayName("Mapping to non existant field")
+        public void testNonExistantFieldInMappingDest(){
+            HashMap<Field, Field> fieldMapping = new HashMap<>();
+            fieldMapping.put(dogEntity.getFields().get(0), new Field("string", "NO_EXISTO"));
+            assertThrows(FieldMappingException.class, () -> boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping));
+        }
+
+        @Test
+        @DisplayName("Mapping from non existant field")
+        public void testNonExistantFieldInMappingSource(){
+            HashMap<Field, Field> fieldMapping = new HashMap<>();
+            fieldMapping.put(new Field("string", "NO_EXISTO"), dogEntity.getFields().get(0));
+            assertThrows(FieldMappingException.class, () -> boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping));
+        }
+
+        @Test
+        @DisplayName("test single mapping")
+        public void testGoodMapping(){
+            HashMap<Field, Field> fieldMapping = new HashMap<>();
+            fieldMapping.put(dogEntity.getFields().get(0), catentity.getFields().get(0));
+            Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping);
+            assertEquals(result.getFields().size(), dogAndCatEntityAllFields.getFields().size() - 1);
+        }
+
+        @Test
+        @DisplayName("test two mappings to the same field")
+        public void testDoubleMapping(){
+            HashMap<Field, Field> fieldMapping = new HashMap<>();
+            fieldMapping.put(dogEntity.getFields().get(0), catentity.getFields().get(0));
+            fieldMapping.put(dogEntity.getFields().get(1), catentity.getFields().get(0));
+            Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping);
+            assertThrows(FieldMappingException.class, () -> boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping));
+        }
+
+        @Test
+        @DisplayName("test size n mapping")
+        public void testNMapping(){
+            HashMap<Field, Field> fieldMapping = new HashMap<>();
+            for(int i = 0; i< dogEntity.getFields().size(); i++){
+                fieldMapping.put(dogEntity.getFields().get(i), catentity.getFields().get(i));
+            }
+            Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping);
+            // all dog fields are consumed in the transformation
+            assertEquals(result.getFields().size(), catentity.getFields().size());
+        }
     }
 }
