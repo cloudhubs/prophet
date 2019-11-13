@@ -7,6 +7,7 @@ package edu.baylor.ecs.prophet.bounded.context.utils;
 
 
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.*;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.Module;
 
 import java.util.Map;
 
