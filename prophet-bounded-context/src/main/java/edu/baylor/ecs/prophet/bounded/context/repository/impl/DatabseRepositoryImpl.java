@@ -5,9 +5,9 @@
 
 package edu.baylor.ecs.prophet.bounded.context.repository.impl;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.BoundedContextDatabaseService;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.BoundedContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
 import edu.baylor.ecs.prophet.bounded.context.repository.DatabseRepository;
 
 /**

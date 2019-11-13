@@ -1,7 +1,8 @@
 package edu.baylor.ecs.cloudhubs.prophet.metamodel.service;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.BoundedContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
+
 import org.springframework.stereotype.Service;
 
 @Service

@@ -5,8 +5,8 @@
 
 package edu.baylor.ecs.prophet.bounded.context.repository;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.BoundedContext;
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.dto.systemcontext.SystemContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.BoundedContext;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
 
 /**
  * Interface to communicate with neo4j database
