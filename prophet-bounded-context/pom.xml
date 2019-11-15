@@ -33,11 +33,6 @@
 <!--      <scope>compile</scope>-->
 <!--    </dependency>-->
     <!-- https://mvnrepository.com/artifact/de.sciss/ws4j -->
-    <dependency>
-      <groupId>de.sciss</groupId>
-      <artifactId>ws4j</artifactId>
-      <version>0.1.0</version>
-    </dependency>
 <!--    <dependency>-->
 <!--      <groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>-->
 <!--      <artifactId>metamodel</artifactId>-->
@@ -72,7 +67,11 @@
       <version>3.9</version>
     </dependency>
 
-
+    <dependency>
+      <groupId>com.sciss</groupId>
+      <artifactId>ws4j</artifactId>
+      <version>1.0.1</version>
+    </dependency>
   </dependencies>
 
   <build>
