@@ -130,10 +130,11 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
             fieldMapping = new HashMap<>();
         }
 
-        // make sure that all fields in the field mapping are also in f1
-        for(Field f : fieldMapping.keySet()){
+        Set<Field> alreadySeen = new HashSet<>();
+        // make sure that all fields in the field mapping are also in f1 and that no two map to the same value
+        for(Map.Entry<Field, Field> f : fieldMapping.entrySet()){
             // TODO make this more efficient
-            if(!one.getFields().contains(f)){
+            if(!one.getFields().contains(f.getKey()) || !alreadySeen.add(f.getValue())){
                 throw new FieldMappingException();
             }
         }

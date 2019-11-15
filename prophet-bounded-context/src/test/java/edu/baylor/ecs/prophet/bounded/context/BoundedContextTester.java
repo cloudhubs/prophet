@@ -55,7 +55,7 @@ public class BoundedContextTester {
         Field catBreed = new Field("string", "breed");
         Field catWeight = new Field("long", "weight");
         Field catName = new Field("string", "name");
-        dog.setFields(Arrays.asList(catBreed, catWeight, catName));
+        cat.setFields(Arrays.asList(catBreed, catWeight, catName));
         Field catOwner = new Field("object", "owner");
         catOwner.setEntityReference(person);
 
@@ -243,7 +243,6 @@ public class BoundedContextTester {
             HashMap<Field, Field> fieldMapping = new HashMap<>();
             fieldMapping.put(dogEntity.getFields().get(0), catentity.getFields().get(0));
             fieldMapping.put(dogEntity.getFields().get(1), catentity.getFields().get(0));
-            Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping);
             assertThrows(FieldMappingException.class, () -> boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping));
         }
 
