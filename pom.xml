@@ -1,75 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-        
-  
-  
   <modelVersion>4.0.0</modelVersion>
-        
-  
-  
   <groupId>edu.baylor.ecs.cloudhubs</groupId>
-        
-  
-  
   <artifactId>prophet</artifactId>
-        
-  
-  
   <version>1.0-SNAPSHOT</version>
-        
-  
-  
   <packaging>pom</packaging>
-        
-  
-  
   <name>Prophet Application</name>
-        
-  
-  
   <url>https://seer.baylor.ecs.edu/prophet</url>
-        
-  
-  
-  <properties>
-                
-    
-    
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-    <maven.compiler.source>1.11</maven.compiler.source>
-        
-    <maven.compiler.target>1.11</maven.compiler.target>
-      
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.11</maven.compiler.source>
+    <maven.compiler.target>1.11</maven.compiler.target>
   </properties>
-        
-  
-  
+
   <modules>
-                
-    
-    
-    <module>prophet-bounded-context</module>
-                
-    
-    
     <module>neo4j-database</module>
-                
-    
-    
     <module>metamodel</module>
-              
-    
-    
     <module>application</module>
-          
-    
     <module>graph-library</module>
     <module>bytecode-analysis</module>
-
   </modules>
-      
-
 
 </project>
