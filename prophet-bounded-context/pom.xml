@@ -26,12 +26,12 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>
-      <artifactId>neo4j-database</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>-->
+      <!--<artifactId>neo4j-database</artifactId>-->
+      <!--<version>1.0-SNAPSHOT</version>-->
+      <!--<scope>compile</scope>-->
+    <!--</dependency>-->
     <!-- https://mvnrepository.com/artifact/de.sciss/ws4j -->
     <dependency>
       <groupId>de.sciss</groupId>
@@ -100,8 +100,8 @@
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
               <configuration>
-                  <source>9</source>
-                  <target>9</target>
+                  <source>8</source>
+                  <target>8</target>
               </configuration>
           </plugin>
       </plugins>
