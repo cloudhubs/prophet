@@ -22,6 +22,8 @@ public class BoundedContextTester {
 
     private static SystemContext simpleSystem = null;
     private static BoundedContextUtils boundedContextUtils;
+    private static Module moduleOne;
+    private static Module moduleTwo;
     private static Entity dogEntity;
     private static Entity catentity;
     private static Entity dogAndCatEntityAllFields;
@@ -32,7 +34,7 @@ public class BoundedContextTester {
         boundedContextUtils = new BoundedContextUtilsImpl();
 
         // MODULE ONE *******************************************************
-        Module moduleOne = new Module("Module One");
+        moduleOne = new Module("Module One");
 
         // person entity
         Entity person = new Entity("Person");
@@ -62,7 +64,7 @@ public class BoundedContextTester {
         moduleOne.setEntities(Arrays.asList(person, dog, cat));
 
         // MODULE TWO *******************************************************
-        Module moduleTwo = new Module("Module two");
+        moduleTwo = new Module("Module two");
 
         // person entity
         Entity m2_person = new Entity("Person");
@@ -256,6 +258,21 @@ public class BoundedContextTester {
             Entity result = boundedContextUtils.mergeEntities(dogEntity, catentity, fieldMapping);
             // all dog fields are consumed in the transformation
             assertEquals(result.getFields().size(), catentity.getFields().size());
+        }
+
+    }
+
+    @Nested
+    @DisplayName("Module Testing")
+    public class ModuleTesting{
+
+        @Test
+        @DisplayName("Merge Modules")
+        public void testModuleMerge(){
+            Module returnModule = boundedContextUtils.mergeModules(moduleOne, moduleTwo);
+            assertNotNull(returnModule.getName());
+            assertNotEquals("", returnModule.getName());
+            assertTrue(returnModule.getEntities().size() <= moduleOne.getEntities().size() + moduleTwo.getEntities().size());
         }
     }
 }

@@ -26,6 +26,8 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
     // tools used for finding similarities
     private SimilarityUtils similarityUtils = new SimilarityUtilsImpl();
 
+    private static double ENTITY_SIMILARITY_CUTOFF = .9;
+
     /**
      * creates a bounded context for the system context
      * @param systemContext the system
@@ -90,11 +92,29 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
 
         Module newModule = new Module();
 
+        newModule.setName(moduleOne.getName());
+        newModule.setEntities(new LinkedList<>());
+
         // sets the entities of the new module
-        newModule.setEntities(
+        newModule.getEntities().addAll(
 
                 // stream of all entries in entitysimilarity
                 entitySimilarity.entrySet().stream()
+
+                        // if the similarity is strong enough
+                        .filter(x -> {
+                            Map.Entry<Double, ImmutablePair<Entity, Map<Field, Field>>> val = x.getValue().lastEntry();
+                            double similarity = val.getKey();
+
+                            if(similarity > ENTITY_SIMILARITY_CUTOFF){
+                                return true;
+                            }
+                            else{
+                                newModule.getEntities().add(x.getKey());
+                                newModule.getEntities().add(val.getValue().getLeft());
+                                return false;
+                            }
+                        })
 
                         // map each mapping between entities to a new merged entity
                         .map(x -> mergeEntities(x.getKey(), x.getValue().lastEntry().getValue().getLeft(), x.getValue().lastEntry().getValue().getRight()))
@@ -103,7 +123,7 @@ public class BoundedContextUtilsImpl implements BoundedContextUtils {
                         .collect(Collectors.toList())
         );
 
-        return null;
+        return newModule;
     }
 
     /**
