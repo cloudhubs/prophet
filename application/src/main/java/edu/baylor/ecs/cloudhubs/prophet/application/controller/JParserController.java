@@ -1,14 +1,13 @@
 package edu.baylor.ecs.cloudhubs.prophet.application.controller;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.JParserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.file.NotDirectoryException;
 
-//@RestController
-//public class JParserController {
-//
+@RestController
+public class JParserController {
+
 //    @Autowired
 //    private JParserService jParserService;
 //
@@ -19,4 +18,4 @@ import java.nio.file.NotDirectoryException;
 //            e.printStackTrace();
 //        }
 //    }
-//}
+}

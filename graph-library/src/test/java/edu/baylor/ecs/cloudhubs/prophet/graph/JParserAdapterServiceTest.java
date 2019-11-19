@@ -31,7 +31,7 @@ public class JParserAdapterServiceTest {
     @Test
     public void createClass() {
         try {
-            jParserService.createSystemFromSourceCodeViaDirectory(url);
+            System system = jParserService.createSystemFromSourceCodeViaDirectory(url);
         } catch (NotDirectoryException e) {
             e.printStackTrace();
         }
