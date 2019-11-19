@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.nio.file.NotDirectoryException;
-import java.util.List;
 
 //@PropertySource("classpath:application.properties")
 @RunWith(SpringRunner.class)
@@ -31,7 +28,7 @@ public class JParserAdapterServiceTest {
     @Test
     public void createClass() {
         try {
-            System system = jParserService.createSystemFromSourceCodeViaDirectory(url);
+            jParserService.createSystemFromSourceCodeViaDirectory(url);
         } catch (NotDirectoryException e) {
             e.printStackTrace();
         }
