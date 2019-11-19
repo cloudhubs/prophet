@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import java.nio.file.NotDirectoryException;
 
 @Service
-public class JParserService extends FacadeService {
-
-    //Todo: call Jparser library and convert data and insert to db via FacadeService
+public class JParserService {
 
     /**
      * Validates that a directory is valid and then creates a directory graph from it which is used to produce the

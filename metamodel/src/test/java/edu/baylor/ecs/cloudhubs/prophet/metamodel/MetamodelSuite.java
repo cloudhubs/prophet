@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        LoadScriptServiceTest.class
+        //LoadScriptServiceTest.class
 })
 public class MetamodelSuite {
 

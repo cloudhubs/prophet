@@ -9,30 +9,30 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public abstract class FacadeService {
-
-    @Autowired
-    private DbClassRepository dbClassRepository;
-
-    @Autowired
-    private SystemRepository systemRepository;
-
-    @Autowired
-    private ModuleRepository moduleRepository;
-
-    public System createSystem(System system){
-        return systemRepository.save(system);
-    }
-
-    public void deleteAll(){systemRepository.deleteAll(); }
-
-    public Iterable<System> getAllNodes(){
-        return systemRepository.findAllByName("Transaction system");
-    }
-
-    public Iterable<System> getAllNodesConnected(){
-        Iterable<System> systems = systemRepository.findAll();
-        return systems;
-    }
-}
+//@Service
+//public abstract class FacadeService {
+//
+//    @Autowired
+//    private DbClassRepository dbClassRepository;
+//
+//    @Autowired
+//    private SystemRepository systemRepository;
+//
+//    @Autowired
+//    private ModuleRepository moduleRepository;
+//
+//    public System createSystem(System system){
+//        return systemRepository.save(system);
+//    }
+//
+//    public void deleteAll(){systemRepository.deleteAll(); }
+//
+//    public Iterable<System> getAllNodes(){
+//        return systemRepository.findAllByName("Transaction system");
+//    }
+//
+//    public Iterable<System> getAllNodesConnected(){
+//        Iterable<System> systems = systemRepository.findAll();
+//        return systems;
+//    }
+//}

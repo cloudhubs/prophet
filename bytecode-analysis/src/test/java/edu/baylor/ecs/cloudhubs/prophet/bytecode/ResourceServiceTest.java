@@ -25,9 +25,9 @@ public class ResourceServiceTest
     @Autowired
     private ResourceService resourceService;
 
-    @SpringBootApplication
-    static class TestConfiguration {
-    }
+//    @SpringBootApplication
+//    static class TestConfiguration {
+//    }
 
     /**
      * Rigorous Test :-)

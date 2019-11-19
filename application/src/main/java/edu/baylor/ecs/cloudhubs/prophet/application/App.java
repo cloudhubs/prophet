@@ -15,60 +15,21 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.System;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-
-//@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
-//@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.graph.repository")
-//@RestController
-
-
-
-//@SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
-//@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.graph.repository")
-@EntityScan("edu.baylor.ecs.cloudhubs.prophet.metamodel.db")
+@EntityScan({"edu.baylor.ecs.cloudhubs.prophet.metamodel.db","edu.baylor.ecs.cloudhubs.prophet.graph.model"})
 @SpringBootApplication(scanBasePackages = "edu.baylor.ecs.cloudhubs.prophet")
-@EnableNeo4jRepositories("edu.baylor.ecs.cloudhubs.prophet.metamodel.repository")
-@ComponentScan({"edu.baylor.ecs.cloudhubs.prophet.metamodel.service", "edu.baylor.ecs.cloudhubs.prophet.application" +
-        ".services"})
+@EnableNeo4jRepositories({"edu.baylor.ecs.cloudhubs.prophet.metamodel.repository","edu.baylor.ecs.cloudhubs.prophet" +
+        ".graph" +
+        ".repository"})
+@ComponentScan(
+        {   "edu.baylor.ecs.cloudhubs.prophet.metamodel.service",
+                "edu.baylor.ecs.cloudhubs.prophet.graph.service",
+                "edu.baylor.ecs.cloudhubs.prophet.application.services",
+        })
 public class App {
-
-//    private final MyService myService;
-//
-//    private final EmbeddedDb embeddedDb;
-//
-//    private final DbSystemService dbSystemService;
-//
-//    public App(MyService myService, EmbeddedDb embeddedDb, DbSystemService dbSystemService) {
-//        this.myService = myService;
-//        this.embeddedDb = embeddedDb;
-//        this.dbSystemService = dbSystemService;
-//    }
-//
-//    @GetMapping("/system")
-//    public String home() {
-//        embeddedDb.registerDb();
-//        return myService.message();
-//    }
-//
-//    @GetMapping("/all")
-//    public Iterable<DbSystem> getAll(){
-//        embeddedDb.registerDb();
-//        dbSystemService.createByName("My Service X");
-//        Iterable<DbSystem> it = dbSystemService.getAll();
-//        embeddedDb.shutDown();
-//        return it;
-//
-//    }
-
-//
-//    private SystemService service;
-//
-//    private SystemRepository systemRepository;
 
     private final static Logger log = LoggerFactory.getLogger(App.class);
 

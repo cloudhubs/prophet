@@ -1,6 +1,5 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph.service;
 
-import edu.baylor.ecs.cloudhubs.prophet.metamodel.service.LoadScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
