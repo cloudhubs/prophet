@@ -41,5 +41,6 @@ public class LoadDataService {
         }
         String cqlFile = sb.toString();
         session.query(cqlFile, Collections.EMPTY_MAP);
+        session.clear();
     }
 }

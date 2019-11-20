@@ -22,6 +22,6 @@ public class PyServiceTest {
         request.setFileName("/Users/yeboah/Python/py-testbd/app");
         request.setGitIgnore(true);
 
-        service.processPythonProject(request);
+//        service.processPythonProject(request);
     }
 }

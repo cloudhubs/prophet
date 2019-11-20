@@ -1,5 +1,8 @@
 package edu.baylor.ecs.cloudhubs.prophet.application;
 
+import edu.baylor.ecs.cloudhubs.prophet.application.services.LoadDataService;
+import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
+import edu.baylor.ecs.cloudhubs.prophet.graph.service.DbSystemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
         {   "edu.baylor.ecs.cloudhubs.prophet.metamodel.service",
              "edu.baylor.ecs.cloudhubs.prophet.graph.service",
                 "edu.baylor.ecs.cloudhubs.prophet.application.services",
+                "edu.baylor.ecs.cloudhubs.prophet.application.controller",
         })
 public class App {
 
@@ -32,17 +36,22 @@ public class App {
     }
 
     @Bean
-    CommandLineRunner demo() {
+    CommandLineRunner demo(LoadDataService loadDataService, DbSystemService dbSystemService) {
         return args -> {
-
+            loadDataService.load("bounded-context.cql");
+            dbSystemService.createByName("Test");
+            Iterable<DbSystem> dbs =  dbSystemService.getAll();
+            dbs.forEach(n -> {
+                System.out.println(n.getName());
+            });
 
         };
     }
 
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
-    }
+//    @Bean
+//    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+//        return builder.build();
+//    }
 
 }
