@@ -6,11 +6,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        DbSystemTest.class,
-        DbModuleServiceTest.class,
-        ModuleRelRepositoryTest.class,
-        DbClassServiceTest.class,
-        JParserAdapterServiceTest.class
+//        DbSystemTest.class,
+//        DbModuleServiceTest.class,
+//        ModuleRelRepositoryTest.class,
+//        DbClassServiceTest.class,
+//        JParserAdapterServiceTest.class,
+        LoadScriptServiceTest.class
         //DbBoundedContextTest.class
 })
 public class GraphLibrarySuite {

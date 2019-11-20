@@ -1,6 +1,8 @@
 package edu.baylor.ecs.cloudhubs.prophet.graph;
 
-import edu.baylor.ecs.cloudhubs.prophet.graph.service.JParserService;
+import edu.baylor.ecs.cloudhubs.prophet.graph.model.DbSystem;
+import edu.baylor.ecs.cloudhubs.prophet.graph.service.DbSystemService;
+import edu.baylor.ecs.cloudhubs.prophet.graph.service.LoadScriptService;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,34 +12,29 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import java.nio.file.NotDirectoryException;
 
-//@PropertySource("classpath:application.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 @Transactional
-public class JParserAdapterServiceTest {
-
-    @Value("${parser.url}")
-    private String url;
+public class LoadScriptServiceTest {
 
     @Autowired
-    private JParserService jParserService;
+    private LoadScriptService loadScriptService;
 
+    @Autowired
+    private DbSystemService dbSystemService;
 
-//    @Test
-//    public void createClass() {
-//        try {
-//            jParserService.createSystemFromSourceCodeViaDirectory(url);
-//        } catch (NotDirectoryException e) {
-//            e.printStackTrace();
-//        }
-//        Assertions.assertThat(4).isEqualTo(4);
-//    }
+    @Value("${script.test}")
+    private String testScript;
+
+    @Test()
+    public void loadTestScript(){
+        this.loadScriptService.load(testScript);
+        DbSystem dbSystem = this.dbSystemService.getSystem("TestSystem");
+        Assertions.assertThat(dbSystem.getName()).isEqualTo("TestSystem");
+    }
 
     @SpringBootApplication
     static class TestConfiguration {
     }
-
-
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 
@@ -26,8 +27,12 @@ public class LoadScriptService {
     @Transactional
     public void load(String path) {
         StringBuilder sb = new StringBuilder();
+        ClassLoader t = Thread.currentThread().getContextClassLoader();
+//        ClassLoader t = this.getClass().getClassLoader();
+        InputStream s = t.getResourceAsStream(path);
+
         BufferedReader reader =
-                new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)));
+                new BufferedReader(new InputStreamReader(s));
         String line;
         try {
             while ((line = reader.readLine()) != null) {
