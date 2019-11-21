@@ -9,6 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <!--<parent>-->
+        <!--<artifactId>prophet</artifactId>-->
+        <!--<groupId>edu.baylor.ecs.cloudhubs</groupId>-->
+        <!--<version>1.0-SNAPSHOT</version>-->
+    <!--</parent>-->
+
     <groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>
     <artifactId>graph-library</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -34,58 +40,101 @@
     </properties>
 
     <dependencies>
-
         <!-- SPRING BOOT and NEO4J -->
-
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+            <!--<version>2.1.8.RELEASE</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <version>2.1.8.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.1.8.RELEASE</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>2.1.8.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-neo4j</artifactId>
+            <version>2.1.8.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>2.1.8.RELEASE</version>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j</artifactId>
             <version>3.5.12</version>
         </dependency>
-
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-embedded-driver</artifactId>
             <version>${neo4j-ogm.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-bolt-driver</artifactId>
             <version>${neo4j-ogm.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.baylor.ecs.cloudhubs</groupId>
+            <artifactId>prophet-dto</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-core</artifactId>
+            <version>3.1.5.RELEASE</version>
+        </dependency>
+
+        <!--&lt;!&ndash; Starter &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+            <!--<version>2.1.8.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; Data &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.data</groupId>-->
+            <!--<artifactId>spring-data-commons</artifactId>-->
+            <!--<version>2.1.10.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; Test &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>junit</groupId>-->
+            <!--<artifactId>junit</artifactId>-->
+            <!--<version>4.11</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; Neo4J OGM &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.neo4j</groupId>-->
+            <!--<artifactId>neo4j-ogm-core</artifactId>-->
+            <!--<version>3.2.1</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; OGM Bolt Driver &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.neo4j</groupId>-->
+            <!--<artifactId>neo4j-ogm-bolt-driver</artifactId>-->
+            <!--<version>3.2.1</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -94,44 +143,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- INTER SYSTEM DEPENDENCIES -->
-
-        <!--<dependency>-->
-            <!--<groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>-->
-            <!--<artifactId>metamodel</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-            <!--<scope>compile</scope>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>edu.baylor.ecs.cloudhubs.prophet</groupId>
-            <artifactId>graph-library</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.baylor.ecs.cloudhubs</groupId>
-            <artifactId>prophet-dto</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-rest-core</artifactId>
-            <version>3.1.5.RELEASE</version>
-        </dependency>
-
-        <!--    Validations -->
-
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate</groupId>-->
-        <!--<artifactId>hibernate-validator</artifactId>-->
-        <!--<version>6.0.17.Final</version>-->
-        <!--</dependency>-->
 
     </dependencies>
 
