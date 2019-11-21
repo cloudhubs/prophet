@@ -1,0 +1,1 @@
+CREATE (int:MOVIE {title : "Kolja"})
