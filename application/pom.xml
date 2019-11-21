@@ -73,6 +73,21 @@
         <version>1.0-SNAPSHOT</version>
         <scope>compile</scope>
       </dependency>
+
+
+      <dependency>
+          <groupId>org.neo4j</groupId>
+          <artifactId>neo4j</artifactId>
+          <version>3.5.12</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.neo4j</groupId>
+          <artifactId>neo4j-ogm-embedded-driver</artifactId>
+          <version>${neo4j-ogm.version}</version>
+      </dependency>
+
+
   </dependencies>
 
 

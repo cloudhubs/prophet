@@ -29,7 +29,7 @@ public class LoadDataService {
     public void load() {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader =
-                new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("person.cql")));
+                new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("init.cql")));
         String line;
         try {
             while ((line = reader.readLine()) != null) {
