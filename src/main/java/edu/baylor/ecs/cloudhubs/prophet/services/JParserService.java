@@ -9,41 +9,57 @@ package edu.baylor.ecs.cloudhubs.prophet.services;
 //import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.DbClass;
 //import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.Module;
 //import edu.baylor.ecs.cloudhubs.prophet.metamodel.db.System;
+import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
 import org.springframework.stereotype.Service;
+import systemcontext.SystemContextParser;
+
+import java.io.File;
 
 @Service
 public class JParserService {
 
     /**
-     * Validates that a directory is valid and then creates a directory graph from it which is used to produce the
-     * CIL-JSSA Meta Model / Context graph.
-     * @param directoryLocation a string correlating to the root absolute directory path for a project.
-     * @return a System object which is the Prophet DB Meta Model.
+     * Singleton
      */
-//    public System createSystemFromSourceCodeViaDirectory(String directoryLocation) throws NotDirectoryException {
-//        // Create DirectoryGraph for AnalysisContext graph
-//        DirectoryFactory directoryFactory = new DirectoryFactory();
-//        DirectoryComponent root = (DirectoryComponent) directoryFactory.createDirectoryGraph(directoryLocation);
-//        if (root == null)
-//            throw new NotDirectoryException("Input was not a directory root path! DirectoryComponent is null!");
-//        // Create AnalysisContextFactory and create CIL-JSSA Meta Model
-//        AnalysisContextFactory factory = new AnalysisContextFactory();
-//        AnalysisContext context = factory.createAnalysisContextFromDirectoryGraph(root);
-//        // For each ciljssa::ModuleComponent, create a corresponding prophet::Module
-//        System system = new System();
-//        for (ModuleComponent module : context.getModules()) {
-//            Module mod = new Module();
-//            mod.setName(module.getInstanceName());
-//            mod.setSystem(system);
-//            for (ClassComponent clazz : module.getClasses()) {
-//                DbClass dbClass = new DbClass();
-//                dbClass.setName(clazz.getInstanceName());
-//                mod.addClass(dbClass);
-//            }
-//            system.addModule(mod);
-//        }
-//
-//        return system;
-//    }
+    private static SystemContextParser systemContextParser;
+
+    public JParserService() {
+        assert SystemContextParser.JPARSER_VERSION == 4; // Validate that the correct JParser version is being used,
+                                                         // or else prophet-utils will cause this to crash
+        systemContextParser = SystemContextParser.getInstance();
+    }
+
+    /**
+     * Supply a path to a directory and retreive System Context
+     *
+     * @param path Path to directory
+     * @return a SystemContext object
+     */
+    public SystemContext getSystemContextFromPath(String path) {
+        //TODO: Validate path before calling method. Or do this validation in prophet-utils
+        return systemContextParser.createSystemContextFromPathViaAnalysisContext(path);
+    }
+
+    /**
+     * Supply a path to a file and get a System Context from it
+     *
+     * @param path Path to a file
+     * @return a SystemContext object
+     */
+    public SystemContext getSystemContextFromFile(String path) {
+        return systemContextParser.createSystemContextFromAnalysisContext(
+                systemContextParser.createAnalysisContextFromFile(path));
+    }
+
+    /**
+     * Supply a file and get a System Context from it
+     *
+     * @param file A file
+     * @return A SystemContext object
+     */
+    public SystemContext getSystemContextFromFile(File file) {
+        return systemContextParser.createSystemContextFromAnalysisContext(
+                systemContextParser.createAnalysisContextFromFile(file));
+    }
 
 }
