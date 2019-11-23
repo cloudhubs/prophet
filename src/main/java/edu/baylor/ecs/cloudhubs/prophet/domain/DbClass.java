@@ -1,6 +1,7 @@
 package edu.baylor.ecs.cloudhubs.prophet.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import edu.baylor.ecs.cloudhubs.prophet.domain.global.DbEntity;
 import edu.baylor.ecs.cloudhubs.prophet.domain.relationship.HasAClassRel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,9 @@ public class DbClass {
 
     @Relationship(value = "HAS_A_CLASS", direction = Relationship.INCOMING)
     private List<DbVariable> dbClass;
+
+    @Relationship(value = "IS_AN_ENTITY", direction = Relationship.UNDIRECTED)
+    private DbEntity dbEntity;
 
     @Override
     public boolean equals(Object o) {

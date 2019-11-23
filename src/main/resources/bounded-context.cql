@@ -160,3 +160,24 @@ CREATE (tollbooth)-[:HAS_A_CLASS]->(tollbooth_transaction)
 CREATE (tollbooth_transaction_id:VARIABLE{name : "id"})
 CREATE (tollbooth_transaction_id)-[:HAS_TYPE]->(long)
 CREATE (tollbooth_transaction)-[:CLASS_VARIABLE]->(tollbooth_transaction_id)
+
+
+/* SINGLETONS  ****************************************************************************************/
+
+CREATE (singleton: SINGLETON {name: 'Singleton'})
+CREATE (entity:ENTITY {name:'Database Entity'})
+
+/* ASSOCIATION TO ENTITY  ****************************************************************************************/
+
+CREATE (employee_info)-[:IS_AN_ENTITY]->(entity)
+CREATE (merchant)-[:IS_AN_ENTITY]->(entity)
+CREATE (pos)-[:IS_AN_ENTITY]->(entity)
+CREATE (terminal_transaction)-[:IS_AN_ENTITY]->(entity)
+CREATE (cashier)-[:IS_AN_ENTITY]->(entity)
+CREATE (atm_Place)-[:IS_AN_ENTITY]->(entity)
+CREATE (operator)-[:IS_AN_ENTITY]->(entity)
+CREATE (atm_transaction)-[:IS_AN_ENTITY]->(entity)
+/*CREATE (administrator)-[:IS_AN_ENTITY]->(entity)*/
+CREATE (tollbooth_transaction)-[:IS_AN_ENTITY]->(entity)
+CREATE (tollBooth_physical)-[:IS_AN_ENTITY]->(entity)
+
