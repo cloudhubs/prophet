@@ -39,8 +39,9 @@ public interface BoundedContextRepository {
 
     @Query("MATCH (s:SYSTEM)-[:SYSTEM_MODULE]->(mod:MODULE)-[:HAS_A_CLASS]->(n:DBCLASS)-[:CLASS_VARIABLE]->(var:VARIABLE)," +
             "(n:DBCLASS)-[r2:IS_AN_ENTITY]->(en:ENTITY), (var:VARIABLE)-[type:HAS_TYPE]->(tp:DBCLASS)\n" +
-            "WHERE s.name={systemName}\n" +
+            "WHERE s.name={systemName} AND mod.name={moduleName}\n" +
             "return mod as module, n as from, collect(var) as variables, type as relType, tp as to;")
-    Iterable<ContextMapRelation> getRelationsInContextMap(@Param("systemName") String systemName);
+    Iterable<ContextMapRelation> getRelationsInContextMap(@Param("systemName") String systemName,
+                                                          @Param("moduleName") String moduleName);
 
 }
