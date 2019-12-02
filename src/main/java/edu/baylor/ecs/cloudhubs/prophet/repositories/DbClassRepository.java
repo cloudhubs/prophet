@@ -15,4 +15,7 @@ public interface DbClassRepository extends Neo4jRepository<DbClass, Long> {
 
     @Query("MATCH (n { name: {oldName} }) SET n.name = {newName} RETURN n")
     Optional<DbClass> setDbClassByName(@Param("oldName") String oldName, @Param("newName") String newName);
+
+    @Query("MATCH (n:DbClass)-[:IS_AN_ENTITY]->(m:DbEntity)")
+    Iterable<DbClass> getAllEntityClasses();
 }
