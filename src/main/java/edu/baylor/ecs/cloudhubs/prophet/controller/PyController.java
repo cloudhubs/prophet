@@ -19,7 +19,11 @@ public class PyController {
 
     @PostMapping
     public void processPythonProject(@RequestBody PyRequest request) {
-        // call py-service to process request
-//        service.processPythonProject(request);
+        service.processPythonProject(request);
+    }
+
+    @PostMapping
+    public void matchServiceInterfaces(@RequestBody PyRequest request) {
+        service.processInterfaceRequest(request);
     }
 }
