@@ -17,12 +17,12 @@ public class PyController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/project")
     public void processPythonProject(@RequestBody PyRequest request) {
         service.processPythonProject(request);
     }
 
-    @PostMapping
+    @PostMapping("/interface")
     public void matchServiceInterfaces(@RequestBody PyRequest request) {
         service.processInterfaceRequest(request);
     }
