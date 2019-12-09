@@ -2,6 +2,7 @@ package edu.baylor.ecs.cloudhubs.prophet.services;
 
 
 import edu.baylor.ecs.cloudhubs.prophetdto.systemcontext.SystemContext;
+import edu.baylor.ecs.cloudhubs.prophetutils.ProphetUtilsFacade;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -38,9 +39,8 @@ public class JParserService {
      * @return a SystemContext object
      */
     public SystemContext getSystemContextFromFile(String path) {
-//        return systemContextParser.createSystemContextFromAnalysisContext(
-//                systemContextParser.createAnalysisContextFromFile(path));
-        return null;
+        return ProphetUtilsFacade.getEntityContext(path, new String[0]);
+
     }
 
     /**

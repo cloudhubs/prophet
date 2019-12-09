@@ -3,7 +3,6 @@ package edu.baylor.ecs.cloudhubs.prophet.services;
 import edu.baylor.ecs.cloudhubs.prophet.util.PyRequest;
 import edu.baylor.ecs.cloudhubs.prophetdto.mscontext.MsModel;
 import edu.baylor.ecs.cloudhubs.prophetdto.pyparser.PySystem;
-import edu.baylor.ecs.cloudhubs.prophetdto.pyparser.msapi.PyInterfaceResponse;
 import edu.baylor.ecs.cloudhubs.prophetdto.pyparser.msapi.PyMsSystem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
