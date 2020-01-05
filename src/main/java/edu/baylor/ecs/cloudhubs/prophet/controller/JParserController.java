@@ -3,6 +3,8 @@ package edu.baylor.ecs.cloudhubs.prophet.controller;
 import edu.baylor.ecs.cloudhubs.prophet.services.JParserService;
 import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetRequest;
 import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetResponse;
+import edu.baylor.ecs.cloudhubs.prophetdto.communication.Communication;
+import edu.baylor.ecs.cloudhubs.prophetdto.communication.ContextMap;
 import edu.baylor.ecs.cloudhubs.prophetutils.ProphetUtilsFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +24,16 @@ public class JParserController {
 //        return jParserService.getSystemContextFromFile(request.getUrl());
 //    }
 
-    @PostMapping("/analyze")
-    public ProphetResponse parseApplication(@RequestBody ProphetRequest pr) throws IOException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        ProphetRequest pr = mapper.readValue(req.toString(), ProphetRequest.class);
-        return ProphetUtilsFacade.getProphetResponse(pr.getUrl());
+    @PostMapping("/communication")
+    public Communication getCommunication(@RequestBody ProphetRequest pr) throws IOException {
+        String localPath = pr.getUrl();
+        return ProphetUtilsFacade.getCommunication(pr.getUrl());
+    }
+
+    @PostMapping("/contextmap")
+    public ContextMap getContextMap(@RequestBody ProphetRequest pr) throws IOException {
+        String localPath = pr.getUrl();
+        return ProphetUtilsFacade.getContextMap(pr.getUrl());
     }
 
 }
