@@ -1,6 +1,10 @@
 package edu.baylor.ecs.cloudhubs.prophet.controller;
 
+import edu.baylor.ecs.cloudhubs.prophet.services.DbSystemService;
 import edu.baylor.ecs.cloudhubs.prophet.services.JParserService;
+import edu.baylor.ecs.cloudhubs.prophet.services.ProphetDataService;
+import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetAppData;
+import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetAppRequest;
 import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetRequest;
 import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetResponse;
 import edu.baylor.ecs.cloudhubs.prophetdto.communication.Communication;
@@ -19,6 +23,9 @@ public class JParserController {
     @Autowired
     private JParserService jParserService;
 
+    @Autowired
+    private ProphetDataService prophetDataService;
+
 //    @PostMapping("/")
 //    public SystemContext parseApplication(@RequestBody ProphetRequest request) {
 //        return jParserService.getSystemContextFromFile(request.getUrl());
@@ -34,6 +41,16 @@ public class JParserController {
     public ContextMap getContextMap(@RequestBody ProphetRequest pr) throws IOException {
         String localPath = pr.getUrl();
         return ProphetUtilsFacade.getContextMap(pr.getUrl());
+    }
+
+    @PostMapping("/app")
+    public ProphetAppData getAppData(@RequestBody ProphetAppRequest request) {
+        ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request.getPath());
+        if (request.isPersistDb()) {
+            // TODO: persist to database
+            //prophetDataService.persistProphetData(response);
+        }
+        return response;
     }
 
 }
