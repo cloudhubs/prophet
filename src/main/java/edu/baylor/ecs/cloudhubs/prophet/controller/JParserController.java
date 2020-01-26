@@ -28,7 +28,7 @@ public class JParserController {
 
 //    @PostMapping("/")
 //    public SystemContext parseApplication(@RequestBody ProphetRequest request) {
-//        return jParserService.getSystemContextFromFile(request.getUrl());
+//        return jParserService.getSycstemContextFromFile(request.getUrl());
 //    }
 
     @PostMapping("/communication")
@@ -44,7 +44,7 @@ public class JParserController {
     }
 
     @PostMapping("/app")
-    public ProphetAppData getAppData(@RequestBody ProphetAppRequest request) {
+    public ProphetAppData getAppData(@RequestBody ProphetAppRequest request) throws IOException {
         ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request.getPath());
         if (request.isPersistDb()) {
             // TODO: persist to database

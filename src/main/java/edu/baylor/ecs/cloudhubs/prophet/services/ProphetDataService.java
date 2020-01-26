@@ -13,10 +13,10 @@ public class ProphetDataService {
     private DbModuleService moduleService;
 
     public void persistProphetData(ProphetAppData data) {
-        systemService.createByName(data.getProjectName());
+        systemService.createByName(data.getGlobal().getProjectName());
 
         // persist the microservices
-        data.getMicroservices().stream().map(ms -> moduleService.createByName(data.getProjectName(), ms.getName()));
+        data.getMs().stream().map(ms -> moduleService.createByName(data.getGlobal().getProjectName(), ms.getName()));
 
 
     }
