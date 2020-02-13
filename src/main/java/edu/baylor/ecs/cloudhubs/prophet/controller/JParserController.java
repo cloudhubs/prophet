@@ -3,10 +3,7 @@ package edu.baylor.ecs.cloudhubs.prophet.controller;
 import edu.baylor.ecs.cloudhubs.prophet.services.DbSystemService;
 import edu.baylor.ecs.cloudhubs.prophet.services.JParserService;
 import edu.baylor.ecs.cloudhubs.prophet.services.ProphetDataService;
-import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetAppData;
-import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetAppRequest;
-import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetRequest;
-import edu.baylor.ecs.cloudhubs.prophetdto.app.ProphetResponse;
+import edu.baylor.ecs.cloudhubs.prophetdto.app.*;
 import edu.baylor.ecs.cloudhubs.prophetdto.communication.Communication;
 import edu.baylor.ecs.cloudhubs.prophetdto.communication.ContextMap;
 import edu.baylor.ecs.cloudhubs.prophetutils.ProphetUtilsFacade;
@@ -50,6 +47,12 @@ public class JParserController {
             // TODO: persist to database
             //prophetDataService.persistProphetData(response);
         }
+        return response;
+    }
+
+    @PostMapping("/multirepoapp")
+    public ProphetAppData getMultiRepoAppData(@RequestBody ProphetAppMultiRepoRequest request) throws IOException {
+        ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request);
         return response;
     }
 
