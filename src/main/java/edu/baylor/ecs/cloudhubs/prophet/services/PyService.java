@@ -1,5 +1,6 @@
 package edu.baylor.ecs.cloudhubs.prophet.services;
 
+import edu.baylor.ecs.cloudhubs.prophet.util.PyLanguage;
 import edu.baylor.ecs.cloudhubs.prophet.util.PyRequest;
 import edu.baylor.ecs.cloudhubs.prophetdto.mscontext.MsModel;
 import edu.baylor.ecs.cloudhubs.prophetdto.pyparser.PySystem;
@@ -29,13 +30,15 @@ public class PyService {
     }
 
     private PySystem parseSourceCode(PyRequest request) {
-        String url = getParserURL("parse");
+        String url = getParserURL();
         HttpEntity<PyRequest> payload = new HttpEntity<>(request);
-        return restTemplate.postForObject(url, payload, PySystem.class);
+        PySystem system = restTemplate.postForObject(url, payload, PySystem.class);
+        system.setLanguage(processLanguage(request));
+        return system;
     }
 
     public MsModel processInterfaceRequest(PyRequest request) {
-        String url = getParserURL("interface");
+        String url = getInterfaceURL();
         HttpEntity<PyRequest> payload = new HttpEntity<>(request);
         PyMsSystem system = restTemplate.postForObject(url, payload, PyMsSystem.class);
 //      return  parser.createMsModel(system);
@@ -43,7 +46,21 @@ public class PyService {
         return null;
     }
 
-    private String getParserURL(String endpoint) {
-        return BASE_URL + endpoint;
+    private String processLanguage(PyRequest request){
+        String url = getLanguageURL();
+        HttpEntity<PyRequest> payload = new HttpEntity<>(request);
+        return restTemplate.postForObject(url, payload, PyLanguage.class).getLanguage();
+    }
+
+    private String getParserURL() {
+        return BASE_URL + "parse";
+    }
+
+    private String getLanguageURL(){
+        return BASE_URL + "language";
+    }
+
+    private String getInterfaceURL(){
+        return BASE_URL + "interface";
     }
 }
