@@ -40,20 +40,20 @@ public class JParserController {
         return ProphetUtilsFacade.getContextMap(pr.getUrl());
     }
 
-    @PostMapping("/app")
-    public ProphetAppData getAppData(@RequestBody ProphetAppRequest request) throws IOException {
-        ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request.getPath());
-        if (request.isPersistDb()) {
-            // TODO: persist to database
-            //prophetDataService.persistProphetData(response);
-        }
-        return response;
-    }
-
-    @PostMapping("/multirepoapp")
-    public ProphetAppData getMultiRepoAppData(@RequestBody ProphetAppMultiRepoRequest request) throws IOException {
-        ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request);
-        return response;
-    }
+//    @PostMapping("/app")
+//    public ProphetAppData getAppData(@RequestBody ProphetAppRequest request) throws IOException {
+//        ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request.getPath());
+//        if (request.isPersistDb()) {
+//            // TODO: persist to database
+//            //prophetDataService.persistProphetData(response);
+//        }
+//        return response;
+//    }
+//
+//    @PostMapping("/multirepoapp")
+//    public ProphetAppData getMultiRepoAppData(@RequestBody ProphetAppMultiRepoRequest request) throws IOException {
+//        ProphetAppData response = ProphetUtilsFacade.getProphetAppData(request);
+//        return response;
+//    }
 
 }

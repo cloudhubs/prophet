@@ -3,3 +3,6 @@
 target
 .DS_Store
 systemContext.json
+/bin/
+/.apt_generated/
+/.apt_generated_tests/
