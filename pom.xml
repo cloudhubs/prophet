@@ -116,16 +116,30 @@
         </dependency>
 
         <!-- Cloudhubs organization -->
-        <dependency>
+       <!--  <dependency>
             <groupId>edu.baylor.ecs.cloudhubs</groupId>
             <artifactId>prophet-dto</artifactId>
             <version>0.0.8</version>
-        </dependency>
+        </dependency> -->
+        
         <dependency>
+		    <groupId>com.github.cloudhubs</groupId>
+		    <artifactId>prophet-dto</artifactId>
+		    <version>expansion-base-SNAPSHOT</version>
+		</dependency>
+		
+       <!--  <dependency>
             <groupId>edu.baylor.ecs.cloudhubs</groupId>
             <artifactId>prophet-utils</artifactId>
             <version>0.0.8</version>
-        </dependency>
+        </dependency> -->
+        
+        <dependency>
+		    <groupId>com.github.cloudhubs</groupId>
+		    <artifactId>prophet-utils</artifactId>
+		    <version>expansion-base-SNAPSHOT</version>
+		</dependency>
+        
         <!-- <dependency>
             <groupId>edu.baylor.ecs.cloudhubs</groupId>
             <artifactId>prophet-utils</artifactId>
@@ -133,6 +147,13 @@
         </dependency> -->
 
     </dependencies>
+    
+    <repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
     <build>
         <plugins>
